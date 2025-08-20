@@ -1,0 +1,366 @@
+@import "tailwindcss";
+
+@theme {
+  /* Convert RGB to OKLCH for Tailwind v4 */
+  --color-galaxy-void: oklch(0.13 0.01 270); /* 10 10 15 */
+  --color-galaxy-nebula: oklch(0.19 0.03 260); /* 26 26 46 */
+  --color-galaxy-cosmic: oklch(0.24 0.04 250); /* 22 33 62 */
+  --color-galaxy-starfield: oklch(0.35 0.12 285); /* 45 27 105 */
+  --color-galaxy-violet: oklch(0.38 0.1 290); /* 59 30 84 */
+  --color-galaxy-amethyst: oklch(0.48 0.12 295); /* 91 44 111 */
+  --color-galaxy-plasma: oklch(0.62 0.1 285); /* 139 95 191 */
+  --color-galaxy-aurora: oklch(0.72 0.08 275); /* 167 139 250 */
+  --color-galaxy-stardust: oklch(0.82 0.06 280); /* 196 181 253 */
+  --color-galaxy-moonbeam: oklch(0.92 0.04 285); /* 233 213 255 */
+
+  /* Text Colors */
+  --color-galaxy-text-primary: oklch(1 0 0); /* 255 255 255 - pure white */
+  --color-galaxy-text-secondary: oklch(0.91 0.01 240); /* 226 232 240 */
+  --color-galaxy-text-muted: oklch(0.68 0.02 240); /* 148 163 184 */
+  --color-galaxy-text-accent: oklch(0.82 0.06 280); /* 196 181 253 */
+
+  /* Interactive Colors */
+  --color-galaxy-glow: oklch(0.62 0.1 285); /* 139 95 191 */
+  --color-galaxy-highlight: oklch(0.72 0.08 275); /* 167 139 250 */
+  --color-galaxy-border: oklch(0.62 0.1 285); /* 139 95 191 */
+}
+
+@layer base {
+  body {
+    @apply bg-galaxy-void text-galaxy-text-primary;
+  }
+}
+
+@layer utilities {
+  /* Make galaxy colors available as utilities */
+  .bg-galaxy-void {
+    background-color: var(--color-galaxy-void);
+  }
+  .bg-galaxy-nebula {
+    background-color: var(--color-galaxy-nebula);
+  }
+  .bg-galaxy-cosmic {
+    background-color: var(--color-galaxy-cosmic);
+  }
+  .bg-galaxy-starfield {
+    background-color: var(--color-galaxy-starfield);
+  }
+  .bg-galaxy-violet {
+    background-color: var(--color-galaxy-violet);
+  }
+  .bg-galaxy-amethyst {
+    background-color: var(--color-galaxy-amethyst);
+  }
+  .bg-galaxy-plasma {
+    background-color: var(--color-galaxy-plasma);
+  }
+  .bg-galaxy-aurora {
+    background-color: var(--color-galaxy-aurora);
+  }
+  .bg-galaxy-stardust {
+    background-color: var(--color-galaxy-stardust);
+  }
+  .bg-galaxy-moonbeam {
+    background-color: var(--color-galaxy-moonbeam);
+  }
+
+  .text-galaxy-text-primary {
+    color: var(--color-galaxy-text-primary);
+  }
+  .text-galaxy-text-secondary {
+    color: var(--color-galaxy-text-secondary);
+  }
+  .text-galaxy-text-muted {
+    color: var(--color-galaxy-text-muted);
+  }
+  .text-galaxy-text-accent {
+    color: var(--color-galaxy-text-accent);
+  }
+
+  .border-galaxy-border {
+    border-color: var(--color-galaxy-border);
+  }
+  .border-galaxy-glow {
+    border-color: var(--color-galaxy-glow);
+  }
+
+  /* Galaxy Gradient Backgrounds */
+  .bg-galaxy-gradient-primary {
+    background: linear-gradient(
+      135deg,
+      var(--color-galaxy-plasma),
+      var(--color-galaxy-aurora),
+      var(--color-galaxy-stardust)
+    );
+  }
+
+  .bg-galaxy-gradient-secondary {
+    background: linear-gradient(
+      135deg,
+      var(--color-galaxy-violet),
+      var(--color-galaxy-amethyst),
+      var(--color-galaxy-plasma)
+    );
+  }
+
+  .bg-galaxy-gradient-cosmic {
+    background: linear-gradient(
+      135deg,
+      var(--color-galaxy-nebula),
+      var(--color-galaxy-cosmic),
+      var(--color-galaxy-starfield),
+      var(--color-galaxy-violet)
+    );
+  }
+
+  /* Galaxy Text Gradient */
+  .text-galaxy-gradient {
+    background: linear-gradient(
+      135deg,
+      var(--color-galaxy-plasma),
+      var(--color-galaxy-aurora),
+      var(--color-galaxy-stardust)
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Galaxy Glow Effects */
+  .glow-galaxy {
+    box-shadow: 0 0 20px
+      color-mix(in oklch, var(--color-galaxy-glow) 30%, transparent);
+  }
+
+  .glow-galaxy-strong {
+    box-shadow: 0 0 30px
+        color-mix(in oklch, var(--color-galaxy-glow) 50%, transparent),
+      0 0 60px color-mix(in oklch, var(--color-galaxy-glow) 20%, transparent);
+  }
+
+  .text-glow-galaxy {
+    text-shadow: 0 0 10px
+      color-mix(in oklch, var(--color-galaxy-glow) 50%, transparent);
+  }
+
+  .hover-glow-galaxy:hover {
+    box-shadow: 0 0 25px
+      color-mix(in oklch, var(--color-galaxy-glow) 40%, transparent);
+    transition: box-shadow 0.3s ease;
+  }
+
+  /* Galaxy Animated Background */
+  .bg-galaxy-animated {
+    background: linear-gradient(
+      -45deg,
+      var(--color-galaxy-nebula),
+      var(--color-galaxy-cosmic),
+      var(--color-galaxy-starfield),
+      var(--color-galaxy-violet)
+    );
+    background-size: 400% 400%;
+    animation: galaxyShift 15s ease infinite;
+  }
+
+  @keyframes galaxyShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Starfield Animation */
+  .starfield {
+    background-image: radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+      radial-gradient(
+        2px 2px at 40px 70px,
+        rgba(255, 255, 255, 0.8),
+        transparent
+      ),
+      radial-gradient(
+        1px 1px at 90px 40px,
+        rgba(255, 255, 255, 0.6),
+        transparent
+      ),
+      radial-gradient(
+        1px 1px at 130px 80px,
+        rgba(255, 255, 255, 0.4),
+        transparent
+      ),
+      radial-gradient(
+        2px 2px at 160px 30px,
+        rgba(255, 255, 255, 0.6),
+        transparent
+      );
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: sparkle 20s linear infinite;
+  }
+
+  @keyframes sparkle {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-200px);
+    }
+  }
+}
+
+@layer components {
+  .galaxy-card {
+    background-color: var(--color-galaxy-cosmic);
+    background-color: color-mix(
+      in oklch,
+      var(--color-galaxy-cosmic) 80%,
+      transparent
+    );
+    border: 1px solid
+      color-mix(in oklch, var(--color-galaxy-border) 20%, transparent);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 0 20px
+      color-mix(in oklch, var(--color-galaxy-glow) 30%, transparent);
+    backdrop-filter: blur(4px);
+  }
+
+  .galaxy-button {
+    background: linear-gradient(
+      135deg,
+      var(--color-galaxy-plasma),
+      var(--color-galaxy-aurora),
+      var(--color-galaxy-stardust)
+    );
+    color: var(--color-galaxy-text-primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .galaxy-button:hover {
+    box-shadow: 0 0 25px
+      color-mix(in oklch, var(--color-galaxy-glow) 40%, transparent);
+  }
+
+  .galaxy-input {
+    background-color: color-mix(
+      in oklch,
+      var(--color-galaxy-nebula) 50%,
+      transparent
+    );
+    border: 1px solid
+      color-mix(in oklch, var(--color-galaxy-border) 20%, transparent);
+    color: var(--color-galaxy-text-primary);
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .galaxy-input::placeholder {
+    color: var(--color-galaxy-text-muted);
+  }
+
+  .galaxy-input:focus {
+    border-color: var(--color-galaxy-glow);
+    box-shadow: 0 0 0 2px
+      color-mix(in oklch, var(--color-galaxy-glow) 20%, transparent);
+    outline: none;
+  }
+
+  .galaxy-nav {
+    background-color: color-mix(
+      in oklch,
+      var(--color-galaxy-cosmic) 90%,
+      transparent
+    );
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid
+      color-mix(in oklch, var(--color-galaxy-border) 20%, transparent);
+  }
+
+  /* Starfield Animation */
+  .starfield {
+    background-image: radial-gradient(
+        2px 2px at 20px 30px,
+        var(--color-galaxy-stardust),
+        transparent
+      ),
+      radial-gradient(
+        2px 2px at 40px 70px,
+        var(--color-galaxy-moonbeam),
+        transparent
+      ),
+      radial-gradient(
+        1px 1px at 90px 40px,
+        var(--color-galaxy-aurora),
+        transparent
+      ),
+      radial-gradient(
+        1px 1px at 130px 80px,
+        var(--color-galaxy-plasma),
+        transparent
+      ),
+      radial-gradient(
+        2px 2px at 160px 30px,
+        var(--color-galaxy-stardust),
+        transparent
+      );
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: starfield-move 20s linear infinite;
+  }
+
+  @keyframes starfield-move {
+    from {
+      background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
+    }
+    to {
+      background-position: 0 -100px, 0 -100px, 0 -100px, 0 -100px, 0 -100px;
+    }
+  }
+
+  /* Animated Background */
+  .bg-galaxy-animated {
+    background: linear-gradient(
+      -45deg,
+      var(--color-galaxy-cosmic),
+      var(--color-galaxy-starfield),
+      var(--color-galaxy-violet),
+      var(--color-galaxy-nebula)
+    );
+    background-size: 400% 400%;
+    animation: galaxy-gradient 15s ease infinite;
+  }
+
+  @keyframes galaxy-gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-galaxy-void);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-galaxy-glow);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-galaxy-highlight);
+}
