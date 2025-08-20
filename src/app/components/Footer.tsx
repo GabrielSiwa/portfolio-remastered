@@ -121,7 +121,7 @@ const Footer = () => {
                 Gabriel Siwa
               </motion.h3>
               <p className="text-galaxy-text-accent font-medium mb-3">
-                Software Developer Student
+                Software Developer
               </p>
               <p className="text-galaxy-text-muted leading-relaxed mb-4">
                 Passionate about creating innovative solutions with modern web

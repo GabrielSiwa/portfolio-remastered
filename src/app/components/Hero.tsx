@@ -143,7 +143,7 @@ const Hero = () => {
             {/* Simple Image Container */}
             <div className="w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden border-4 border-galaxy-border glow-galaxy">
               <Image
-                src="/profile.jpg"
+                src="/profile.png"
                 alt="Gabriel Siwa Profile"
                 width={224}
                 height={224}
