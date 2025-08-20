@@ -9,9 +9,7 @@ import {
   MapPin,
   Download,
   Heart,
-  Code,
   Coffee,
-  Sparkles,
   ArrowUp,
   ExternalLink,
 } from "lucide-react";
@@ -42,14 +40,6 @@ const Footer = () => {
       },
     },
   };
-
-  // Navigation links
-  const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Projects", href: "#projects" },
-    { name: "Contact", href: "#contact" },
-  ];
 
   // Social links
   const socialLinks = [
