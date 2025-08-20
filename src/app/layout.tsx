@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -28,9 +29,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900`}
       >
-        <Navbar />
-        {children}
-        <Footer />
+  <Navbar />
+  {children}
+  <Footer />
+  <Analytics />
       </body>
     </html>
   );
