@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   Github,
@@ -10,7 +9,6 @@ import {
   Download,
   Code,
   Sparkles,
-  BookOpen,
   Coffee,
   Heart,
 } from "lucide-react";
@@ -274,13 +272,22 @@ const Hero = () => {
           transition={{ delay: 1.4, duration: 0.8 }}
           className="flex flex-col sm:flex-row gap-4 mb-6"
         >
-          <Link
-            href="/contact"
+          <motion.button
+            type="button"
+            whileHover={{
+              scale: 1.05,
+              boxShadow: "0 0 30px rgba(139, 95, 191, 0.4)",
+            }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => {
+              window.location.href = "mailto:siwagabrielira8@gmail.com";
+            }}
+            aria-label="Email Gabriel"
             className="galaxy-button flex items-center justify-center space-x-2 text-lg px-8 py-4"
           >
             <Heart className="w-5 h-5" />
             <span>Let&apos;s Collaborate</span>
-          </Link>
+          </motion.button>
         </motion.div>
 
         {/* Social Links */}

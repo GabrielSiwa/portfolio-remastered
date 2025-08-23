@@ -316,7 +316,6 @@ const Navbar = () => {
                   <button
                     onClick={(e) => {
                       e.preventDefault();
-                      // Handle Contact differently - open email
                       if (item.href === "#contact") {
                         window.location.href =
                           "mailto:siwagabrielira8@gmail.com";
