@@ -1,0 +1,39 @@
+[
+  {
+    "id": "pots-pharmacy-order-tracking-system",
+    "title": "POTS — Pharmacy Order Tracking System",
+    "short": "Real-time pharmacy order tracking and management platform",
+    "description": "A digital platform that enables pharmacies to place, view, and track compounding orders in real time. Features secure authentication, multi-stage order tracking, role-based access, and content safety.",
+    "image": "/images/projects/tracking.png",
+    "videoUrl": "/demo/Demonstration_POTS.mov",
+    "cta": {
+      "label": "View Live Demo",
+      "url": "https://drive.google.com/file/d/1pCVGkfGAhbcDpvzAsYjBE6xmcYPhl00_/view?usp=sharing"
+    },
+    "detailsUrl": "https://coffee-mates.vercel.app/",
+    "techStack": [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Node.js",
+      "Tailwind",
+      "MongoDB"
+    ],
+    "date": "2025-08-21"
+  },
+  {
+    "id": "eyemo-accessibility",
+    "title": "EyeMo — AI Voice-Controlled Accessibility",
+    "short": "Tap-activated voice commands, OCR and scene analysis for visual accessibility",
+    "description": "EyeMo empowers people with visual impairments through tap-activated voice commands, instant OCR with speech output, AI-powered scene analysis, and voice-announced location services using Azure and OpenAI.",
+    "image": "/images/projects/eyemo-screenshot.svg",
+    "videoUrl": "/demo/EyeMo-Ad.mp4",
+    "cta": {
+      "label": "View Live Demo",
+      "url": "https://coffee-mates.vercel.app/"
+    },
+    "detailsUrl": "https://coffee-mates.vercel.app/",
+    "techStack": ["React Native", "Expo", "Azure", "OpenAI", "TypeScript"],
+    "date": "2025-08-20"
+  }
+]

@@ -125,19 +125,20 @@ const Footer = () => {
               </p>
               <p className="text-galaxy-text-muted leading-relaxed mb-4">
                 Passionate about creating innovative solutions with modern web
-                technologies. Currently studying at{" "}
+                technologies. Recent{" "}
                 <span className="text-galaxy-text-accent font-semibold">
-                  SAIT
+                  Software Development graduate from SAIT (2025)
                 </span>{" "}
-                while building real-world applications and exploring AI
-                technologies.
+                with hands-on experience building real-world applications and
+                exploring cutting-edge technologies including AI and full-stack
+                development.
               </p>
 
               {/* Availability Status */}
               <div className="flex items-center space-x-2 text-sm">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                 <span className="text-galaxy-text-secondary">
-                  Available for internships & entry-level opportunities
+                  Actively seeking full-time software developer opportunities
                 </span>
               </div>
             </div>
@@ -246,7 +247,7 @@ const Footer = () => {
           </div>
 
           {/* Call to Action */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -265,7 +266,7 @@ const Footer = () => {
               <span>Let&apos;s start a conversation</span>
               <ExternalLink className="w-3 h-3" />
             </motion.a>
-          </motion.div>
+          </motion.div> */}
         </motion.div>
       </motion.div>
     </footer>

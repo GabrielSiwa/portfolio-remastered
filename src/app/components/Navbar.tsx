@@ -19,6 +19,21 @@ import type {
   MobileMenuHook,
 } from "../lib/navigation";
 
+// Smooth scroll function with navbar offset
+const smoothScrollTo = (elementId: string) => {
+  const element = document.getElementById(elementId);
+  if (element) {
+    const navbarHeight = 80; // Adjust this value based on your navbar height
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
+  }
+};
+
 const useNavbarScroll = (): NavbarScrollHook => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
@@ -102,9 +117,18 @@ const NavItemComponent = React.memo(
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
-        <Link
-          href={item.href}
-          onClick={onClick}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            // Handle Contact differently - open email
+            if (item.href === "#contact") {
+              window.location.href = "mailto:siwagabrielira8@gmail.com";
+            } else {
+              const sectionId = item.href.replace("#", "");
+              smoothScrollTo(sectionId);
+            }
+            onClick?.();
+          }}
           className={`relative group px-3 py-2 text-sm font-medium transition-colors duration-200 flex items-center space-x-2 ${
             isActive
               ? "text-galaxy-text-accent"
@@ -118,7 +142,7 @@ const NavItemComponent = React.memo(
               isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
             }`}
           />
-        </Link>
+        </button>
       </motion.div>
     );
   }
@@ -171,10 +195,10 @@ const Navbar = () => {
   // Memoize navigation items
   const navItems: NavItem[] = useMemo(
     () => [
-      { name: "Home", href: "/", icon: Home },
-      { name: "About", href: "/about", icon: User },
-      { name: "Projects", href: "/projects", icon: FolderOpen },
-      { name: "Contact", href: "/contact", icon: Mail },
+      { name: "Home", href: "#hero", icon: Home },
+      { name: "About", href: "#about", icon: User },
+      { name: "Projects", href: "#projects", icon: FolderOpen },
+      { name: "Contact", href: "#contact", icon: Mail },
     ],
     []
   );
@@ -182,6 +206,10 @@ const Navbar = () => {
   // Check if current path is active
   const isActiveLink = useCallback(
     (href: string) => {
+      // For anchor links, check if the section is currently visible
+      if (href.startsWith("#")) {
+        return false; // You can implement intersection observer later if needed
+      }
       return pathname === href;
     },
     [pathname]
@@ -193,16 +221,16 @@ const Navbar = () => {
       if (event.altKey) {
         switch (event.key) {
           case "1":
-            window.location.href = "/";
+            smoothScrollTo("hero");
             break;
           case "2":
-            window.location.href = "/about";
+            smoothScrollTo("about");
             break;
           case "3":
-            window.location.href = "/projects";
+            smoothScrollTo("projects");
             break;
           case "4":
-            window.location.href = "/contact";
+            window.location.href = "mailto:siwagabriel8@gmail.com";
             break;
         }
       }
@@ -285,10 +313,20 @@ const Navbar = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
                 >
-                  <Link
-                    href={item.href}
-                    onClick={closeMenu}
-                    className={`flex items-center space-x-3 px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 hover-glow-galaxy ${
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      // Handle Contact differently - open email
+                      if (item.href === "#contact") {
+                        window.location.href =
+                          "mailto:siwagabrielira8@gmail.com";
+                      } else {
+                        const sectionId = item.href.replace("#", "");
+                        smoothScrollTo(sectionId);
+                      }
+                      closeMenu();
+                    }}
+                    className={`flex items-center space-x-3 px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 hover-glow-galaxy w-full text-left ${
                       isActiveLink(item.href)
                         ? "text-galaxy-text-accent bg-galaxy-starfield"
                         : "text-galaxy-text-primary hover:text-galaxy-text-accent hover:bg-galaxy-starfield"
@@ -296,7 +334,7 @@ const Navbar = () => {
                   >
                     <item.icon className="w-5 h-5" />
                     <span>{item.name}</span>
-                  </Link>
+                  </button>
                 </motion.div>
               ))}
             </div>

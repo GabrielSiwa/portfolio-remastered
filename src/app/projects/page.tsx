@@ -1,9 +1,212 @@
 "use client";
 
-import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useState, useEffect } from "react";
+import AnimatedReveal from "../components/AnimatedReveal";
+import SectionParticles from "../components/SectionParticles";
 
-const Projects = () => {
-  return <div>Projects Page</div>;
+// Helper function to get local video URL
+function getLocalVideoUrl(url: string): string | null {
+  if (!url) return null;
+
+  // Check if it's a local video file path (starts with / or is a relative path)
+  if (
+    url.startsWith("/") ||
+    url.includes(".mp4") ||
+    url.includes(".mov") ||
+    url.includes(".webm")
+  ) {
+    return url;
+  }
+
+  return null;
+}
+
+type Project = {
+  id: string;
+  title: string;
+  short?: string;
+  description?: string;
+  image?: string;
+  demoUrl?: string;
+  cta?: { label?: string; url?: string } | null;
+  detailsUrl?: string;
+  videoUrl?: string;
+  techStack?: string[];
 };
 
-export default Projects;
+async function loadProjects(): Promise<Project[]> {
+  try {
+    const response = await fetch("/projects.json");
+    const parsed = await response.json();
+    if (!Array.isArray(parsed)) return [];
+    return parsed.map((p: unknown) => {
+      const item = p as Record<string, unknown>;
+      return {
+        id: String(item.id ?? ""),
+        title: String(item.title ?? "Untitled Project"),
+        short: String(item.short ?? item.description ?? ""),
+        description: String(item.description ?? ""),
+        image: String(item.image ?? ""),
+        demoUrl: String(item.demoUrl ?? ""),
+        detailsUrl: String(item.detailsUrl ?? ""),
+        videoUrl: String(
+          item.videoUrl ||
+            (item.cta && typeof item.cta === "object"
+              ? (item.cta as Record<string, unknown>).url
+              : "") ||
+            ""
+        ),
+        techStack: Array.isArray(item.techStack)
+          ? (item.techStack as string[])
+          : [],
+        cta:
+          item.cta && typeof item.cta === "object"
+            ? {
+                label: String(
+                  (item.cta as Record<string, unknown>).label ?? ""
+                ),
+                url: String((item.cta as Record<string, unknown>).url ?? ""),
+              }
+            : null,
+      };
+    });
+  } catch {
+    return [];
+  }
+}
+
+export default function ProjectsPage() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadProjects().then((data) => {
+      setProjects(data);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) {
+    return (
+      <main className="max-w-6xl mx-auto px-4 py-12 relative">
+        <div className="text-center">Loading projects...</div>
+      </main>
+    );
+  }
+
+  return (
+    <main className="max-w-6xl mx-auto px-4 py-12 relative">
+      {/* subtle particles and animated reveal like the Hero */}
+      <SectionParticles count={12} />
+
+      <AnimatedReveal>
+        <h1 className="text-4xl font-semibold mb-8 text-center">
+          Featured Projects
+        </h1>
+      </AnimatedReveal>
+
+      {projects.length === 0 ? (
+        <p className="text-center text-galaxy-text-muted">
+          No projects found. Add entries to public/projects.json
+        </p>
+      ) : (
+        <AnimatedReveal className="grid gap-8 grid-cols-1 md:grid-cols-2">
+          {projects.map((project) => {
+            const localVideoUrl = getLocalVideoUrl(project.videoUrl || "");
+
+            return (
+              <article
+                key={project.id}
+                className="bg-white/5 rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300"
+              >
+                {localVideoUrl ? (
+                  <div className="w-full h-72 relative group">
+                    <video
+                      src={localVideoUrl}
+                      className="w-full h-full object-cover group-hover:[&::-webkit-media-controls]:opacity-100 [&::-webkit-media-controls]:opacity-0 [&::-webkit-media-controls]:transition-opacity [&::-webkit-media-controls]:duration-300"
+                      muted
+                      loop
+                      controls
+                      onMouseEnter={(e) => {
+                        e.currentTarget.play();
+                        e.currentTarget.muted = false;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.pause();
+                        e.currentTarget.muted = true;
+                      }}
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                ) : project.image ? (
+                  <div className="w-full h-72 relative">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      style={{ objectFit: "cover" }}
+                    />
+                  </div>
+                ) : null}
+
+                <div className="p-8">
+                  <h2 className="text-3xl font-bold mb-3">{project.title}</h2>
+                  <p className="text-lg text-galaxy-text-muted mb-4">
+                    {project.short || project.description}
+                  </p>
+
+                  {project.techStack && project.techStack.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.techStack.map((t) => (
+                        <span
+                          key={t}
+                          className="text-xs px-2 py-1 rounded bg-white/5 text-galaxy-text-muted"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="flex gap-3 mt-6">
+                    {project.cta?.url && !localVideoUrl ? (
+                      <Link
+                        href={project.cta.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-5 py-2 galaxy-button rounded"
+                      >
+                        {project.cta.label || "View Demo"}
+                      </Link>
+                    ) : project.demoUrl ? (
+                      <Link
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-5 py-2 galaxy-button rounded"
+                      >
+                        Live Demo
+                      </Link>
+                    ) : null}
+
+                    <Link
+                      href={project.detailsUrl || `/projects/${project.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-5 py-2 border border-galaxy-text-accent text-galaxy-text-accent rounded hover:bg-galaxy-text-accent hover:text-galaxy-dark transition-colors"
+                    >
+                      More Details
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </AnimatedReveal>
+      )}
+    </main>
+  );
+}

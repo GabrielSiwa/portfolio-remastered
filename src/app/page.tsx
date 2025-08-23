@@ -1,15 +1,23 @@
 import Hero from "./components/Hero";
 import AboutPage from "./about/page";
-import ContactPage from "./contact/page";
+// import ContactPage from "./contact/page";
 import Projects from "./projects/page";
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <Hero />
-      {/* <AboutPage />
-      <Projects />
-      <ContactPage /> */}
+      <section id="hero">
+        <Hero />
+      </section>
+      <section id="about">
+        <AboutPage />
+      </section>
+      <section id="projects">
+        <Projects />
+      </section>
+      {/* <section id="contact">
+        <ContactPage />
+      </section> */}
     </main>
   );
 }

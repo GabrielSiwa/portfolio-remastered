@@ -27,7 +27,8 @@
 
 @layer base {
   body {
-    @apply bg-galaxy-void text-galaxy-text-primary;
+    /* Background handled by global <Background /> component in layout */
+    @apply text-galaxy-text-primary;
   }
 }
 

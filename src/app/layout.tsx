@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Background from "./components/Background";
 import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,10 +27,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
       >
-        <Navbar />
-        {children}
+        {/* Main site wrapper: Navbar + page content use the animated Background */}
+        <div className="relative min-h-screen">
+          <Background />
+          <Navbar />
+          {children}
+        </div>
+
+        {/* Footer sits outside the Background wrapper so it keeps its own styling */}
         <Footer />
       </body>
     </html>

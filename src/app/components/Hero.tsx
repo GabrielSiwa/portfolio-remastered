@@ -2,13 +2,13 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import Link from "next/link";
+import { motion } from "framer-motion";
 import {
   Github,
   Linkedin,
   Download,
   Code,
-  ArrowDown,
   Sparkles,
   BookOpen,
   Coffee,
@@ -17,27 +17,8 @@ import {
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
 
-  // Enhanced scroll transforms
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
-  const profileScale = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.7],
-    [1, 0.9, 0.6]
-  );
-
-  // Hydration fix: Only render particles on client side
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  // (client-only particles removed; no client-only state required)
 
   // Typing animation state
   const [currentText, setCurrentText] = useState("");
@@ -89,48 +70,15 @@ const Hero = () => {
   return (
     <div
       ref={containerRef}
-      className="relative min-h-screen bg-galaxy-void overflow-hidden pt-20"
+      className="relative min-h-screen overflow-hidden pt-20"
     >
-      {/* Starfield Background */}
-      <div className="absolute inset-0 starfield opacity-30" />
+      {/* Background layers are provided globally by RootLayout's <Background /> */}
 
-      {/* Animated Background Gradients */}
-      <div className="absolute inset-0 bg-galaxy-animated opacity-20" />
-
-      {/* Floating Particles - Only render on client to prevent hydration mismatch */}
-      {isClient && (
-        <div className="absolute inset-0">
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-2 h-2 bg-galaxy-stardust rounded-full opacity-60"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                y: [0, -100, 0],
-                opacity: [0.2, 1, 0.2],
-              }}
-              transition={{
-                duration: 3 + Math.random() * 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
-        </div>
-      )}
-
-      <motion.div
-        style={{ y, opacity, scale }}
-        className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4 sm:px-6 lg:px-8"
-      >
+      <motion.div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4 sm:px-6 lg:px-8 mt-4">
         {/* Profile Image with Enhanced Scroll Behavior */}
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
-          style={{ scale: profileScale }}
           transition={{
             type: "spring",
             stiffness: 260,
@@ -143,7 +91,7 @@ const Hero = () => {
             {/* Simple Image Container */}
             <div className="w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden border-4 border-galaxy-border glow-galaxy">
               <Image
-                src="/profile.png"
+                src="/images/profile.png"
                 alt="Gabriel Siwa Profile"
                 width={224}
                 height={224}
@@ -226,14 +174,12 @@ const Hero = () => {
         >
           <div className="flex flex-col items-center space-y-2">
             <h2 className="text-xl md:text-2xl lg:text-3xl font-medium text-galaxy-text-secondary">
-              Software Developer Student
+              Software Developer
             </h2>
             <div className="flex items-center space-x-2 text-galaxy-text-accent">
-              <span className="w-1 h-1 bg-galaxy-plasma rounded-full"></span>
               <span className="text-lg md:text-xl font-medium">
                 Tech Enthusiast
-              </span>
-              <span className="w-1 h-1 bg-galaxy-plasma rounded-full"></span>
+              </span>{" "}
               <span className="text-lg md:text-xl font-medium">
                 AI Explorer
               </span>
@@ -314,11 +260,10 @@ const Hero = () => {
           className="mb-6 max-w-2xl"
         >
           <p className="text-md text-galaxy-text-muted leading-relaxed">
-            Passionate about creating innovative solutions with modern web
-            technologies. Currently studying at{" "}
-            <span className="text-galaxy-text-accent font-semibold">SAIT</span>{" "}
-            while building real-world applications and exploring AI
-            technologies.
+            I love solving problems through code and bringing creative ideas to
+            life. Whether it&apos;s building web applications or experimenting
+            with new technologies, I&apos;m always excited to learn and create
+            something meaningful.
           </p>
         </motion.div>
 
@@ -329,26 +274,13 @@ const Hero = () => {
           transition={{ delay: 1.4, duration: 0.8 }}
           className="flex flex-col sm:flex-row gap-4 mb-6"
         >
-          <motion.button
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0 0 30px rgba(139, 95, 191, 0.4)",
-            }}
-            whileTap={{ scale: 0.95 }}
+          <Link
+            href="/contact"
             className="galaxy-button flex items-center justify-center space-x-2 text-lg px-8 py-4"
           >
             <Heart className="w-5 h-5" />
-            <span>Let&apos;s Collaborate </span>
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="border-2 border-galaxy-border text-galaxy-text-primary px-8 py-4 rounded-lg hover:bg-galaxy-cosmic hover-glow-galaxy transition-all duration-300 flex items-center justify-center space-x-2 text-lg"
-          >
-            <BookOpen className="w-5 h-5" />
-            <span>My learning Journey</span>
-          </motion.button>
+            <span>Let&apos;s Collaborate</span>
+          </Link>
         </motion.div>
 
         {/* Social Links */}
@@ -356,7 +288,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.7, duration: 0.8 }}
-          className="flex space-x-6 mb-12"
+          className="flex space-x-6 py-12"
         >
           {socialLinks.map((link) => (
             <motion.a
@@ -372,23 +304,6 @@ const Hero = () => {
               <link.icon className="w-6 h-6" />
             </motion.a>
           ))}
-        </motion.div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex flex-col items-center text-galaxy-text-muted"
-          >
-            <span className="text-sm mb-2">Scroll to explore</span>
-            <ArrowDown className="w-5 h-5" />
-          </motion.div>
         </motion.div>
 
         {/* Tech Stack Icons */}
