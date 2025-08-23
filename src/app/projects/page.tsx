@@ -23,6 +23,33 @@ function getLocalVideoUrl(url: string): string | null {
   return null;
 }
 
+// Detect Google Drive share links and build an embeddable preview URL
+function getGoogleDrivePreviewUrl(url: string): string | null {
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    // Common Drive share formats:
+    // https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+    // https://drive.google.com/open?id=FILE_ID
+    if (u.hostname.includes("drive.google.com")) {
+      // try to extract /d/ID/
+      const parts = u.pathname.split("/");
+      const dIndex = parts.indexOf("d");
+      if (dIndex >= 0 && parts.length > dIndex + 1) {
+        const id = parts[dIndex + 1];
+        return `https://drive.google.com/file/d/${id}/preview`;
+      }
+
+      // query param id
+      const id = u.searchParams.get("id");
+      if (id) return `https://drive.google.com/file/d/${id}/preview`;
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
 type Project = {
   id: string;
   title: string;
@@ -141,16 +168,37 @@ export default function ProjectsPage() {
                       Your browser does not support the video tag.
                     </video>
                   </div>
-                ) : project.image ? (
-                  <div className="w-full h-72 relative">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      style={{ objectFit: "cover" }}
-                    />
-                  </div>
-                ) : null}
+                ) : (
+                  // Check for a Google Drive preview URL
+                  (() => {
+                    const drivePreview = getGoogleDrivePreviewUrl(
+                      project.videoUrl || ""
+                    );
+                    if (drivePreview) {
+                      return (
+                        <div className="w-full h-72 relative">
+                          <iframe
+                            src={drivePreview}
+                            title={`${project.title} demo`}
+                            className="w-full h-full"
+                            allow="autoplay; encrypted-media"
+                          />
+                        </div>
+                      );
+                    }
+
+                    return project.image ? (
+                      <div className="w-full h-72 relative">
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          style={{ objectFit: "cover" }}
+                        />
+                      </div>
+                    ) : null;
+                  })()
+                )}
 
                 <div className="p-8">
                   <h2 className="text-3xl font-bold mb-3">{project.title}</h2>

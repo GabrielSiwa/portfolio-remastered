@@ -5,7 +5,7 @@
     "short": "Real-time pharmacy order tracking and management platform",
     "description": "A digital platform that enables pharmacies to place, view, and track compounding orders in real time. Features secure authentication, multi-stage order tracking, role-based access, and content safety.",
     "image": "/images/projects/tracking.png",
-    "videoUrl": "/demo/Demonstration_POTS.mov",
+    "videoUrl": "https://drive.google.com/file/d/1pCVGkfGAhbcDpvzAsYjBE6xmcYPhl00_/view?usp=sharing",
     "cta": {
       "label": "View Live Demo",
       "url": "https://drive.google.com/file/d/1pCVGkfGAhbcDpvzAsYjBE6xmcYPhl00_/view?usp=sharing"
