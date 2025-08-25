@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import {
@@ -15,23 +15,7 @@ import {
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // (client-only particles removed; no client-only state required)
-
-  // Typing animation state
-  const [currentText, setCurrentText] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const fullText = "Gabriel Siwa";
-
-  useEffect(() => {
-    if (currentIndex < fullText.length) {
-      const timeout = setTimeout(() => {
-        setCurrentText((prev) => prev + fullText[currentIndex]);
-        setCurrentIndex((prev) => prev + 1);
-      }, 150);
-      return () => clearTimeout(timeout);
-    }
-  }, [currentIndex, fullText]);
+  // Splash reveal will animate the full name instead of typing
 
   // Floating animation for profile image
   const floatingAnimation = {
@@ -141,25 +125,32 @@ const Hero = () => {
           </motion.div>
         </motion.div>
 
-        {/* Main Heading with Typing Effect */}
+        {/* Main Heading with Splash Reveal */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5, duration: 0.9, ease: "anticipate" }}
           className="mb-4"
         >
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">
             <span className="text-galaxy-text-primary">I&apos;m </span>
-            <span className="text-galaxy-gradient">
-              {currentText}
-              <motion.span
-                animate={{ opacity: [1, 0, 1] }}
-                transition={{ duration: 0.8, repeat: Infinity }}
-                className="text-galaxy-plasma"
-              >
-                |
-              </motion.span>
-            </span>
+            <motion.span
+              className="text-galaxy-gradient inline-block"
+              initial={{ scale: 0.6, opacity: 0 }}
+              animate={{ scale: [1.05, 0.98, 1], opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
+            >
+              Gabriel Siwa
+            </motion.span>
+
+            {/* subtle splash burst */}
+            <motion.span
+              aria-hidden
+              className="absolute block w-48 h-48 rounded-full bg-galaxy-plasma/10 pointer-events-none"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: [0, 1.2, 1.6], opacity: [0.6, 0.2, 0] }}
+              transition={{ delay: 0.55, duration: 0.9 }}
+            />
           </h1>
         </motion.div>
 

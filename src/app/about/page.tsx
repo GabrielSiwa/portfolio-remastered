@@ -54,13 +54,13 @@ const AboutPage = () => {
           </ul>
         </section>
       </AnimatedReveal> */}
-
+      {/* 
       <AnimatedReveal className="mb-6">
         <section>
           <h2 className="text-2xl font-semibold mb-4">Experience</h2>
           <div className="space-y-6">
             {/* Software Development Student */}
-            <div className="border-l-2 border-galaxy-border pl-4">
+      {/* <div className="border-l-2 border-galaxy-border pl-4">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
                 <h3 className="text-lg font-medium text-galaxy-text-primary">
                   Software Development Student
@@ -88,10 +88,10 @@ const AboutPage = () => {
                   Node.js, and various databases
                 </li>
               </ul>
-            </div>
+            </div> */}
 
-            {/* Record Technician */}
-            <div className="border-l-2 border-galaxy-border pl-4">
+      {/* Record Technician */}
+      {/* <div className="border-l-2 border-galaxy-border pl-4">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
                 <h3 className="text-lg font-medium text-galaxy-text-primary">
                   Record Technician – Technology & Innovation
@@ -117,10 +117,10 @@ const AboutPage = () => {
                   process optimization
                 </li>
               </ul>
-            </div>
+            </div> */}
 
-            {/* Back-End Java Developer */}
-            <div className="border-l-2 border-galaxy-border pl-4">
+      {/* Back-End Java Developer */}
+      {/* <div className="border-l-2 border-galaxy-border pl-4">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
                 <h3 className="text-lg font-medium text-galaxy-text-primary">
                   Back-End Java Developer (Co-op)
@@ -156,14 +156,14 @@ const AboutPage = () => {
             </div>
           </div>
         </section>
-      </AnimatedReveal>
-
+      </AnimatedReveal> */}
+      {/* 
       <AnimatedReveal className="mb-6">
         <section>
           <h2 className="text-2xl font-semibold mb-4">Education</h2>
-          <div className="space-y-4">
-            {/* SAIT Diploma */}
-            <div className="border-l-2 border-galaxy-border pl-4">
+          <div className="space-y-4"> */}
+      {/* SAIT Diploma */}
+      {/* <div className="border-l-2 border-galaxy-border pl-4">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
                 <h3 className="text-lg font-medium text-galaxy-text-primary">
                   Diploma in Software Development
@@ -175,10 +175,10 @@ const AboutPage = () => {
               <p className="text-galaxy-text-secondary">
                 Southern Alberta Institute of Technology (SAIT) | Calgary, AB
               </p>
-            </div>
+            </div> */}
 
-            {/* Bachelor's Degree */}
-            <div className="border-l-2 border-galaxy-border pl-4">
+      {/* Bachelor's Degree */}
+      {/* <div className="border-l-2 border-galaxy-border pl-4">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
                 <h3 className="text-lg font-medium text-galaxy-text-primary">
                   Bachelor&apos;s degree in Computer Science
@@ -193,7 +193,7 @@ const AboutPage = () => {
             </div>
           </div>
         </section>
-      </AnimatedReveal>
+      </AnimatedReveal> */}
 
       <AnimatedReveal className="mb-6">
         <section>
