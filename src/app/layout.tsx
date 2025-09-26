@@ -35,8 +35,6 @@ export default function RootLayout({
           <Navbar />
           {children}
         </div>
-
-        {/* Footer sits outside the Background wrapper so it keeps its own styling */}
         <Footer />
       </body>
     </html>

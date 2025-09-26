@@ -9,11 +9,12 @@ export default function Home() {
       <section id="hero">
         <Hero />
       </section>
-      <section id="about">
-        <AboutPage />
-      </section>
+
       <section id="projects">
         <Projects />
+      </section>
+      <section id="about">
+        <AboutPage />
       </section>
       {/* <section id="contact">
         <ContactPage />

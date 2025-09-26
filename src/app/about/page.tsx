@@ -1,4 +1,7 @@
+"use client";
 import React from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
 import SkillFlip from "../components/SkillFlip";
 import AnimatedReveal from "../components/AnimatedReveal";
 import SectionParticles from "../components/SectionParticles";
@@ -32,172 +35,121 @@ const AboutPage = () => {
       <SectionParticles count={10} />
 
       <AnimatedReveal>
-        <h1 className="text-3xl font-bold mb-2 text-center">About Me</h1>
-        <p className="text-sm text-galaxy-text-accent text-center mb-4">
-          TypeScript · React · Next.js · Node.js · Tailwind · MongoDB · Azure ·
-          GitHub
-        </p>
+        <h1 className="text-3xl font-bold mb-12 text-center">About Me</h1>
+
+        <AnimatedReveal className="mb-12">
+          <section aria-labelledby="bio-heading" className="max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center justify-items-center">
+              {/* Left: portrait with subtle hover glow */}
+              <motion.div
+                className="relative w-full max-w-[320px] mx-auto md:mx-0 h-[400px]"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
+                <div className="group relative w-full h-full">
+                  <Image
+                    src="/images/profile_2.jpg"
+                    alt="Gabriel Siwa portrait"
+                    fill
+                    priority
+                    sizes="(min-width: 768px) 320px, 100vw"
+                    className="object-cover object-top rounded-xl border-2 border-white/10 shadow-lg transition-all duration-300 group-hover:shadow-2xl group-hover:border-galaxy-accent/30"
+                    style={{
+                      objectPosition: "center 10%", // Tighter crop - head + upper chest only
+                    }}
+                  />
+
+                  {/* Subtle cyan/purple glow on hover */}
+                  <div className="absolute -inset-1 bg-gradient-to-br from-galaxy-accent/20 via-cyan-500/10 to-purple-500/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-md"></div>
+                </div>
+              </motion.div>
+
+              {/* Right: bio text with better spacing and highlights */}
+              <div className="text-left space-y-4">
+                <div className="text-md text-galaxy-text-secondary leading-relaxed space-y-4">
+                  <p>
+                    I&apos;m Gabriel, a backend-leaning software developer who
+                    ships secure, reliable, cloud-backed apps and mobile
+                    experiences.
+                  </p>
+
+                  <p>
+                    I work across{" "}
+                    <span className="text-galaxy-text-accent font-medium">
+                      React
+                    </span>{" "}
+                    and{" "}
+                    <span className="text-galaxy-text-accent font-medium">
+                      TypeScript
+                    </span>{" "}
+                    on the client, and{" "}
+                    <span className="text-galaxy-text-accent font-medium">
+                      Node.js
+                    </span>{" "}
+                    and{" "}
+                    <span className="text-galaxy-text-accent font-medium">
+                      Java
+                    </span>{" "}
+                    with MongoDB/MSSQL on the server. I care about the
+                    intersection of performance, reliability, and developer
+                    experience—clear API contracts, predictable releases, and
+                    code that&apos;s easy to read and test.
+                  </p>
+
+                  <p>
+                    My toolbelt includes{" "}
+                    <span className="text-galaxy-text-accent font-medium">
+                      Azure
+                    </span>{" "}
+                    for deployments,{" "}
+                    <span className="text-galaxy-text-accent font-medium">
+                      GitHub Actions
+                    </span>{" "}
+                    for{" "}
+                    <span className="text-galaxy-text-accent font-medium">
+                      CI/CD
+                    </span>
+                    , and pragmatic testing, triage, and documentation to keep
+                    teams moving.
+                  </p>
+
+                  <p>
+                    I&apos;ve delivered measurable improvements in API
+                    responsiveness and automated workflows that remove manual
+                    steps. I&apos;m comfortable balancing speed with{" "}
+                    <span className="text-galaxy-text-accent font-medium">
+                      security
+                    </span>{" "}
+                    practices like strong password hashing and input protection.
+                  </p>
+
+                  <p>
+                    I collaborate well in Agile teams, give and receive
+                    thoughtful code reviews, and learn new tools quickly.{" "}
+                    <span className="text-galaxy-text-accent font-medium">
+                      I&apos;m always eager to tackle complex problems and
+                      create tools that empower users and teams.
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </AnimatedReveal>
       </AnimatedReveal>
 
-      {/* <AnimatedReveal className="mb-6">
-        <section>
-          <h2 className="text-2xl font-semibold mb-4">What I do</h2>
-          <ul className="list-disc list-inside text-galaxy-text-muted">
-            <li>
-              Build production-ready web applications using TypeScript + React
-            </li>
-            <li>
-              Design accessible UI with semantic HTML and ARIA best practices
-            </li>
-            <li>Integrate APIs, serverless functions, and managed databases</li>
-            <li>Ship iteratively with CI/CD and strong testing habits</li>
-          </ul>
-        </section>
-      </AnimatedReveal> */}
-      {/* 
       <AnimatedReveal className="mb-6">
         <section>
-          <h2 className="text-2xl font-semibold mb-4">Experience</h2>
-          <div className="space-y-6">
-            {/* Software Development Student */}
-      {/* <div className="border-l-2 border-galaxy-border pl-4">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                <h3 className="text-lg font-medium text-galaxy-text-primary">
-                  Software Development Student
-                </h3>
-                <span className="text-sm text-galaxy-text-accent">
-                  January 2025 – August 2025
-                </span>
-              </div>
-              <p className="text-galaxy-text-secondary mb-2">
-                Southern Alberta Institute of Technology (SAIT) | Calgary, AB
-              </p>
-              <ul className="list-disc list-inside text-galaxy-text-muted text-sm space-y-1">
-                <li>
-                  Developing a web-based Pharmacy Order Tracking System (POTS)
-                  for real-time order tracking and online ordering from local
-                  compounding centers
-                </li>
-                <li>
-                  Designing and developing a centralized dashboard to automate
-                  order management, reduce manual processes, and minimize paper
-                  waste
-                </li>
-                <li>
-                  Working with modern technologies including React, Next.js,
-                  Node.js, and various databases
-                </li>
-              </ul>
-            </div> */}
-
-      {/* Record Technician */}
-      {/* <div className="border-l-2 border-galaxy-border pl-4">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                <h3 className="text-lg font-medium text-galaxy-text-primary">
-                  Record Technician – Technology & Innovation
-                </h3>
-                <span className="text-sm text-galaxy-text-accent">
-                  September 2024 – December 2024
-                </span>
-              </div>
-              <p className="text-galaxy-text-secondary mb-2">
-                Government of Alberta | Calgary, AB
-              </p>
-              <ul className="list-disc list-inside text-galaxy-text-muted text-sm space-y-1">
-                <li>
-                  Automated quality control steps using digital tools, reducing
-                  manual processing by 40% and increasing task efficiency by 30%
-                </li>
-                <li>
-                  Enhanced document tracking and storage accuracy, contributing
-                  to a 25% increase in departmental productivity
-                </li>
-                <li>
-                  Streamlined workflows through technology integration and
-                  process optimization
-                </li>
-              </ul>
-            </div> */}
-
-      {/* Back-End Java Developer */}
-      {/* <div className="border-l-2 border-galaxy-border pl-4">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                <h3 className="text-lg font-medium text-galaxy-text-primary">
-                  Back-End Java Developer (Co-op)
-                </h3>
-                <span className="text-sm text-galaxy-text-accent">
-                  July 2022 - August 2022
-                </span>
-              </div>
-              <p className="text-galaxy-text-secondary mb-2">
-                Xurpas Inc. | Makati, Philippines
-              </p>
-              <ul className="list-disc list-inside text-galaxy-text-muted text-sm space-y-1">
-                <li>
-                  Engineered backend logic and RESTful APIs for a client-facing
-                  enterprise system using Java and MSSQL, reducing average
-                  response time by 15%
-                </li>
-                <li>
-                  Implemented Argon2 encryption protocols to safeguard sensitive
-                  client data, significantly enhancing security compliance
-                </li>
-                <li>
-                  Designed and integrated APIs with a Svelte frontend,
-                  strengthening frontend-backend communication and reducing
-                  development bottlenecks
-                </li>
-                <li>
-                  Facilitated intern task assignments and coordinated sprint
-                  reviews with the project manager, boosting team delivery
-                  efficiency by 10%
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-      </AnimatedReveal> */}
-      {/* 
-      <AnimatedReveal className="mb-6">
-        <section>
-          <h2 className="text-2xl font-semibold mb-4">Education</h2>
-          <div className="space-y-4"> */}
-      {/* SAIT Diploma */}
-      {/* <div className="border-l-2 border-galaxy-border pl-4">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                <h3 className="text-lg font-medium text-galaxy-text-primary">
-                  Diploma in Software Development
-                </h3>
-                <span className="text-sm text-galaxy-text-accent">
-                  January 2024 – August 2025
-                </span>
-              </div>
-              <p className="text-galaxy-text-secondary">
-                Southern Alberta Institute of Technology (SAIT) | Calgary, AB
-              </p>
-            </div> */}
-
-      {/* Bachelor's Degree */}
-      {/* <div className="border-l-2 border-galaxy-border pl-4">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                <h3 className="text-lg font-medium text-galaxy-text-primary">
-                  Bachelor&apos;s degree in Computer Science
-                </h3>
-                <span className="text-sm text-galaxy-text-accent">
-                  Awarded August 2023
-                </span>
-              </div>
-              <p className="text-galaxy-text-secondary">
-                Cavite State University - Carmona | Cavite, Philippines
-              </p>
-            </div>
-          </div>
-        </section>
-      </AnimatedReveal> */}
-
-      <AnimatedReveal className="mb-6">
-        <section>
-          <h2 className="text-2xl font-semibold mb-4 ">Skills</h2>
+          <h2 className="text-2xl font-semibold mb-6">Skills</h2>
+          {/* <p className="text-sm text-galaxy-text-muted mb-6">
+            Tech: <span className="text-galaxy-text-accent">TypeScript</span> ·{" "}
+            <span className="text-galaxy-text-accent">React</span> ·{" "}
+            <span className="text-galaxy-text-accent">Next.js</span> ·{" "}
+            <span className="text-galaxy-text-accent">Node.js</span> ·{" "}
+            <span className="text-galaxy-text-accent">Tailwind</span> ·{" "}
+            <span className="text-galaxy-text-accent">MongoDB</span> ·{" "}
+            <span className="text-galaxy-text-accent">React Native</span>
+          </p> */}
           <div className="flex flex-wrap gap-4">
             {skills.map((s) => (
               <div

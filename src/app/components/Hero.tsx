@@ -12,6 +12,9 @@ import {
   Coffee,
   Heart,
 } from "lucide-react";
+import { SiReact, SiPython, SiTypescript, SiJavascript } from "react-icons/si";
+import { FaJava } from "react-icons/fa";
+import { TbBrandReactNative } from "react-icons/tb";
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -56,9 +59,9 @@ const Hero = () => {
     >
       {/* Background layers are provided globally by RootLayout's <Background /> */}
 
-      <motion.div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4 sm:px-6 lg:px-8 mt-4">
+      <motion.div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4 sm:px-6 lg:px-8">
         {/* Profile Image with Enhanced Scroll Behavior */}
-        <motion.div
+        {/* <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{
@@ -68,9 +71,9 @@ const Hero = () => {
             delay: 0.2,
           }}
           className="mb-4"
-        >
-          <motion.div animate={floatingAnimation} className="relative">
-            {/* Simple Image Container */}
+        > */}
+        {/* <motion.div animate={floatingAnimation} className="relative">
+            Simple Image Container
             <div className="w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden border-4 border-galaxy-border glow-galaxy">
               <Image
                 src="/images/profile.png"
@@ -80,16 +83,16 @@ const Hero = () => {
                 className="w-full h-full object-cover"
                 priority
               />
-            </div>
+            </div> */}
 
-            {/* Rotating ring around profile */}
+        {/* Rotating ring around profile
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               className="absolute inset-0 border-2 border-dashed border-galaxy-plasma rounded-full opacity-30"
-            />
+            /> */}
 
-            {/* Sparkles around profile - Only render on client
+        {/* Sparkles around profile - Only render on client
             {isClient && (
               <>
                 {[...Array(6)].map((_, i) => {
@@ -122,8 +125,8 @@ const Hero = () => {
                 })}
               </>
             )} */}
-          </motion.div>
-        </motion.div>
+        {/* </motion.div>
+        </motion.div> */}
 
         {/* Main Heading with Splash Reveal */}
         <motion.div
@@ -132,15 +135,14 @@ const Hero = () => {
           transition={{ delay: 0.5, duration: 0.9, ease: "anticipate" }}
           className="mb-4"
         >
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">
-            <span className="text-galaxy-text-primary">I&apos;m </span>
+          <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold">
             <motion.span
               className="text-galaxy-gradient inline-block"
               initial={{ scale: 0.6, opacity: 0 }}
               animate={{ scale: [1.05, 0.98, 1], opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
             >
-              Gabriel Siwa
+              GABRIEL SIWA
             </motion.span>
 
             {/* subtle splash burst */}
@@ -191,7 +193,7 @@ const Hero = () => {
               title="JavaScript"
             >
               <div className="w-8 h-8 bg-yellow-400 rounded flex items-center justify-center text-black font-bold text-sm">
-                JS
+                <SiJavascript className="w-4 h-4" aria-hidden />
               </div>
             </motion.div>
 
@@ -202,7 +204,7 @@ const Hero = () => {
               title="TypeScript"
             >
               <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center text-white font-bold text-sm">
-                TS
+                <SiTypescript className="w-4 h-4" aria-hidden />
               </div>
             </motion.div>
 
@@ -212,8 +214,19 @@ const Hero = () => {
               className="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300"
               title="React"
             >
-              <div className="w-8 h-8 bg-cyan-400 rounded flex items-center justify-center text-white font-bold text-sm">
-                ⚛️
+              <div className="w-8 h-8 bg-cyan-600 rounded flex items-center justify-center text-white font-bold text-sm">
+                <SiReact className="w-4 h-4" aria-hidden />
+              </div>
+            </motion.div>
+
+            {/* React Native */}
+            <motion.div
+              whileHover={{ scale: 1.2, y: -5 }}
+              className="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300"
+              title="React Native"
+            >
+              <div className="w-8 h-8 bg-cyan-900 rounded flex items-center justify-center text-white font-bold text-sm">
+                <TbBrandReactNative className="w-4 h-4" aria-hidden />
               </div>
             </motion.div>
 
@@ -224,7 +237,7 @@ const Hero = () => {
               title="Python"
             >
               <div className="w-8 h-8 bg-green-500 rounded flex items-center justify-center text-white font-bold text-sm">
-                🐍
+                <SiPython className="w-4 h-4" aria-hidden />
               </div>
             </motion.div>
 
@@ -235,7 +248,7 @@ const Hero = () => {
               title="Java"
             >
               <div className="w-8 h-8 bg-orange-500 rounded flex items-center justify-center text-white font-bold text-sm">
-                ☕
+                <FaJava className="w-4 h-4" aria-hidden />
               </div>
             </motion.div>
           </div>

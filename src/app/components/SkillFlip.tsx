@@ -9,7 +9,6 @@ import {
   SiNodedotjs,
   SiTailwindcss,
   SiMongodb,
-  SiOpenjdk,
   SiPython,
   SiSharp,
   SiJavascript,
@@ -17,10 +16,11 @@ import {
   SiGithub,
   SiExpo,
 } from "react-icons/si";
+import { FaJava } from "react-icons/fa";
 import { HiCloud } from "react-icons/hi"; // Generic cloud icon for Azure
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  java: SiOpenjdk,
+  java: FaJava,
   python: SiPython,
   csharp: SiSharp,
   typescript: SiTypescript,
@@ -31,21 +31,19 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   mongodb: SiMongodb,
   javascript: SiJavascript,
   vercel: SiVercel,
-  azure: HiCloud, // Using generic cloud icon for Azure
+  azure: HiCloud,
   github: SiGithub,
-  reactnative: SiReact, // React Native uses the same React icon
+  reactnative: SiReact,
   expo: SiExpo,
 };
-
-export default function SkillFlip({
-  skill,
-  years,
-  icon,
-}: {
+type Props = {
   skill: string;
   years: number;
   icon?: string;
-}) {
+};
+
+const SkillFlip: React.FC<Props> = ({ skill, years, icon }) => {
+  const yearLabel = years === 1 ? "year" : "years";
   const IconComponent = icon && iconMap[icon] ? iconMap[icon] : null;
 
   return (
@@ -76,7 +74,9 @@ export default function SkillFlip({
           style={{ transform: "rotateY(180deg)" }}
         >
           <span className="text-xs font-semibold">{skill}</span>
-          <span className="text-[10px]">{years} yrs</span>
+          <span className="text-[10px]">
+            {years} {yearLabel}
+          </span>
         </div>
       </div>
       <style>{`
@@ -87,4 +87,6 @@ export default function SkillFlip({
       `}</style>
     </div>
   );
-}
+};
+
+export default SkillFlip;
