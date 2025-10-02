@@ -74,7 +74,7 @@ const skillCategories = {
   tools: [
     { name: "Visual Studio Code", years: 6, icon: "vscode" },
     { name: "Git", years: 4, icon: "github" },
-    { name: "BitBucket", years: 4, icon: "bitbucket" },
+    { name: "BitBucket", years: 1, icon: "bitbucket" },
     { name: "Docker", years: 1, icon: "docker" },
     { name: "Vercel", years: 1, icon: "vercel" },
     { name: "Trello", years: 1, icon: "trello" },
