@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 
 // ============================================================================
@@ -17,6 +17,11 @@ interface TooltipData {
   } | null;
 }
 
+interface ViewportSize {
+  width: number;
+  height: number;
+}
+
 // ============================================================================
 // CONSTELLATION CONFIGURATION
 // ============================================================================
@@ -28,18 +33,17 @@ const CONSTELLATIONS = [
     description:
       "The Lion - Gabriel's zodiac constellation, representing courage, leadership, and creativity",
     stars: [
-      // The Sickle (backwards question mark) - Lion's head and mane
-      { x: 29, y: 16 }, // 0 - Epsilon (Ras Elased) - top of sickle
-      { x: 25, y: 15 }, // 1 - Mu (Rasalas)
-      { x: 20, y: 18 }, // 2 - Zeta (Adhafera)
-      { x: 21, y: 21 }, // 3 - Gamma (Algieba)
-      { x: 26, y: 22 }, // 4 - Alpha (Regulus) - heart/bottom of sickle
-      { x: 27, y: 27 }, // 5 - Zosma
+      { x: 22, y: 13.2 }, // 0 - Epsilon (Ras Elased) - top of sickle
+      { x: 20, y: 12.5 }, // 1 - Mu (Rasalas)
+      { x: 17, y: 13.6 }, // 2 - Zeta (Adhafera)
+      { x: 18, y: 14.7 }, // 3 - Gamma (Algieba)
+      { x: 23, y: 15.4 }, // 4 - Alpha (Regulus) - heart/bottom of sickle
+      { x: 24, y: 16.9 }, // 5 - Zosma
 
       // Body
-      { x: 30, y: 30 }, // 6 - Chertan
-      { x: 32, y: 32 }, // 7 - Chertan
-      { x: 34, y: 35 }, // 8 - Theta
+      { x: 12, y: 16.9 }, // 6 - Chertan
+      { x: 7, y: 17.4 }, // 7 - Chertan
+      { x: 12, y: 15.5 }, // 8 - Theta
     ],
     connections: [
       // The Sickle pattern (exactly like your reference image)
@@ -49,6 +53,9 @@ const CONSTELLATIONS = [
       { from: 3, to: 4 }, // Gamma to Alpha (Regulus)
       { from: 4, to: 5 }, // Alpha to Zosma
       { from: 5, to: 6 }, // Zosma to Chertan
+      { from: 6, to: 7 }, // Chertan to Chertan
+      { from: 3, to: 8 }, // Gamma to Theta
+      { from: 8, to: 7 }, // Theta to Chertan
     ],
     special: true,
   },
@@ -58,17 +65,17 @@ const CONSTELLATIONS = [
     description:
       "A developer's constellation representing the structure of clean, organized code - from root to branches",
     stars: [
-      { x: 85, y: 30 }, // Root
-      { x: 83, y: 25 }, // Left main branch
-      { x: 87, y: 25 }, // Right main branch
-      { x: 81, y: 20 }, // Left sub branch
-      { x: 85, y: 20 }, // Center sub branch
-      { x: 89, y: 20 }, // Right sub branch
-      { x: 79, y: 15 }, // Far left leaf
-      { x: 83, y: 15 }, // Left leaf
-      { x: 87, y: 15 }, // Right leaf
-      { x: 91, y: 15 }, // Far right leaf
-      { x: 85, y: 10 }, // Top
+      { x: 85, y: 17.85 }, // Root
+      { x: 83, y: 16.575 }, // Left main branch
+      { x: 87, y: 16.575 }, // Right main branch
+      { x: 81, y: 15.3 }, // Left sub branch
+      { x: 85, y: 15.3 }, // Center sub branch
+      { x: 89, y: 15.3 }, // Right sub branch
+      { x: 79, y: 14.025 }, // Far left leaf
+      { x: 83, y: 14.025 }, // Left leaf
+      { x: 87, y: 14.025 }, // Right leaf
+      { x: 91, y: 14.025 }, // Far right leaf
+      { x: 85, y: 12.75 }, // Top
     ],
     connections: [
       { from: 0, to: 1 }, // Root to left main branch
@@ -90,6 +97,56 @@ const CONSTELLATIONS = [
 ] as const;
 
 // ============================================================================
+// SCALING UTILITIES
+// ============================================================================
+
+const getResponsiveScale = (viewport: ViewportSize) => {
+  const baseWidth = 1920; // Desktop reference
+  const baseHeight = 1080;
+
+  // Calculate scale based on viewport size
+  const widthScale = viewport.width / baseWidth;
+  const heightScale = viewport.height / baseHeight;
+  const scale = Math.min(widthScale, heightScale);
+
+  // Clamp scale between reasonable bounds
+  return Math.max(0.5, Math.min(scale, 1.5));
+};
+
+const getStarSize = (viewport: ViewportSize, isSpecial: boolean) => {
+  const scale = getResponsiveScale(viewport);
+  const baseSize = isSpecial ? 16 : 12; // Base size in pixels
+  const scaledSize = Math.max(8, baseSize * scale); // Minimum 8px
+
+  // Responsive breakpoints
+  if (viewport.width < 640) return Math.max(6, scaledSize * 0.7); // Mobile
+  if (viewport.width < 768) return Math.max(8, scaledSize * 0.8); // Tablet
+  if (viewport.width < 1024) return Math.max(10, scaledSize * 0.9); // Small desktop
+
+  return scaledSize;
+};
+
+const getStrokeWidth = (viewport: ViewportSize) => {
+  const scale = getResponsiveScale(viewport);
+  const baseStrokeWidth = 2;
+  const scaledStrokeWidth = Math.max(1, baseStrokeWidth * scale);
+
+  // Responsive breakpoints
+  if (viewport.width < 640) return Math.max(1, scaledStrokeWidth * 0.7);
+  if (viewport.width < 768) return Math.max(1.5, scaledStrokeWidth * 0.8);
+
+  return scaledStrokeWidth;
+};
+
+const getHoverScale = (viewport: ViewportSize) => {
+  // Reduce hover scale on smaller screens to prevent overlap
+  if (viewport.width < 640) return 1.8; // Mobile
+  if (viewport.width < 768) return 2.0; // Tablet
+  if (viewport.width < 1024) return 2.2; // Small desktop
+  return 2.5; // Large desktop
+};
+
+// ============================================================================
 // CONSTELLATION LAYER COMPONENT
 // ============================================================================
 
@@ -106,13 +163,45 @@ const ConstellationLayer: React.FC = () => {
     y: 0,
     constellation: null,
   });
+  const [viewport, setViewport] = useState<ViewportSize>({
+    width: 1920,
+    height: 1080,
+  });
+
+  // ========================================================================
+  // VIEWPORT TRACKING
+  // ========================================================================
+
+  useEffect(() => {
+    const updateViewport = () => {
+      setViewport({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    // Set initial viewport
+    updateViewport();
+
+    // Add resize listener with debounce
+    let timeoutId: NodeJS.Timeout;
+    const debouncedResize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(updateViewport, 150);
+    };
+
+    window.addEventListener("resize", debouncedResize);
+    return () => {
+      window.removeEventListener("resize", debouncedResize);
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   // ========================================================================
   // EVENT HANDLERS
   // ========================================================================
 
   const handleConstellationClick = useCallback((constellationId: string) => {
-    console.log(`🌟 Clicked constellation: ${constellationId}`);
     setActiveConstellation((prev) =>
       prev === constellationId ? null : constellationId
     );
@@ -120,24 +209,39 @@ const ConstellationLayer: React.FC = () => {
 
   const handleConstellationHover = useCallback(
     (constellationId: string, event: React.MouseEvent) => {
-      console.log(`🌟 Hovering constellation: ${constellationId}`);
       const constellation = CONSTELLATIONS.find(
         (c) => c.id === constellationId
       );
       if (!constellation) return;
 
       setHoveredConstellation(constellationId);
+
+      // Calculate tooltip position with viewport bounds checking
+      const tooltipWidth = 300; // Approximate tooltip width
+      const tooltipHeight = 120; // Approximate tooltip height
+
+      let x = event.clientX + 15;
+      let y = event.clientY - 10;
+
+      // Keep tooltip within viewport bounds
+      if (x + tooltipWidth > viewport.width) {
+        x = event.clientX - tooltipWidth - 15;
+      }
+      if (y + tooltipHeight > viewport.height) {
+        y = event.clientY - tooltipHeight - 15;
+      }
+
       setTooltip({
         visible: true,
-        x: event.clientX,
-        y: event.clientY,
+        x: Math.max(10, x),
+        y: Math.max(10, y),
         constellation: {
           name: constellation.name,
           description: constellation.description,
         },
       });
     },
-    []
+    [viewport]
   );
 
   const handleConstellationLeave = useCallback(() => {
@@ -154,6 +258,10 @@ const ConstellationLayer: React.FC = () => {
   // RENDER
   // ========================================================================
 
+  const starSize = getStarSize(viewport, true);
+  const strokeWidth = getStrokeWidth(viewport);
+  const hoverScale = getHoverScale(viewport);
+
   return (
     <>
       {/* Constellation stars - positioned as part of the background */}
@@ -162,68 +270,75 @@ const ConstellationLayer: React.FC = () => {
           {CONSTELLATIONS.map((constellation) => (
             <div key={constellation.id} className="absolute inset-0">
               {/* Constellation stars */}
-              {constellation.stars.map((star, index) => (
-                <div
-                  key={`${constellation.id}-star-${index}`}
-                  className="absolute pointer-events-auto"
-                  style={{
-                    left: `${star.x}%`,
-                    top: `${star.y}%`,
-                    transform: "translate(-50%, -50%)",
-                    zIndex: 25, // Higher than Hero content but lower than navigation
-                  }}
-                >
-                  <motion.div
-                    className={`rounded-full cursor-pointer transition-all duration-300 ${
-                      constellation.special ? "w-4 h-4" : "w-3 h-3"
-                    } ${
-                      activeConstellation === constellation.id
-                        ? "bg-gradient-to-r from-yellow-400 to-orange-500 shadow-lg shadow-yellow-400/50"
-                        : hoveredConstellation === constellation.id
-                        ? "bg-gradient-to-r from-yellow-300 to-orange-400 shadow-md shadow-yellow-300/40"
-                        : "bg-gradient-to-r from-yellow-500 to-orange-600"
-                    }`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      console.log(
-                        `🌟 Star clicked: ${constellation.id}-${index}`
-                      );
-                      handleConstellationClick(constellation.id);
+              {constellation.stars.map((star, index) => {
+                const currentStarSize = getStarSize(
+                  viewport,
+                  constellation.special
+                );
+
+                return (
+                  <div
+                    key={`${constellation.id}-star-${index}`}
+                    className="absolute pointer-events-auto"
+                    style={{
+                      left: `${star.x}%`,
+                      top: `${star.y}%`,
+                      transform: "translate(-50%, -50%)",
+                      zIndex: 25,
                     }}
-                    onMouseEnter={(e) => {
-                      e.stopPropagation();
-                      console.log(
-                        `🌟 Star hovered: ${constellation.id}-${index}`
-                      );
-                      handleConstellationHover(constellation.id, e);
-                    }}
-                    onMouseLeave={(e) => {
-                      e.stopPropagation();
-                      handleConstellationLeave();
-                    }}
-                    whileHover={{
-                      scale: 2.5,
-                      rotate: [0, 15, -15, 0],
-                    }}
-                    animate={{
-                      opacity:
+                  >
+                    <motion.div
+                      className={`rounded-full cursor-pointer transition-all duration-300 ${
                         activeConstellation === constellation.id
-                          ? 1
+                          ? "bg-gradient-to-r from-yellow-400 to-orange-500 shadow-lg shadow-yellow-400/50"
                           : hoveredConstellation === constellation.id
-                          ? 1
-                          : 0.9,
-                      boxShadow:
-                        hoveredConstellation === constellation.id
-                          ? "0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.4)"
-                          : undefined,
-                    }}
-                    transition={{
-                      rotate: { duration: 0.6, ease: "easeInOut" },
-                      scale: { duration: 0.2, ease: "easeOut" },
-                    }}
-                  />
-                </div>
-              ))}
+                          ? "bg-gradient-to-r from-yellow-300 to-orange-400 shadow-md shadow-yellow-300/40"
+                          : "bg-gradient-to-r from-yellow-500 to-orange-600"
+                      }`}
+                      style={{
+                        width: `${currentStarSize}px`,
+                        height: `${currentStarSize}px`,
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleConstellationClick(constellation.id);
+                      }}
+                      onMouseEnter={(e) => {
+                        e.stopPropagation();
+                        handleConstellationHover(constellation.id, e);
+                      }}
+                      onMouseLeave={(e) => {
+                        e.stopPropagation();
+                        handleConstellationLeave();
+                      }}
+                      whileHover={{
+                        scale: hoverScale,
+                        rotate: [0, 15, -15, 0],
+                      }}
+                      animate={{
+                        opacity:
+                          activeConstellation === constellation.id
+                            ? 1
+                            : hoveredConstellation === constellation.id
+                            ? 1
+                            : 0.9,
+                        boxShadow:
+                          hoveredConstellation === constellation.id
+                            ? `0 0 ${
+                                30 * getResponsiveScale(viewport)
+                              }px rgba(255, 215, 0, 0.8), 0 0 ${
+                                60 * getResponsiveScale(viewport)
+                              }px rgba(255, 215, 0, 0.4)`
+                            : undefined,
+                      }}
+                      transition={{
+                        rotate: { duration: 0.6, ease: "easeInOut" },
+                        scale: { duration: 0.2, ease: "easeOut" },
+                      }}
+                    />
+                  </div>
+                );
+              })}
 
               {/* Constellation lines */}
               {(activeConstellation === constellation.id ||
@@ -243,11 +358,13 @@ const ConstellationLayer: React.FC = () => {
                         x2={`${toStar.x}%`}
                         y2={`${toStar.y}%`}
                         stroke="rgba(255, 215, 0, 0.8)"
-                        strokeWidth="2"
+                        strokeWidth={strokeWidth}
                         initial={{ pathLength: 0, opacity: 0 }}
                         animate={{ pathLength: 1, opacity: 1 }}
                         transition={{ duration: 0.8, delay: index * 0.1 }}
-                        filter="drop-shadow(0 0 3px rgba(255, 215, 0, 0.5))"
+                        filter={`drop-shadow(0 0 ${
+                          3 * getResponsiveScale(viewport)
+                        }px rgba(255, 215, 0, 0.5))`}
                       />
                     );
                   })}
@@ -258,28 +375,46 @@ const ConstellationLayer: React.FC = () => {
         </div>
       </div>
 
-      {/* Tooltip - positioned with higher z-index */}
+      {/* Responsive Tooltip */}
       {tooltip.visible && tooltip.constellation && (
         <div
           className="fixed z-50 pointer-events-none"
           style={{
-            left: `${tooltip.x + 15}px`,
-            top: `${tooltip.y - 10}px`,
+            left: `${tooltip.x}px`,
+            top: `${tooltip.y}px`,
           }}
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.2 }}
-            className="bg-galaxy-cosmic/95 backdrop-blur-sm border border-galaxy-border rounded-lg p-3 max-w-xs shadow-lg"
+            className={`bg-galaxy-cosmic/95 backdrop-blur-sm border border-galaxy-border rounded-lg shadow-lg ${
+              viewport.width < 640
+                ? "p-2 max-w-[250px]" // Mobile
+                : viewport.width < 768
+                ? "p-2.5 max-w-[280px]" // Tablet
+                : "p-3 max-w-xs" // Desktop
+            }`}
           >
-            <h3 className="text-galaxy-text-accent font-semibold text-sm mb-1">
+            <h3
+              className={`text-galaxy-text-accent font-semibold mb-1 ${
+                viewport.width < 640 ? "text-xs" : "text-sm"
+              }`}
+            >
               {tooltip.constellation.name}
             </h3>
-            <p className="text-galaxy-text-secondary text-xs leading-relaxed">
+            <p
+              className={`text-galaxy-text-secondary leading-relaxed ${
+                viewport.width < 640 ? "text-xs" : "text-xs"
+              }`}
+            >
               {tooltip.constellation.description}
             </p>
-            <div className="text-galaxy-text-muted text-xs mt-2 italic">
+            <div
+              className={`text-galaxy-text-muted mt-2 italic ${
+                viewport.width < 640 ? "text-xs" : "text-xs"
+              }`}
+            >
               Click to{" "}
               {activeConstellation === hoveredConstellation ? "hide" : "reveal"}{" "}
               constellation lines
