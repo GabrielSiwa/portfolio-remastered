@@ -22,6 +22,8 @@ interface ViewportSize {
   height: number;
   isMobile: boolean;
   isTablet: boolean;
+  isLaptop: boolean;
+  isDesktop: boolean;
 }
 
 // ============================================================================
@@ -96,7 +98,7 @@ const CONSTELLATIONS = [
 ] as const;
 
 // ============================================================================
-// MOBILE-FRIENDLY SCALING UTILITIES
+// ENHANCED SCALING UTILITIES FOR BIGGER SCREENS
 // ============================================================================
 
 const getViewportInfo = (width: number, height: number): ViewportSize => ({
@@ -104,6 +106,8 @@ const getViewportInfo = (width: number, height: number): ViewportSize => ({
   height,
   isMobile: width < 768,
   isTablet: width >= 768 && width < 1024,
+  isLaptop: width >= 1024 && width < 1440,
+  isDesktop: width >= 1440,
 });
 
 const getResponsiveScale = (viewport: ViewportSize) => {
@@ -114,64 +118,83 @@ const getResponsiveScale = (viewport: ViewportSize) => {
   const heightScale = viewport.height / baseHeight;
   const scale = Math.min(widthScale, heightScale);
 
-  // More aggressive scaling for mobile
-  if (viewport.isMobile) return Math.max(0.4, Math.min(scale, 1.0));
-  if (viewport.isTablet) return Math.max(0.6, Math.min(scale, 1.2));
+  // Enhanced scaling for different screen sizes
+  if (viewport.isTablet) return Math.max(0.5, Math.min(scale, 1.0));
+  if (viewport.isLaptop) return Math.max(0.7, Math.min(scale, 1.1));
+  if (viewport.isDesktop) return Math.max(0.8, Math.min(scale, 1.3));
 
-  return Math.max(0.8, Math.min(scale, 1.5));
+  // Ultra-wide and large displays (> 1440px)
+  return Math.max(0.9, Math.min(scale, 1.5));
 };
 
 const getStarSize = (viewport: ViewportSize, isSpecial: boolean) => {
   const scale = getResponsiveScale(viewport);
   let baseSize = isSpecial ? 16 : 12;
 
-  // Mobile-first sizing
-  if (viewport.isMobile) {
-    baseSize = isSpecial ? 20 : 16; // Larger touch targets for mobile
-    return Math.max(16, baseSize * scale); // Minimum 16px for accessibility
+  // Optimized sizing for different screen categories
+  if (viewport.isTablet) {
+    baseSize = isSpecial ? 14 : 10;
+    return Math.max(10, baseSize * scale);
   }
 
-  if (viewport.isTablet) {
-    baseSize = isSpecial ? 18 : 14;
+  if (viewport.isLaptop) {
+    baseSize = isSpecial ? 16 : 12;
     return Math.max(12, baseSize * scale);
   }
 
-  return Math.max(10, baseSize * scale);
+  if (viewport.isDesktop) {
+    baseSize = isSpecial ? 18 : 14;
+    return Math.max(14, baseSize * scale);
+  }
+
+  // Ultra-wide displays
+  baseSize = isSpecial ? 20 : 16;
+  return Math.max(16, baseSize * scale);
 };
 
 const getStrokeWidth = (viewport: ViewportSize) => {
   const scale = getResponsiveScale(viewport);
   let baseStrokeWidth = 2;
 
-  if (viewport.isMobile) {
-    baseStrokeWidth = 2.5; // Thicker lines for mobile visibility
-    return Math.max(2, baseStrokeWidth * scale);
+  if (viewport.isTablet) {
+    baseStrokeWidth = 1.8;
+    return Math.max(1.5, baseStrokeWidth * scale);
   }
 
-  if (viewport.isTablet) {
-    baseStrokeWidth = 2.2;
+  if (viewport.isLaptop) {
+    baseStrokeWidth = 2.0;
     return Math.max(1.8, baseStrokeWidth * scale);
   }
 
-  return Math.max(1.5, baseStrokeWidth * scale);
+  if (viewport.isDesktop) {
+    baseStrokeWidth = 2.2;
+    return Math.max(2.0, baseStrokeWidth * scale);
+  }
+
+  // Ultra-wide displays
+  baseStrokeWidth = 2.5;
+  return Math.max(2.2, baseStrokeWidth * scale);
 };
 
 const getHoverScale = (viewport: ViewportSize) => {
-  // Reduced hover effects for mobile (touch doesn't really have hover)
-  if (viewport.isMobile) return 1.3;
-  if (viewport.isTablet) return 1.6;
-  return 2.2;
+  if (viewport.isTablet) return 1.5;
+  if (viewport.isLaptop) return 1.8;
+  if (viewport.isDesktop) return 2.2;
+  return 2.5; // Ultra-wide
 };
 
-const getTouchAreaSize = (viewport: ViewportSize) => {
-  // Minimum touch target size (44px recommended by Apple, 48px by Google)
-  if (viewport.isMobile) return 48;
-  if (viewport.isTablet) return 40;
-  return 32;
+const getTooltipSize = (viewport: ViewportSize) => {
+  if (viewport.isTablet)
+    return { width: 220, padding: "p-2", textSize: "text-xs" };
+  if (viewport.isLaptop)
+    return { width: 280, padding: "p-2.5", textSize: "text-sm" };
+  if (viewport.isDesktop)
+    return { width: 320, padding: "p-3", textSize: "text-sm" };
+  return { width: 360, padding: "p-4", textSize: "text-base" }; // Ultra-wide
 };
 
 // ============================================================================
-// MOBILE-OPTIMIZED CONSTELLATION LAYER
+// CONSTELLATION LAYER (Desktop/Tablet only, Mobile hidden)
 // ============================================================================
 
 const ConstellationLayer: React.FC = () => {
@@ -192,10 +215,9 @@ const ConstellationLayer: React.FC = () => {
     height: 1080,
     isMobile: false,
     isTablet: false,
+    isLaptop: false,
+    isDesktop: false,
   });
-
-  // Touch state for mobile interactions
-  const [touchStartTime, setTouchStartTime] = useState<number>(0);
 
   // ========================================================================
   // VIEWPORT TRACKING
@@ -215,7 +237,7 @@ const ConstellationLayer: React.FC = () => {
     let timeoutId: NodeJS.Timeout;
     const debouncedResize = () => {
       clearTimeout(timeoutId);
-      timeoutId = setTimeout(updateViewport, 100); // Faster response for mobile
+      timeoutId = setTimeout(updateViewport, 150);
     };
 
     window.addEventListener("resize", debouncedResize);
@@ -229,62 +251,17 @@ const ConstellationLayer: React.FC = () => {
   }, []);
 
   // ========================================================================
-  // MOBILE-FRIENDLY EVENT HANDLERS
+  // EVENT HANDLERS
   // ========================================================================
 
-  const handleConstellationInteraction = useCallback(
-    (constellationId: string, event?: React.MouseEvent | React.TouchEvent) => {
-      // Toggle constellation on tap/click
-      setActiveConstellation((prev) =>
-        prev === constellationId ? null : constellationId
-      );
+  const handleConstellationClick = useCallback((constellationId: string) => {
+    setActiveConstellation((prev) =>
+      prev === constellationId ? null : constellationId
+    );
+  }, []);
 
-      // Show tooltip on mobile when activated
-      if (viewport.isMobile && event) {
-        const constellation = CONSTELLATIONS.find(
-          (c) => c.id === constellationId
-        );
-        if (constellation) {
-          let clientX: number;
-          let clientY: number;
-
-          if ("touches" in event && event.touches.length > 0) {
-            // Touch event
-            clientX = event.touches[0].clientX;
-            clientY = event.touches[0].clientY;
-          } else if ("clientX" in event) {
-            // Mouse event
-            clientX = event.clientX;
-            clientY = event.clientY;
-          } else {
-            // Fallback
-            return;
-          }
-
-          setTooltip({
-            visible: true,
-            x: Math.min(clientX + 10, viewport.width - 280),
-            y: Math.max(clientY - 80, 10),
-            constellation: {
-              name: constellation.name,
-              description: constellation.description,
-            },
-          });
-
-          // Auto-hide tooltip on mobile after 3 seconds
-          setTimeout(() => {
-            setTooltip((prev) => ({ ...prev, visible: false }));
-          }, 3000);
-        }
-      }
-    },
-    [viewport]
-  );
-
-  const handleDesktopHover = useCallback(
+  const handleConstellationHover = useCallback(
     (constellationId: string, event: React.MouseEvent) => {
-      if (viewport.isMobile) return; // Skip hover on mobile
-
       const constellation = CONSTELLATIONS.find(
         (c) => c.id === constellationId
       );
@@ -292,14 +269,15 @@ const ConstellationLayer: React.FC = () => {
 
       setHoveredConstellation(constellationId);
 
-      const tooltipWidth = viewport.isTablet ? 250 : 300;
-      const tooltipHeight = 100;
+      const tooltipConfig = getTooltipSize(viewport);
+      const tooltipHeight = 120;
 
       let x = event.clientX + 15;
       let y = event.clientY - 10;
 
-      if (x + tooltipWidth > viewport.width) {
-        x = event.clientX - tooltipWidth - 15;
+      // Smart tooltip positioning for larger screens
+      if (x + tooltipConfig.width > viewport.width) {
+        x = event.clientX - tooltipConfig.width - 15;
       }
       if (y + tooltipHeight > viewport.height) {
         y = event.clientY - tooltipHeight - 15;
@@ -318,9 +296,7 @@ const ConstellationLayer: React.FC = () => {
     [viewport]
   );
 
-  const handleDesktopLeave = useCallback(() => {
-    if (viewport.isMobile) return; // Skip hover leave on mobile
-
+  const handleConstellationLeave = useCallback(() => {
     setHoveredConstellation(null);
     setTooltip({
       visible: false,
@@ -328,42 +304,29 @@ const ConstellationLayer: React.FC = () => {
       y: 0,
       constellation: null,
     });
-  }, [viewport]);
-
-  // Touch handlers for mobile
-  const handleTouchStart = useCallback(() => {
-    setTouchStartTime(Date.now());
   }, []);
 
-  const handleTouchEnd = useCallback(
-    (constellationId: string, event: React.TouchEvent) => {
-      const touchDuration = Date.now() - touchStartTime;
-
-      // Only trigger on quick taps (not long press or swipe)
-      if (touchDuration < 500) {
-        event.preventDefault();
-        handleConstellationInteraction(constellationId, event);
-      }
-    },
-    [touchStartTime, handleConstellationInteraction]
-  );
-
   // ========================================================================
-  // RENDER
+  // RENDER - Hide on mobile, show on tablet+
   // ========================================================================
+
+  // Keep mobile hiding functionality
+  if (viewport.isMobile) {
+    return null;
+  }
 
   const strokeWidth = getStrokeWidth(viewport);
   const hoverScale = getHoverScale(viewport);
-  const touchAreaSize = getTouchAreaSize(viewport);
+  const tooltipConfig = getTooltipSize(viewport);
 
   return (
     <>
-      {/* Constellation stars with mobile-optimized touch targets */}
+      {/* Constellation stars - positioned as part of the background */}
       <div className="absolute inset-0 pointer-events-none z-20">
         <div className="relative w-full h-full">
           {CONSTELLATIONS.map((constellation) => (
             <div key={constellation.id} className="absolute inset-0">
-              {/* Stars with expanded touch areas for mobile */}
+              {/* Constellation stars */}
               {constellation.stars.map((star, index) => {
                 const currentStarSize = getStarSize(
                   viewport,
@@ -379,12 +342,6 @@ const ConstellationLayer: React.FC = () => {
                       top: `${star.y}%`,
                       transform: "translate(-50%, -50%)",
                       zIndex: 25,
-                      // Expanded touch area for mobile
-                      width: viewport.isMobile ? `${touchAreaSize}px` : "auto",
-                      height: viewport.isMobile ? `${touchAreaSize}px` : "auto",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
                     }}
                   >
                     <motion.div
@@ -399,61 +356,22 @@ const ConstellationLayer: React.FC = () => {
                         width: `${currentStarSize}px`,
                         height: `${currentStarSize}px`,
                       }}
-                      // Desktop interactions
-                      onClick={
-                        !viewport.isMobile
-                          ? (e) => {
-                              e.stopPropagation();
-                              handleConstellationInteraction(
-                                constellation.id,
-                                e
-                              );
-                            }
-                          : undefined
-                      }
-                      onMouseEnter={
-                        !viewport.isMobile
-                          ? (e) => {
-                              e.stopPropagation();
-                              handleDesktopHover(constellation.id, e);
-                            }
-                          : undefined
-                      }
-                      onMouseLeave={
-                        !viewport.isMobile
-                          ? (e) => {
-                              e.stopPropagation();
-                              handleDesktopLeave();
-                            }
-                          : undefined
-                      }
-                      // Mobile touch interactions
-                      onTouchStart={
-                        viewport.isMobile ? handleTouchStart : undefined
-                      }
-                      onTouchEnd={
-                        viewport.isMobile
-                          ? (e) => {
-                              handleTouchEnd(constellation.id, e);
-                            }
-                          : undefined
-                      }
-                      whileHover={
-                        !viewport.isMobile
-                          ? {
-                              scale: hoverScale,
-                              rotate: [0, 15, -15, 0],
-                            }
-                          : undefined
-                      }
-                      whileTap={
-                        viewport.isMobile
-                          ? {
-                              scale: 1.4,
-                              transition: { duration: 0.1 },
-                            }
-                          : undefined
-                      }
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleConstellationClick(constellation.id);
+                      }}
+                      onMouseEnter={(e) => {
+                        e.stopPropagation();
+                        handleConstellationHover(constellation.id, e);
+                      }}
+                      onMouseLeave={(e) => {
+                        e.stopPropagation();
+                        handleConstellationLeave();
+                      }}
+                      whileHover={{
+                        scale: hoverScale,
+                        rotate: [0, 15, -15, 0],
+                      }}
                       animate={{
                         opacity:
                           activeConstellation === constellation.id
@@ -462,8 +380,7 @@ const ConstellationLayer: React.FC = () => {
                             ? 1
                             : 0.9,
                         boxShadow:
-                          hoveredConstellation === constellation.id ||
-                          activeConstellation === constellation.id
+                          hoveredConstellation === constellation.id
                             ? `0 0 ${
                                 30 * getResponsiveScale(viewport)
                               }px rgba(255, 215, 0, 0.8), 0 0 ${
@@ -501,10 +418,7 @@ const ConstellationLayer: React.FC = () => {
                         strokeWidth={strokeWidth}
                         initial={{ pathLength: 0, opacity: 0 }}
                         animate={{ pathLength: 1, opacity: 1 }}
-                        transition={{
-                          duration: viewport.isMobile ? 0.6 : 0.8,
-                          delay: index * (viewport.isMobile ? 0.05 : 0.1),
-                        }}
+                        transition={{ duration: 0.8, delay: index * 0.1 }}
                         filter={`drop-shadow(0 0 ${
                           3 * getResponsiveScale(viewport)
                         }px rgba(255, 215, 0, 0.5))`}
@@ -518,7 +432,7 @@ const ConstellationLayer: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile-optimized Tooltip */}
+      {/* Enhanced Responsive Tooltip */}
       {tooltip.visible && tooltip.constellation && (
         <div
           className="fixed z-50 pointer-events-none"
@@ -531,34 +445,27 @@ const ConstellationLayer: React.FC = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.2 }}
-            className={`bg-galaxy-cosmic/95 backdrop-blur-sm border border-galaxy-border rounded-lg shadow-lg ${
-              viewport.isMobile
-                ? "p-3 max-w-[280px] text-sm" // Mobile: larger text, more padding
-                : viewport.isTablet
-                ? "p-2.5 max-w-[250px] text-sm" // Tablet
-                : "p-3 max-w-xs text-xs" // Desktop
-            }`}
+            className={`bg-galaxy-cosmic/95 backdrop-blur-sm border border-galaxy-border rounded-lg shadow-lg ${tooltipConfig.padding}`}
+            style={{ maxWidth: `${tooltipConfig.width}px` }}
           >
             <h3
-              className={`text-galaxy-text-accent font-semibold mb-2 ${
-                viewport.isMobile ? "text-sm" : "text-xs"
-              }`}
+              className={`text-galaxy-text-accent font-semibold mb-1 ${tooltipConfig.textSize}`}
             >
               {tooltip.constellation.name}
             </h3>
             <p
               className={`text-galaxy-text-secondary leading-relaxed mb-2 ${
-                viewport.isMobile ? "text-sm" : "text-xs"
+                viewport.isTablet ? "text-xs" : tooltipConfig.textSize
               }`}
             >
               {tooltip.constellation.description}
             </p>
             <div
-              className={`text-galaxy-text-muted italic ${
-                viewport.isMobile ? "text-xs" : "text-xs"
+              className={`text-galaxy-text-muted mt-2 italic ${
+                viewport.isTablet ? "text-xs" : "text-sm"
               }`}
             >
-              {viewport.isMobile ? "Tap" : "Click"} to{" "}
+              Click to{" "}
               {activeConstellation === hoveredConstellation ? "hide" : "reveal"}{" "}
               constellation lines
             </div>
