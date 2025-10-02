@@ -688,19 +688,18 @@ const AboutPage: React.FC = () => {
             <div className="text-left space-y-4">
               <div className="space-y-4">
                 <motion.h1
-                  className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-galaxy-accent to-galaxy-secondary bg-clip-text text-transparent"
+                  className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-galaxy-accent to-galaxy-secondary bg-clip-text text-galaxy-moonbeam"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
                 >
-                  Gabriel Siwa
+                  Hi I&apos;m Gab!
                 </motion.h1>
 
                 <div className="text-md text-galaxy-text-secondary leading-relaxed space-y-4">
                   <p>
-                    I&apos;m Gabriel, a backend-leaning software developer who
-                    ships secure, reliable, cloud-backed apps and mobile
-                    experiences.
+                    I&apos;m a backend-leaning software developer who ships
+                    secure, reliable, cloud-backed apps and mobile experiences.
                   </p>
 
                   <p>
