@@ -20,6 +20,8 @@ interface TooltipData {
 interface ViewportSize {
   width: number;
   height: number;
+  isMobile: boolean;
+  isTablet: boolean;
 }
 
 // ============================================================================
@@ -33,29 +35,26 @@ const CONSTELLATIONS = [
     description:
       "The Lion - Gabriel's zodiac constellation, representing courage, leadership, and creativity",
     stars: [
-      { x: 22, y: 13.2 }, // 0 - Epsilon (Ras Elased) - top of sickle
-      { x: 20, y: 12.5 }, // 1 - Mu (Rasalas)
-      { x: 17, y: 13.6 }, // 2 - Zeta (Adhafera)
-      { x: 18, y: 14.7 }, // 3 - Gamma (Algieba)
-      { x: 23, y: 15.4 }, // 4 - Alpha (Regulus) - heart/bottom of sickle
-      { x: 24, y: 16.9 }, // 5 - Zosma
-
-      // Body
-      { x: 12, y: 16.9 }, // 6 - Chertan
-      { x: 7, y: 17.4 }, // 7 - Chertan
-      { x: 12, y: 15.5 }, // 8 - Theta
+      { x: 22, y: 9.24 }, // 0 - Epsilon (30% up from 13.2)
+      { x: 20, y: 8.75 }, // 1 - Mu (30% up from 12.5)
+      { x: 17, y: 9.52 }, // 2 - Zeta (30% up from 13.6)
+      { x: 18, y: 10.29 }, // 3 - Gamma (30% up from 14.7)
+      { x: 23, y: 10.78 }, // 4 - Alpha (30% up from 15.4)
+      { x: 24, y: 11.83 }, // 5 - Zosma (30% up from 16.9)
+      { x: 12, y: 11.83 }, // 6 - Chertan (30% up from 16.9)
+      { x: 7, y: 12.18 }, // 7 - Chertan (30% up from 17.4)
+      { x: 12, y: 10.85 }, // 8 - Theta (30% up from 15.5)
     ],
     connections: [
-      // The Sickle pattern (exactly like your reference image)
-      { from: 0, to: 1 }, // Epsilon to Mu
-      { from: 1, to: 2 }, // Mu to Zeta (Adhafera)
-      { from: 2, to: 3 }, // Zeta to Gamma (Algieba)
-      { from: 3, to: 4 }, // Gamma to Alpha (Regulus)
-      { from: 4, to: 5 }, // Alpha to Zosma
-      { from: 5, to: 6 }, // Zosma to Chertan
-      { from: 6, to: 7 }, // Chertan to Chertan
-      { from: 3, to: 8 }, // Gamma to Theta
-      { from: 8, to: 7 }, // Theta to Chertan
+      { from: 0, to: 1 },
+      { from: 1, to: 2 },
+      { from: 2, to: 3 },
+      { from: 3, to: 4 },
+      { from: 4, to: 5 },
+      { from: 5, to: 6 },
+      { from: 6, to: 7 },
+      { from: 3, to: 8 },
+      { from: 8, to: 7 },
     ],
     special: true,
   },
@@ -65,89 +64,114 @@ const CONSTELLATIONS = [
     description:
       "A developer's constellation representing the structure of clean, organized code - from root to branches",
     stars: [
-      { x: 85, y: 17.85 }, // Root
-      { x: 83, y: 16.575 }, // Left main branch
-      { x: 87, y: 16.575 }, // Right main branch
-      { x: 81, y: 15.3 }, // Left sub branch
-      { x: 85, y: 15.3 }, // Center sub branch
-      { x: 89, y: 15.3 }, // Right sub branch
-      { x: 79, y: 14.025 }, // Far left leaf
-      { x: 83, y: 14.025 }, // Left leaf
-      { x: 87, y: 14.025 }, // Right leaf
-      { x: 91, y: 14.025 }, // Far right leaf
-      { x: 85, y: 12.75 }, // Top
+      { x: 85, y: 12.495 }, // Root (30% up from 17.85)
+      { x: 83, y: 11.6025 }, // Left main branch (30% up from 16.575)
+      { x: 87, y: 11.6025 }, // Right main branch (30% up from 16.575)
+      { x: 81, y: 10.71 }, // Left sub branch (30% up from 15.3)
+      { x: 85, y: 10.71 }, // Center sub branch (30% up from 15.3)
+      { x: 89, y: 10.71 }, // Right sub branch (30% up from 15.3)
+      { x: 79, y: 9.8175 }, // Far left leaf (30% up from 14.025)
+      { x: 83, y: 9.8175 }, // Left leaf (30% up from 14.025)
+      { x: 87, y: 9.8175 }, // Right leaf (30% up from 14.025)
+      { x: 91, y: 9.8175 }, // Far right leaf (30% up from 14.025)
+      { x: 85, y: 8.925 }, // Top (30% up from 12.75)
     ],
     connections: [
-      { from: 0, to: 1 }, // Root to left main branch
-      { from: 0, to: 2 }, // Root to right main branch
-      { from: 1, to: 3 }, // Left main to left sub
-      { from: 1, to: 4 }, // Left main to center sub
-      { from: 2, to: 4 }, // Right main to center sub
-      { from: 2, to: 5 }, // Right main to right sub
-      { from: 3, to: 6 }, // Left sub to far left leaf
-      { from: 3, to: 7 }, // Left sub to left leaf
-      { from: 4, to: 7 }, // Center sub to left leaf
-      { from: 4, to: 8 }, // Center sub to right leaf
-      { from: 4, to: 10 }, // Center sub to top
-      { from: 5, to: 8 }, // Right sub to right leaf
-      { from: 5, to: 9 }, // Right sub to far right leaf
+      { from: 0, to: 1 },
+      { from: 0, to: 2 },
+      { from: 1, to: 3 },
+      { from: 1, to: 4 },
+      { from: 2, to: 4 },
+      { from: 2, to: 5 },
+      { from: 3, to: 6 },
+      { from: 3, to: 7 },
+      { from: 4, to: 7 },
+      { from: 4, to: 8 },
+      { from: 4, to: 10 },
+      { from: 5, to: 8 },
+      { from: 5, to: 9 },
     ],
     special: true,
   },
 ] as const;
 
 // ============================================================================
-// SCALING UTILITIES
+// MOBILE-FRIENDLY SCALING UTILITIES
 // ============================================================================
 
+const getViewportInfo = (width: number, height: number): ViewportSize => ({
+  width,
+  height,
+  isMobile: width < 768,
+  isTablet: width >= 768 && width < 1024,
+});
+
 const getResponsiveScale = (viewport: ViewportSize) => {
-  const baseWidth = 1920; // Desktop reference
+  const baseWidth = 1920;
   const baseHeight = 1080;
 
-  // Calculate scale based on viewport size
   const widthScale = viewport.width / baseWidth;
   const heightScale = viewport.height / baseHeight;
   const scale = Math.min(widthScale, heightScale);
 
-  // Clamp scale between reasonable bounds
-  return Math.max(0.5, Math.min(scale, 1.5));
+  // More aggressive scaling for mobile
+  if (viewport.isMobile) return Math.max(0.4, Math.min(scale, 1.0));
+  if (viewport.isTablet) return Math.max(0.6, Math.min(scale, 1.2));
+
+  return Math.max(0.8, Math.min(scale, 1.5));
 };
 
 const getStarSize = (viewport: ViewportSize, isSpecial: boolean) => {
   const scale = getResponsiveScale(viewport);
-  const baseSize = isSpecial ? 16 : 12; // Base size in pixels
-  const scaledSize = Math.max(8, baseSize * scale); // Minimum 8px
+  let baseSize = isSpecial ? 16 : 12;
 
-  // Responsive breakpoints
-  if (viewport.width < 640) return Math.max(6, scaledSize * 0.7); // Mobile
-  if (viewport.width < 768) return Math.max(8, scaledSize * 0.8); // Tablet
-  if (viewport.width < 1024) return Math.max(10, scaledSize * 0.9); // Small desktop
+  // Mobile-first sizing
+  if (viewport.isMobile) {
+    baseSize = isSpecial ? 20 : 16; // Larger touch targets for mobile
+    return Math.max(16, baseSize * scale); // Minimum 16px for accessibility
+  }
 
-  return scaledSize;
+  if (viewport.isTablet) {
+    baseSize = isSpecial ? 18 : 14;
+    return Math.max(12, baseSize * scale);
+  }
+
+  return Math.max(10, baseSize * scale);
 };
 
 const getStrokeWidth = (viewport: ViewportSize) => {
   const scale = getResponsiveScale(viewport);
-  const baseStrokeWidth = 2;
-  const scaledStrokeWidth = Math.max(1, baseStrokeWidth * scale);
+  let baseStrokeWidth = 2;
 
-  // Responsive breakpoints
-  if (viewport.width < 640) return Math.max(1, scaledStrokeWidth * 0.7);
-  if (viewport.width < 768) return Math.max(1.5, scaledStrokeWidth * 0.8);
+  if (viewport.isMobile) {
+    baseStrokeWidth = 2.5; // Thicker lines for mobile visibility
+    return Math.max(2, baseStrokeWidth * scale);
+  }
 
-  return scaledStrokeWidth;
+  if (viewport.isTablet) {
+    baseStrokeWidth = 2.2;
+    return Math.max(1.8, baseStrokeWidth * scale);
+  }
+
+  return Math.max(1.5, baseStrokeWidth * scale);
 };
 
 const getHoverScale = (viewport: ViewportSize) => {
-  // Reduce hover scale on smaller screens to prevent overlap
-  if (viewport.width < 640) return 1.8; // Mobile
-  if (viewport.width < 768) return 2.0; // Tablet
-  if (viewport.width < 1024) return 2.2; // Small desktop
-  return 2.5; // Large desktop
+  // Reduced hover effects for mobile (touch doesn't really have hover)
+  if (viewport.isMobile) return 1.3;
+  if (viewport.isTablet) return 1.6;
+  return 2.2;
+};
+
+const getTouchAreaSize = (viewport: ViewportSize) => {
+  // Minimum touch target size (44px recommended by Apple, 48px by Google)
+  if (viewport.isMobile) return 48;
+  if (viewport.isTablet) return 40;
+  return 32;
 };
 
 // ============================================================================
-// CONSTELLATION LAYER COMPONENT
+// MOBILE-OPTIMIZED CONSTELLATION LAYER
 // ============================================================================
 
 const ConstellationLayer: React.FC = () => {
@@ -166,7 +190,12 @@ const ConstellationLayer: React.FC = () => {
   const [viewport, setViewport] = useState<ViewportSize>({
     width: 1920,
     height: 1080,
+    isMobile: false,
+    isTablet: false,
   });
+
+  // Touch state for mobile interactions
+  const [touchStartTime, setTouchStartTime] = useState<number>(0);
 
   // ========================================================================
   // VIEWPORT TRACKING
@@ -174,41 +203,79 @@ const ConstellationLayer: React.FC = () => {
 
   useEffect(() => {
     const updateViewport = () => {
-      setViewport({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
+      const newViewport = getViewportInfo(
+        window.innerWidth,
+        window.innerHeight
+      );
+      setViewport(newViewport);
     };
 
-    // Set initial viewport
     updateViewport();
 
-    // Add resize listener with debounce
     let timeoutId: NodeJS.Timeout;
     const debouncedResize = () => {
       clearTimeout(timeoutId);
-      timeoutId = setTimeout(updateViewport, 150);
+      timeoutId = setTimeout(updateViewport, 100); // Faster response for mobile
     };
 
     window.addEventListener("resize", debouncedResize);
+    window.addEventListener("orientationchange", debouncedResize);
+
     return () => {
       window.removeEventListener("resize", debouncedResize);
+      window.removeEventListener("orientationchange", debouncedResize);
       clearTimeout(timeoutId);
     };
   }, []);
 
   // ========================================================================
-  // EVENT HANDLERS
+  // MOBILE-FRIENDLY EVENT HANDLERS
   // ========================================================================
 
-  const handleConstellationClick = useCallback((constellationId: string) => {
-    setActiveConstellation((prev) =>
-      prev === constellationId ? null : constellationId
-    );
-  }, []);
+  const handleConstellationInteraction = useCallback(
+    (constellationId: string, event?: React.MouseEvent | React.TouchEvent) => {
+      // Toggle constellation on tap/click
+      setActiveConstellation((prev) =>
+        prev === constellationId ? null : constellationId
+      );
 
-  const handleConstellationHover = useCallback(
+      // Show tooltip on mobile when activated
+      if (viewport.isMobile && event) {
+        const constellation = CONSTELLATIONS.find(
+          (c) => c.id === constellationId
+        );
+        if (constellation) {
+          const touch =
+            "touches" in event ? event.touches[0] : (event as React.MouseEvent);
+          const clientX =
+            "clientX" in touch ? touch.clientX : (touch as any).clientX;
+          const clientY =
+            "clientY" in touch ? touch.clientY : (touch as any).clientY;
+
+          setTooltip({
+            visible: true,
+            x: Math.min(clientX + 10, viewport.width - 280),
+            y: Math.max(clientY - 80, 10),
+            constellation: {
+              name: constellation.name,
+              description: constellation.description,
+            },
+          });
+
+          // Auto-hide tooltip on mobile after 3 seconds
+          setTimeout(() => {
+            setTooltip((prev) => ({ ...prev, visible: false }));
+          }, 3000);
+        }
+      }
+    },
+    [viewport]
+  );
+
+  const handleDesktopHover = useCallback(
     (constellationId: string, event: React.MouseEvent) => {
+      if (viewport.isMobile) return; // Skip hover on mobile
+
       const constellation = CONSTELLATIONS.find(
         (c) => c.id === constellationId
       );
@@ -216,14 +283,12 @@ const ConstellationLayer: React.FC = () => {
 
       setHoveredConstellation(constellationId);
 
-      // Calculate tooltip position with viewport bounds checking
-      const tooltipWidth = 300; // Approximate tooltip width
-      const tooltipHeight = 120; // Approximate tooltip height
+      const tooltipWidth = viewport.isTablet ? 250 : 300;
+      const tooltipHeight = 100;
 
       let x = event.clientX + 15;
       let y = event.clientY - 10;
 
-      // Keep tooltip within viewport bounds
       if (x + tooltipWidth > viewport.width) {
         x = event.clientX - tooltipWidth - 15;
       }
@@ -244,7 +309,9 @@ const ConstellationLayer: React.FC = () => {
     [viewport]
   );
 
-  const handleConstellationLeave = useCallback(() => {
+  const handleDesktopLeave = useCallback(() => {
+    if (viewport.isMobile) return; // Skip hover leave on mobile
+
     setHoveredConstellation(null);
     setTooltip({
       visible: false,
@@ -252,7 +319,25 @@ const ConstellationLayer: React.FC = () => {
       y: 0,
       constellation: null,
     });
+  }, [viewport]);
+
+  // Touch handlers for mobile
+  const handleTouchStart = useCallback(() => {
+    setTouchStartTime(Date.now());
   }, []);
+
+  const handleTouchEnd = useCallback(
+    (constellationId: string, event: React.TouchEvent) => {
+      const touchDuration = Date.now() - touchStartTime;
+
+      // Only trigger on quick taps (not long press or swipe)
+      if (touchDuration < 500) {
+        event.preventDefault();
+        handleConstellationInteraction(constellationId, event);
+      }
+    },
+    [touchStartTime, handleConstellationInteraction]
+  );
 
   // ========================================================================
   // RENDER
@@ -261,15 +346,16 @@ const ConstellationLayer: React.FC = () => {
   const starSize = getStarSize(viewport, true);
   const strokeWidth = getStrokeWidth(viewport);
   const hoverScale = getHoverScale(viewport);
+  const touchAreaSize = getTouchAreaSize(viewport);
 
   return (
     <>
-      {/* Constellation stars - positioned as part of the background */}
+      {/* Constellation stars with mobile-optimized touch targets */}
       <div className="absolute inset-0 pointer-events-none z-20">
         <div className="relative w-full h-full">
           {CONSTELLATIONS.map((constellation) => (
             <div key={constellation.id} className="absolute inset-0">
-              {/* Constellation stars */}
+              {/* Stars with expanded touch areas for mobile */}
               {constellation.stars.map((star, index) => {
                 const currentStarSize = getStarSize(
                   viewport,
@@ -285,6 +371,12 @@ const ConstellationLayer: React.FC = () => {
                       top: `${star.y}%`,
                       transform: "translate(-50%, -50%)",
                       zIndex: 25,
+                      // Expanded touch area for mobile
+                      width: viewport.isMobile ? `${touchAreaSize}px` : "auto",
+                      height: viewport.isMobile ? `${touchAreaSize}px` : "auto",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
                     <motion.div
@@ -299,22 +391,61 @@ const ConstellationLayer: React.FC = () => {
                         width: `${currentStarSize}px`,
                         height: `${currentStarSize}px`,
                       }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleConstellationClick(constellation.id);
-                      }}
-                      onMouseEnter={(e) => {
-                        e.stopPropagation();
-                        handleConstellationHover(constellation.id, e);
-                      }}
-                      onMouseLeave={(e) => {
-                        e.stopPropagation();
-                        handleConstellationLeave();
-                      }}
-                      whileHover={{
-                        scale: hoverScale,
-                        rotate: [0, 15, -15, 0],
-                      }}
+                      // Desktop interactions
+                      onClick={
+                        !viewport.isMobile
+                          ? (e) => {
+                              e.stopPropagation();
+                              handleConstellationInteraction(
+                                constellation.id,
+                                e
+                              );
+                            }
+                          : undefined
+                      }
+                      onMouseEnter={
+                        !viewport.isMobile
+                          ? (e) => {
+                              e.stopPropagation();
+                              handleDesktopHover(constellation.id, e);
+                            }
+                          : undefined
+                      }
+                      onMouseLeave={
+                        !viewport.isMobile
+                          ? (e) => {
+                              e.stopPropagation();
+                              handleDesktopLeave();
+                            }
+                          : undefined
+                      }
+                      // Mobile touch interactions
+                      onTouchStart={
+                        viewport.isMobile ? handleTouchStart : undefined
+                      }
+                      onTouchEnd={
+                        viewport.isMobile
+                          ? (e) => {
+                              handleTouchEnd(constellation.id, e);
+                            }
+                          : undefined
+                      }
+                      whileHover={
+                        !viewport.isMobile
+                          ? {
+                              scale: hoverScale,
+                              rotate: [0, 15, -15, 0],
+                            }
+                          : undefined
+                      }
+                      whileTap={
+                        viewport.isMobile
+                          ? {
+                              scale: 1.4,
+                              transition: { duration: 0.1 },
+                            }
+                          : undefined
+                      }
                       animate={{
                         opacity:
                           activeConstellation === constellation.id
@@ -323,7 +454,8 @@ const ConstellationLayer: React.FC = () => {
                             ? 1
                             : 0.9,
                         boxShadow:
-                          hoveredConstellation === constellation.id
+                          hoveredConstellation === constellation.id ||
+                          activeConstellation === constellation.id
                             ? `0 0 ${
                                 30 * getResponsiveScale(viewport)
                               }px rgba(255, 215, 0, 0.8), 0 0 ${
@@ -361,7 +493,10 @@ const ConstellationLayer: React.FC = () => {
                         strokeWidth={strokeWidth}
                         initial={{ pathLength: 0, opacity: 0 }}
                         animate={{ pathLength: 1, opacity: 1 }}
-                        transition={{ duration: 0.8, delay: index * 0.1 }}
+                        transition={{
+                          duration: viewport.isMobile ? 0.6 : 0.8,
+                          delay: index * (viewport.isMobile ? 0.05 : 0.1),
+                        }}
                         filter={`drop-shadow(0 0 ${
                           3 * getResponsiveScale(viewport)
                         }px rgba(255, 215, 0, 0.5))`}
@@ -375,7 +510,7 @@ const ConstellationLayer: React.FC = () => {
         </div>
       </div>
 
-      {/* Responsive Tooltip */}
+      {/* Mobile-optimized Tooltip */}
       {tooltip.visible && tooltip.constellation && (
         <div
           className="fixed z-50 pointer-events-none"
@@ -389,33 +524,33 @@ const ConstellationLayer: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.2 }}
             className={`bg-galaxy-cosmic/95 backdrop-blur-sm border border-galaxy-border rounded-lg shadow-lg ${
-              viewport.width < 640
-                ? "p-2 max-w-[250px]" // Mobile
-                : viewport.width < 768
-                ? "p-2.5 max-w-[280px]" // Tablet
-                : "p-3 max-w-xs" // Desktop
+              viewport.isMobile
+                ? "p-3 max-w-[280px] text-sm" // Mobile: larger text, more padding
+                : viewport.isTablet
+                ? "p-2.5 max-w-[250px] text-sm" // Tablet
+                : "p-3 max-w-xs text-xs" // Desktop
             }`}
           >
             <h3
-              className={`text-galaxy-text-accent font-semibold mb-1 ${
-                viewport.width < 640 ? "text-xs" : "text-sm"
+              className={`text-galaxy-text-accent font-semibold mb-2 ${
+                viewport.isMobile ? "text-sm" : "text-xs"
               }`}
             >
               {tooltip.constellation.name}
             </h3>
             <p
-              className={`text-galaxy-text-secondary leading-relaxed ${
-                viewport.width < 640 ? "text-xs" : "text-xs"
+              className={`text-galaxy-text-secondary leading-relaxed mb-2 ${
+                viewport.isMobile ? "text-sm" : "text-xs"
               }`}
             >
               {tooltip.constellation.description}
             </p>
             <div
-              className={`text-galaxy-text-muted mt-2 italic ${
-                viewport.width < 640 ? "text-xs" : "text-xs"
+              className={`text-galaxy-text-muted italic ${
+                viewport.isMobile ? "text-xs" : "text-xs"
               }`}
             >
-              Click to{" "}
+              {viewport.isMobile ? "Tap" : "Click"} to{" "}
               {activeConstellation === hoveredConstellation ? "hide" : "reveal"}{" "}
               constellation lines
             </div>
