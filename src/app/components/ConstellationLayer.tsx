@@ -245,12 +245,21 @@ const ConstellationLayer: React.FC = () => {
           (c) => c.id === constellationId
         );
         if (constellation) {
-          const touch =
-            "touches" in event ? event.touches[0] : (event as React.MouseEvent);
-          const clientX =
-            "clientX" in touch ? touch.clientX : (touch as any).clientX;
-          const clientY =
-            "clientY" in touch ? touch.clientY : (touch as any).clientY;
+          let clientX: number;
+          let clientY: number;
+
+          if ("touches" in event && event.touches.length > 0) {
+            // Touch event
+            clientX = event.touches[0].clientX;
+            clientY = event.touches[0].clientY;
+          } else if ("clientX" in event) {
+            // Mouse event
+            clientX = event.clientX;
+            clientY = event.clientY;
+          } else {
+            // Fallback
+            return;
+          }
 
           setTooltip({
             visible: true,
@@ -343,7 +352,6 @@ const ConstellationLayer: React.FC = () => {
   // RENDER
   // ========================================================================
 
-  const starSize = getStarSize(viewport, true);
   const strokeWidth = getStrokeWidth(viewport);
   const hoverScale = getHoverScale(viewport);
   const touchAreaSize = getTouchAreaSize(viewport);
