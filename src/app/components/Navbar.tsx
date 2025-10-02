@@ -19,7 +19,6 @@ import type {
   MobileMenuHook,
 } from "../lib/navigation";
 
-// Smooth scroll function with navbar offset
 const smoothScrollTo = (elementId: string) => {
   const element = document.getElementById(elementId);
   if (element) {
@@ -62,7 +61,6 @@ const useMobileMenu = (): MobileMenuHook => {
     setIsMobileMenuOpen(false);
   }, []);
 
-  // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -79,7 +77,6 @@ const useMobileMenu = (): MobileMenuHook => {
     };
   }, [isMobileMenuOpen, closeMenu]);
 
-  // Close menu on escape key
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -120,9 +117,12 @@ const NavItemComponent = React.memo(
         <button
           onClick={(e) => {
             e.preventDefault();
-            // Handle Contact differently - open email
+            // Handle Contact differently - open LinkedIn
             if (item.href === "#contact") {
-              window.location.href = "mailto:siwagabrielira8@gmail.com";
+              window.open(
+                "https://www.linkedin.com/messaging/compose/?recipient=gabrielsiwa",
+                "_blank"
+              );
             } else {
               const sectionId = item.href.replace("#", "");
               smoothScrollTo(sectionId);
@@ -206,9 +206,8 @@ const Navbar = () => {
   // Check if current path is active
   const isActiveLink = useCallback(
     (href: string) => {
-      // For anchor links, check if the section is currently visible
       if (href.startsWith("#")) {
-        return false; // You can implement intersection observer later if needed
+        return false;
       }
       return pathname === href;
     },
@@ -230,7 +229,10 @@ const Navbar = () => {
             smoothScrollTo("projects");
             break;
           case "4":
-            window.location.href = "mailto:siwagabriel8@gmail.com";
+            window.open(
+              "https://www.linkedin.com/messaging/compose/?recipient=gabrielsiwa",
+              "_blank"
+            );
             break;
         }
       }
@@ -317,8 +319,10 @@ const Navbar = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       if (item.href === "#contact") {
-                        window.location.href =
-                          "mailto:siwagabrielira8@gmail.com";
+                        window.open(
+                          "https://www.linkedin.com/messaging/compose/?recipient=gabrielsiwa",
+                          "_blank"
+                        );
                       } else {
                         const sectionId = item.href.replace("#", "");
                         smoothScrollTo(sectionId);

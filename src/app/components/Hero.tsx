@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useRef } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   Github,
@@ -21,14 +20,14 @@ const Hero = () => {
   // Splash reveal will animate the full name instead of typing
 
   // Floating animation for profile image
-  const floatingAnimation = {
-    y: [0, -20, 0],
-    transition: {
-      duration: 4,
-      repeat: Infinity,
-      ease: "easeInOut" as const,
-    },
-  };
+  // const floatingAnimation = {
+  //   y: [0, -20, 0],
+  //   transition: {
+  //     duration: 4,
+  //     repeat: Infinity,
+  //     ease: "easeInOut" as const,
+  //   },
+  // };
 
   // Social links data
   const socialLinks = [
@@ -59,7 +58,7 @@ const Hero = () => {
     >
       {/* Background layers are provided globally by RootLayout's <Background /> */}
 
-      <motion.div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4 sm:px-6 lg:px-8">
+      <motion.div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4">
         {/* Profile Image with Enhanced Scroll Behavior */}
         {/* <motion.div
           initial={{ scale: 0, rotate: -180 }}
@@ -284,9 +283,12 @@ const Hero = () => {
             }}
             whileTap={{ scale: 0.95 }}
             onClick={() => {
-              window.location.href = "mailto:siwagabrielira8@gmail.com";
+              window.open(
+                "https://www.linkedin.com/messaging/compose/?recipient=gabrielsiwa",
+                "_blank"
+              );
             }}
-            aria-label="Email Gabriel"
+            aria-label="Message Gabriel on LinkedIn"
             className="galaxy-button flex items-center justify-center space-x-2 text-lg px-8 py-4"
           >
             <Heart className="w-5 h-5" />

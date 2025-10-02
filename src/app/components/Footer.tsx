@@ -11,7 +11,6 @@ import {
   Heart,
   Coffee,
   ArrowUp,
-  ExternalLink,
 } from "lucide-react";
 
 const Footer = () => {
