@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
+import { Github } from "lucide-react"; // Add GitHub icon import
 import AnimatedReveal from "../components/AnimatedReveal";
 import SectionParticles from "../components/SectionParticles";
 
@@ -61,6 +62,7 @@ type Project = {
   detailsUrl?: string;
   videoUrl?: string;
   techStack?: string[];
+  repositoryUrl?: string; // Add repository URL field
 };
 
 async function loadProjects(): Promise<Project[]> {
@@ -78,6 +80,7 @@ async function loadProjects(): Promise<Project[]> {
         image: String(item.image ?? ""),
         demoUrl: String(item.demoUrl ?? ""),
         detailsUrl: String(item.detailsUrl ?? ""),
+        repositoryUrl: String(item.repositoryUrl ?? ""), // Add repository URL parsing
         videoUrl: String(
           item.videoUrl ||
             (item.cta && typeof item.cta === "object"
@@ -219,7 +222,8 @@ export default function ProjectsPage() {
                     </div>
                   )}
 
-                  <div className="flex gap-3 mt-6">
+                  <div className="flex flex-wrap gap-3 mt-6">
+                    {/* Demo/CTA Button */}
                     {project.cta?.url && !localVideoUrl ? (
                       <Link
                         href={project.cta.url}
@@ -240,6 +244,7 @@ export default function ProjectsPage() {
                       </Link>
                     ) : null}
 
+                    {/* More Details Button */}
                     <Link
                       href={project.detailsUrl || `/projects/${project.id}`}
                       target="_blank"
@@ -248,6 +253,20 @@ export default function ProjectsPage() {
                     >
                       More Details
                     </Link>
+
+                    {/* GitHub Repository Button */}
+                    {project.repositoryUrl && (
+                      <Link
+                        href={project.repositoryUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-5 py-2 border border-gray-500 text-gray-300 rounded hover:bg-gray-500 hover:text-white transition-colors flex items-center gap-2"
+                        title="View Repository"
+                      >
+                        <Github size={16} />
+                        <span className="hidden sm:inline">Repository</span>
+                      </Link>
+                    )}
                   </div>
                 </div>
               </article>

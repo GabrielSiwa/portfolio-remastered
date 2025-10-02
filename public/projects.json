@@ -32,6 +32,7 @@
     "description": "EyeMo empowers people with visual impairments through tap-activated voice commands, instant OCR with speech output, AI-powered scene analysis, and voice-announced location services using Azure and OpenAI.",
     "image": "/images/projects/eyemo-screenshot.svg",
     "videoUrl": "/demo/EyeMo-Ad.mp4",
+    "repositoryUrl": "https://github.com/GabrielSiwa/EyeMo",
     "cta": {
       "label": "View Live Demo",
       "url": "https://coffee-mates.vercel.app/"
