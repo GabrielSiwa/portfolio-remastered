@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 
 // ============================================================================
@@ -20,10 +20,20 @@ interface TooltipData {
 interface ViewportSize {
   width: number;
   height: number;
-  isMobile: boolean;
-  isTablet: boolean;
   isLaptop: boolean;
   isDesktop: boolean;
+}
+
+interface CosmicParticle {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  opacity: number;
+  duration: number;
+  delay: number;
+  type: "dust" | "sparkle" | "nebula";
+  color: string;
 }
 
 // ============================================================================
@@ -37,15 +47,15 @@ const CONSTELLATIONS = [
     description:
       "The Lion - Gabriel's zodiac constellation, representing courage, leadership, and creativity",
     stars: [
-      { x: 22, y: 9.24 }, // 0 - Epsilon (30% up from 13.2)
-      { x: 20, y: 8.75 }, // 1 - Mu (30% up from 12.5)
-      { x: 17, y: 9.52 }, // 2 - Zeta (30% up from 13.6)
-      { x: 18, y: 10.29 }, // 3 - Gamma (30% up from 14.7)
-      { x: 23, y: 10.78 }, // 4 - Alpha (30% up from 15.4)
-      { x: 24, y: 11.83 }, // 5 - Zosma (30% up from 16.9)
-      { x: 12, y: 11.83 }, // 6 - Chertan (30% up from 16.9)
-      { x: 7, y: 12.18 }, // 7 - Chertan (30% up from 17.4)
-      { x: 12, y: 10.85 }, // 8 - Theta (30% up from 15.5)
+      { x: 27.6, y: 11.5 }, // 0 - Epsilon (22 * 1.3, 9.24 * 1.3)
+      { x: 26, y: 10.375 }, // 1 - Mu (20 * 1.3, 8.75 * 1.3)
+      { x: 22.1, y: 11.376 }, // 2 - Zeta (17 * 1.3, 9.52 * 1.3)
+      { x: 21.4, y: 13.377 }, // 3 - Gamma (18 * 1.3, 10.29 * 1.3)
+      { x: 25.9, y: 15.014 }, // 4 - Alpha (23 * 1.3, 10.78 * 1.3)
+      { x: 25.5, y: 17 }, // 5 - Zosma (24 * 1.3, 11.83 * 1.3)
+      { x: 11.6, y: 16 }, // 6 - Chertan (12 * 1.3, 11.83 * 1.3)
+      { x: 6.1, y: 16.834 }, // 7 - Chertan (7 * 1.3, 12.18 * 1.3)
+      { x: 10.5, y: 13.377 }, // 8 - Theta (12 * 1.3, 10.85 * 1.3)
     ],
     connections: [
       { from: 0, to: 1 },
@@ -66,17 +76,17 @@ const CONSTELLATIONS = [
     description:
       "A developer's constellation representing the structure of clean, organized code - from root to branches",
     stars: [
-      { x: 85, y: 12.495 }, // Root (30% up from 17.85)
-      { x: 83, y: 11.6025 }, // Left main branch (30% up from 16.575)
-      { x: 87, y: 11.6025 }, // Right main branch (30% up from 16.575)
-      { x: 81, y: 10.71 }, // Left sub branch (30% up from 15.3)
-      { x: 85, y: 10.71 }, // Center sub branch (30% up from 15.3)
-      { x: 89, y: 10.71 }, // Right sub branch (30% up from 15.3)
-      { x: 79, y: 9.8175 }, // Far left leaf (30% up from 14.025)
-      { x: 83, y: 9.8175 }, // Left leaf (30% up from 14.025)
-      { x: 87, y: 9.8175 }, // Right leaf (30% up from 14.025)
-      { x: 91, y: 9.8175 }, // Far right leaf (30% up from 14.025)
-      { x: 85, y: 8.925 }, // Top (30% up from 12.75)
+      { x: 85, y: 18.2435 },
+      { x: 83, y: 16.08325 },
+      { x: 87, y: 16.08325 },
+      { x: 81, y: 13.923 },
+      { x: 85, y: 13.923 },
+      { x: 89, y: 13.923 },
+      { x: 79, y: 11.76275 },
+      { x: 83, y: 11.76275 },
+      { x: 87, y: 11.76275 },
+      { x: 91, y: 11.76275 },
+      { x: 85, y: 9.6025 },
     ],
     connections: [
       { from: 0, to: 1 },
@@ -98,14 +108,54 @@ const CONSTELLATIONS = [
 ] as const;
 
 // ============================================================================
-// ENHANCED SCALING UTILITIES FOR BIGGER SCREENS
+// COSMIC PARTICLE GENERATION
+// ============================================================================
+
+const generateCosmicParticles = (viewport: ViewportSize): CosmicParticle[] => {
+  const particles: CosmicParticle[] = [];
+  const particleCount = viewport.isLaptop ? 50 : 80; // Adjust count based on screen size
+
+  const colors = [
+    "rgba(255, 50, 50, 0.9)", 
+    "rgba(50, 255, 50, 0.8)", 
+    "rgba(255, 255, 50, 0.8)", 
+    "rgba(255, 100, 255, 0.7)", 
+    "rgba(50, 255, 255, 0.7)", 
+    "rgba(255, 150, 50, 0.6)", 
+  ];
+
+  for (let i = 0; i < particleCount; i++) {
+    const type: CosmicParticle["type"] =
+      Math.random() < 0.6 ? "dust" : Math.random() < 0.8 ? "sparkle" : "nebula";
+
+    particles.push({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size:
+        type === "dust"
+          ? Math.random() * 2 + 1
+          : type === "sparkle"
+          ? Math.random() * 3 + 2
+          : Math.random() * 8 + 4,
+      opacity: Math.random() * 0.6 + 0.2,
+      duration: Math.random() * 20 + 10, // 10-30 seconds
+      delay: Math.random() * 5,
+      type,
+      color: colors[Math.floor(Math.random() * colors.length)],
+    });
+  }
+
+  return particles;
+};
+
+// ============================================================================
+// RESPONSIVE SCALING UTILITIES (LAPTOP+ ONLY)
 // ============================================================================
 
 const getViewportInfo = (width: number, height: number): ViewportSize => ({
   width,
   height,
-  isMobile: width < 768,
-  isTablet: width >= 768 && width < 1024,
   isLaptop: width >= 1024 && width < 1440,
   isDesktop: width >= 1440,
 });
@@ -118,24 +168,15 @@ const getResponsiveScale = (viewport: ViewportSize) => {
   const heightScale = viewport.height / baseHeight;
   const scale = Math.min(widthScale, heightScale);
 
-  // Enhanced scaling for different screen sizes
-  if (viewport.isTablet) return Math.max(0.5, Math.min(scale, 1.0));
-  if (viewport.isLaptop) return Math.max(0.7, Math.min(scale, 1.1));
-  if (viewport.isDesktop) return Math.max(0.8, Math.min(scale, 1.3));
+  if (viewport.isLaptop) return Math.max(0.9, Math.min(scale, 1.1));
+  if (viewport.isDesktop) return Math.max(1.0, Math.min(scale, 1.3));
 
-  // Ultra-wide and large displays (> 1440px)
-  return Math.max(0.9, Math.min(scale, 1.5));
+  return Math.max(1.2, Math.min(scale, 1.5));
 };
 
 const getStarSize = (viewport: ViewportSize, isSpecial: boolean) => {
   const scale = getResponsiveScale(viewport);
   let baseSize = isSpecial ? 16 : 12;
-
-  // Optimized sizing for different screen categories
-  if (viewport.isTablet) {
-    baseSize = isSpecial ? 14 : 10;
-    return Math.max(10, baseSize * scale);
-  }
 
   if (viewport.isLaptop) {
     baseSize = isSpecial ? 16 : 12;
@@ -156,11 +197,6 @@ const getStrokeWidth = (viewport: ViewportSize) => {
   const scale = getResponsiveScale(viewport);
   let baseStrokeWidth = 2;
 
-  if (viewport.isTablet) {
-    baseStrokeWidth = 1.8;
-    return Math.max(1.5, baseStrokeWidth * scale);
-  }
-
   if (viewport.isLaptop) {
     baseStrokeWidth = 2.0;
     return Math.max(1.8, baseStrokeWidth * scale);
@@ -177,15 +213,12 @@ const getStrokeWidth = (viewport: ViewportSize) => {
 };
 
 const getHoverScale = (viewport: ViewportSize) => {
-  if (viewport.isTablet) return 1.5;
   if (viewport.isLaptop) return 1.8;
   if (viewport.isDesktop) return 2.2;
   return 2.5; // Ultra-wide
 };
 
 const getTooltipSize = (viewport: ViewportSize) => {
-  if (viewport.isTablet)
-    return { width: 220, padding: "p-2", textSize: "text-xs" };
   if (viewport.isLaptop)
     return { width: 280, padding: "p-2.5", textSize: "text-sm" };
   if (viewport.isDesktop)
@@ -194,7 +227,7 @@ const getTooltipSize = (viewport: ViewportSize) => {
 };
 
 // ============================================================================
-// CONSTELLATION LAYER (Desktop/Tablet only, Mobile hidden)
+// CONSTELLATION LAYER WITH COSMIC PARTICLES
 // ============================================================================
 
 const ConstellationLayer: React.FC = () => {
@@ -213,11 +246,15 @@ const ConstellationLayer: React.FC = () => {
   const [viewport, setViewport] = useState<ViewportSize>({
     width: 1920,
     height: 1080,
-    isMobile: false,
-    isTablet: false,
     isLaptop: false,
     isDesktop: false,
   });
+
+  // Generate cosmic particles based on viewport
+  const cosmicParticles = useMemo(() => {
+    if (viewport.width < 1024) return [];
+    return generateCosmicParticles(viewport);
+  }, [viewport.width, viewport.height]);
 
   // ========================================================================
   // VIEWPORT TRACKING
@@ -275,7 +312,6 @@ const ConstellationLayer: React.FC = () => {
       let x = event.clientX + 15;
       let y = event.clientY - 10;
 
-      // Smart tooltip positioning for larger screens
       if (x + tooltipConfig.width > viewport.width) {
         x = event.clientX - tooltipConfig.width - 15;
       }
@@ -307,11 +343,11 @@ const ConstellationLayer: React.FC = () => {
   }, []);
 
   // ========================================================================
-  // RENDER - Hide on mobile, show on tablet+
+  // RENDER - LAPTOP+ ONLY WITH COSMIC PARTICLES
   // ========================================================================
 
-  // Keep mobile hiding functionality
-  if (viewport.isMobile) {
+  // Hide component on screens smaller than laptop (< 1024px)
+  if (viewport.width < 1024) {
     return null;
   }
 
@@ -321,6 +357,45 @@ const ConstellationLayer: React.FC = () => {
 
   return (
     <>
+      {/* Cosmic Particle Background */}
+      <div className="absolute inset-0 pointer-events-none z-10">
+        {cosmicParticles.map((particle) => (
+          <motion.div
+            key={particle.id}
+            className="absolute rounded-full"
+            style={{
+              left: `${particle.x}%`,
+              top: `${particle.y}%`,
+              width: `${particle.size}px`,
+              height: `${particle.size}px`,
+              backgroundColor: particle.color,
+              filter:
+                particle.type === "sparkle"
+                  ? "blur(0.5px)"
+                  : particle.type === "nebula"
+                  ? "blur(2px)"
+                  : "none",
+            }}
+            animate={{
+              y: [0, -20, 0],
+              x: [0, particle.type === "dust" ? 5 : 0, 0],
+              opacity: [
+                particle.opacity,
+                particle.opacity * 0.3,
+                particle.opacity,
+              ],
+              scale: particle.type === "sparkle" ? [1, 1.5, 1] : [1, 1.1, 1],
+            }}
+            transition={{
+              duration: particle.duration,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: particle.delay,
+            }}
+          />
+        ))}
+      </div>
+
       {/* Constellation stars - positioned as part of the background */}
       <div className="absolute inset-0 pointer-events-none z-20">
         <div className="relative w-full h-full">
@@ -454,17 +529,11 @@ const ConstellationLayer: React.FC = () => {
               {tooltip.constellation.name}
             </h3>
             <p
-              className={`text-galaxy-text-secondary leading-relaxed mb-2 ${
-                viewport.isTablet ? "text-xs" : tooltipConfig.textSize
-              }`}
+              className={`text-galaxy-text-secondary leading-relaxed mb-2 ${tooltipConfig.textSize}`}
             >
               {tooltip.constellation.description}
             </p>
-            <div
-              className={`text-galaxy-text-muted mt-2 italic ${
-                viewport.isTablet ? "text-xs" : "text-sm"
-              }`}
-            >
+            <div className="text-galaxy-text-muted mt-2 italic text-sm">
               Click to{" "}
               {activeConstellation === hoveredConstellation ? "hide" : "reveal"}{" "}
               constellation lines

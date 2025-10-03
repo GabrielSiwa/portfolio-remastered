@@ -48,6 +48,34 @@ const useNavbarScroll = (): NavbarScrollHook => {
   return { isScrolled };
 };
 
+// Hook for navbar visibility based on scroll direction
+const useNavbarVisibility = () => {
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Show navbar when at top or scrolling up
+      if (currentScrollY < 100 || currentScrollY < lastScrollY) {
+        setIsVisible(true);
+      }
+      // Hide navbar when scrolling down past 100px
+      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
+  return isVisible;
+};
+
 // Custom hook for mobile menu
 const useMobileMenu = (): MobileMenuHook => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -189,6 +217,7 @@ Logo.displayName = "Logo";
 
 const Navbar = () => {
   const { isScrolled } = useNavbarScroll();
+  const isVisible = useNavbarVisibility();
   const { isMobileMenuOpen, toggleMenu, closeMenu, menuRef } = useMobileMenu();
   const pathname = usePathname();
 
@@ -249,6 +278,17 @@ const Navbar = () => {
       }`}
       role="navigation"
       aria-label="Main navigation"
+      initial={{ y: 0 }}
+      animate={{ 
+        y: isVisible ? 0 : -100,
+        opacity: isVisible ? 1 : 0
+      }}
+      transition={{ 
+        type: "spring", 
+        stiffness: 300, 
+        damping: 30,
+        duration: 0.3 
+      }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
