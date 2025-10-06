@@ -80,7 +80,7 @@ const NAVIGATION_ITEMS: NavigationItem[] = [
   {
     id: "about",
     label: "About",
-    href: "/about",
+    href: "#about",
     icon: User,
     color: "from-purple-400 to-purple-600",
     glowColor: "rgba(147, 51, 234, 0.6)",
@@ -88,18 +88,10 @@ const NAVIGATION_ITEMS: NavigationItem[] = [
   {
     id: "projects",
     label: "Projects",
-    href: "/projects",
+    href: "#projects",
     icon: FolderOpen,
     color: "from-green-400 to-green-600",
     glowColor: "rgba(34, 197, 94, 0.6)",
-  },
-  {
-    id: "contact",
-    label: "Contact",
-    href: "/contact",
-    icon: Mail,
-    color: "from-orange-400 to-orange-600",
-    glowColor: "rgba(249, 115, 22, 0.6)",
   },
 ];
 

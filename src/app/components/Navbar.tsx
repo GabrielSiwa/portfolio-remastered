@@ -258,10 +258,7 @@ const Navbar = () => {
             smoothScrollTo("projects");
             break;
           case "4":
-            window.open(
-              "https://www.linkedin.com/messaging/compose/?recipient=gabrielsiwa",
-              "_blank"
-            );
+            window.open("https://www.linkedin.com/in/gabrielsiwa", "_blank");
             break;
         }
       }
@@ -279,15 +276,15 @@ const Navbar = () => {
       role="navigation"
       aria-label="Main navigation"
       initial={{ y: 0 }}
-      animate={{ 
+      animate={{
         y: isVisible ? 0 : -100,
-        opacity: isVisible ? 1 : 0
+        opacity: isVisible ? 1 : 0,
       }}
-      transition={{ 
-        type: "spring", 
-        stiffness: 300, 
+      transition={{
+        type: "spring",
+        stiffness: 300,
         damping: 30,
-        duration: 0.3 
+        duration: 0.3,
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -360,7 +357,7 @@ const Navbar = () => {
                       e.preventDefault();
                       if (item.href === "#contact") {
                         window.open(
-                          "https://www.linkedin.com/messaging/compose/?recipient=gabrielsiwa",
+                          "https://www.linkedin.com/in/gabrielsiwa",
                           "_blank"
                         );
                       } else {

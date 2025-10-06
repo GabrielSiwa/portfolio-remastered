@@ -283,10 +283,7 @@ const Hero = () => {
             }}
             whileTap={{ scale: 0.95 }}
             onClick={() => {
-              window.open(
-                "https://www.linkedin.com/messaging/compose/?recipient=gabrielsiwa",
-                "_blank"
-              );
+              window.open("https://www.linkedin.com/in/gabrielsiwa", "_blank");
             }}
             aria-label="Message Gabriel on LinkedIn"
             className="galaxy-button flex items-center justify-center space-x-2 text-lg px-8 py-4"
