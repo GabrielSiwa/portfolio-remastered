@@ -132,14 +132,6 @@ const Footer = () => {
                 exploring cutting-edge technologies including AI and full-stack
                 development.
               </p>
-
-              {/* Availability Status */}
-              <div className="flex items-center space-x-2 text-sm">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                <span className="text-galaxy-text-secondary">
-                  Actively seeking full-time software developer opportunities
-                </span>
-              </div>
             </div>
           </motion.div>
 
@@ -221,28 +213,20 @@ const Footer = () => {
           variants={itemVariants}
           className="border-t border-galaxy-border pt-6"
         >
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 w-full">
             {/* Copyright */}
-            <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 text-galaxy-text-muted text-sm text-center sm:text-left">
+            <div className="text-galaxy-text-muted text-sm text-center md:text-left">
               <span>© {currentYear} Gabriel Siwa. All rights reserved.</span>
-              <span className="hidden sm:block">•</span>
-              <span className="flex items-center">
+            </div>
+
+            {/* Made with section */}
+            <div className="text-galaxy-text-muted text-sm text-center md:text-right">
+              <span className="flex items-center justify-center md:justify-end">
                 Made with <Heart className="w-3 h-3 mx-1 text-red-400" /> &{" "}
                 <Coffee className="w-3 h-3 ml-1 mr-2 text-amber-400" />
                 in Calgary
               </span>
             </div>
-
-            {/* Scroll to Top */}
-            <motion.button
-              onClick={scrollToTop}
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center space-x-2 text-galaxy-text-muted hover:text-galaxy-text-accent transition-colors duration-300 text-sm group"
-            >
-              <span>Back to top</span>
-              <ArrowUp className="w-4 h-4 group-hover:translate-y-[-2px] transition-transform duration-300" />
-            </motion.button>
           </div>
 
           {/* Call to Action */}

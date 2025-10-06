@@ -761,6 +761,13 @@ const AboutPage: React.FC = () => {
                     </span>
                   </p>
                 </div>
+                {/* Availability Status */}
+                <div className="flex items-center space-x-2 text-sm">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                  <span className="text-galaxy-text-secondary">
+                    Actively seeking full-time software developer opportunities
+                  </span>
+                </div>
               </div>
             </div>
           </div>
