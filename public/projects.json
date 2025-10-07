@@ -42,5 +42,16 @@
     "problem": "People with visual impairments lacked fast, on-device tools for quick scene understanding and OCR-assisted reading.",
     "solution": "Developed EyeMo: a tap-activated, voice-controlled app with OCR, AI scene analysis, and location announcements, powered by Azure and OpenAI, to improve situational awareness.",
     "date": "2025-08-20"
+  },
+  {
+    "id": "studdy-task-manager",
+    "title": "Studdy - Task Manager",
+    "short": "Task Management App that uses Local Storage for Offline Access ",
+    "description": "Studdy is a task management app that helps users organize their tasks using local storage for offline access.",
+    "image": "/images/projects/studdy.png",
+    "techStack": ["React Native", "Expo", "TypeScript"],
+    "problem": "Users need a reliable way to manage tasks without an internet connection.",
+    "solution": "Implemented local storage to allow users to create, read, update, and delete tasks offline, syncing changes when the connection is restored.",
+    "date": "2025-08-20"
   }
 ]

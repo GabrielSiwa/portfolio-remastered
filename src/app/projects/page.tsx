@@ -80,7 +80,7 @@ async function loadProjects(): Promise<Project[]> {
         image: String(item.image ?? ""),
         demoUrl: String(item.demoUrl ?? ""),
         detailsUrl: String(item.detailsUrl ?? ""),
-        repositoryUrl: String(item.repositoryUrl ?? ""), // Add repository URL parsing
+        repositoryUrl: String(item.repositoryUrl ?? ""),
         videoUrl: String(
           item.videoUrl ||
             (item.cta && typeof item.cta === "object"
@@ -245,14 +245,16 @@ export default function ProjectsPage() {
                     ) : null}
 
                     {/* More Details Button */}
-                    <Link
-                      href={project.detailsUrl || `/projects/${project.id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-5 py-2 border border-galaxy-text-accent text-galaxy-text-accent rounded hover:bg-galaxy-text-accent hover:text-galaxy-dark transition-colors"
-                    >
-                      More Details
-                    </Link>
+                    {project.detailsUrl && (
+                      <Link
+                        href={project.detailsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-5 py-2 border border-galaxy-text-accent text-galaxy-text-accent rounded hover:bg-galaxy-text-accent hover:text-galaxy-dark transition-colors"
+                      >
+                        More Details
+                      </Link>
+                    )}
 
                     {/* GitHub Repository Button */}
                     {project.repositoryUrl && (
