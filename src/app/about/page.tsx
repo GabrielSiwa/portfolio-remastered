@@ -668,14 +668,14 @@ const AboutPage: React.FC = () => {
             >
               <div className="group relative w-full h-full">
                 <Image
-                  src="/images/profile_2.jpg"
+                  src="/images/Linkedin.png"
                   alt="Gabriel Siwa portrait"
                   fill
                   priority
                   sizes="(min-width: 768px) 320px, 100vw"
                   className="object-cover object-top rounded-xl border-2 border-white/10 shadow-lg transition-all duration-300 group-hover:shadow-2xl group-hover:border-galaxy-accent/30"
                   style={{
-                    objectPosition: "center 10%", // Tighter crop - head + upper chest only
+                    objectPosition: "center 10%",
                   }}
                 />
 
@@ -767,6 +767,18 @@ const AboutPage: React.FC = () => {
                   <span className="text-galaxy-text-secondary">
                     Actively seeking full-time software developer opportunities
                   </span>
+                </div>
+                <div className="flex mx-auto my-auto justify-center">
+                  <a
+                    href="https://www.linkedin.com/in/gabrielsiwa/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-galaxy-plasma text-galaxy-text font-semibold py-2 px-5 rounded-lg shadow-md
+               hover:bg-galaxy-plasma/90 hover:shadow-lg hover:-translate-y-0.5 transition
+               focus:outline-none focus:ring-2 focus:ring-galaxy-plasma focus:ring-offset-2"
+                  >
+                    Open to Opportunities
+                  </a>
                 </div>
               </div>
             </div>
