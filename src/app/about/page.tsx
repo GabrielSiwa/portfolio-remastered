@@ -693,7 +693,7 @@ const AboutPage: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
                 >
-                  Hi I&apos;m Gab!
+                  Hi, I&apos;m Gab!
                 </motion.h1>
 
                 <div className="text-md text-galaxy-text-secondary leading-relaxed space-y-4">
