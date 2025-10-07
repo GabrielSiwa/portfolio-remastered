@@ -30,7 +30,6 @@
     "title": "EyeMo — AI Voice-Controlled Accessibility",
     "short": "Tap-activated voice commands, OCR and scene analysis for visual accessibility",
     "description": "EyeMo empowers people with visual impairments through tap-activated voice commands, instant OCR with speech output, AI-powered scene analysis, and voice-announced location services using Azure and OpenAI.",
-    "image": "/images/projects/eyemo-screenshot.svg",
     "videoUrl": "/demo/EyeMo-Ad.mp4",
     "repositoryUrl": "https://github.com/GabrielSiwa/EyeMo",
     "cta": {
@@ -48,7 +47,7 @@
     "title": "Studdy - Task Manager",
     "short": "Task Management App that uses Local Storage for Offline Access ",
     "description": "Studdy is a task management app that helps users organize their tasks using local storage for offline access.",
-    "image": "/images/projects/studdy.png",
+    "image": "/images/projects/Studdy.png",
     "techStack": ["React Native", "Expo", "TypeScript"],
     "problem": "Users need a reliable way to manage tasks without an internet connection.",
     "solution": "Implemented local storage to allow users to create, read, update, and delete tasks offline, syncing changes when the connection is restored.",
