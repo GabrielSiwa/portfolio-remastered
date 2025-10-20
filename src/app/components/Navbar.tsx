@@ -8,7 +8,7 @@ import React, {
   useMemo,
 } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { Menu, X, Home, User, FolderOpen, Mail, Sparkles } from "lucide-react";
 
@@ -145,16 +145,6 @@ const NavItemComponent = React.memo(
         <button
           onClick={(e) => {
             e.preventDefault();
-            // Handle Contact differently - open LinkedIn
-            if (item.href === "#contact") {
-              window.open(
-                "https://www.linkedin.com/messaging/compose/?recipient=gabrielsiwa",
-                "_blank"
-              );
-            } else {
-              const sectionId = item.href.replace("#", "");
-              smoothScrollTo(sectionId);
-            }
             onClick?.();
           }}
           className={`relative group px-3 py-2 text-sm font-medium transition-colors duration-200 flex items-center space-x-2 ${
@@ -216,6 +206,7 @@ const Logo = React.memo(() => {
 Logo.displayName = "Logo";
 
 const Navbar = () => {
+  const router = useRouter();
   const { isScrolled } = useNavbarScroll();
   const isVisible = useNavbarVisibility();
   const { isMobileMenuOpen, toggleMenu, closeMenu, menuRef } = useMobileMenu();
@@ -241,6 +232,32 @@ const Navbar = () => {
       return pathname === href;
     },
     [pathname]
+  );
+
+  // Define handleNavigation BEFORE NavItemComponent uses it
+  const handleNavigation = useCallback(
+    (href: string, elementId: string) => {
+      if (href === "#contact") {
+        window.open(
+          "https://www.linkedin.com/messaging/compose/?recipient=gabrielsiwa",
+          "_blank"
+        );
+        return;
+      }
+
+      // Check if we're not on the home page
+      if (window.location.pathname !== "/") {
+        // Navigate to home page, then scroll after navigation
+        router.push(`/#${elementId}`);
+        // Wait for navigation to complete
+        setTimeout(() => {
+          smoothScrollTo(elementId);
+        }, 100);
+      } else {
+        smoothScrollTo(elementId);
+      }
+    },
+    [router]
   );
 
   // Keyboard navigation
@@ -301,6 +318,10 @@ const Navbar = () => {
                   item={item}
                   index={index}
                   isActive={isActiveLink(item.href)}
+                  onClick={() => {
+                    const sectionId = item.href.replace("#", "");
+                    handleNavigation(item.href, sectionId);
+                  }}
                 />
               ))}
             </div>
@@ -355,15 +376,8 @@ const Navbar = () => {
                   <button
                     onClick={(e) => {
                       e.preventDefault();
-                      if (item.href === "#contact") {
-                        window.open(
-                          "https://www.linkedin.com/in/gabrielsiwa",
-                          "_blank"
-                        );
-                      } else {
-                        const sectionId = item.href.replace("#", "");
-                        smoothScrollTo(sectionId);
-                      }
+                      const sectionId = item.href.replace("#", "");
+                      handleNavigation(item.href, sectionId);
                       closeMenu();
                     }}
                     className={`flex items-center space-x-3 px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 hover-glow-galaxy w-full text-left ${
