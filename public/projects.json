@@ -51,7 +51,7 @@
     "techStack": ["Next.js", "TypeScript", "Tailwind CSS"],
     "problem": "The Coffee Mates project lacked a centralized platform to showcase its objectives, team members, and individual contributions.",
     "solution": "Developed a dedicated overview website using Next.js and Tailwind CSS to present the project in a cohesive manner, highlighting key features and team efforts.",
-    "date": "2025-08-20"
+    "date": "2025-08-16"
   },
   {
     "id": "studdy",
@@ -62,6 +62,6 @@
     "techStack": ["React Native", "Expo", "TypeScript"],
     "problem": "Users need a reliable way to manage tasks without an internet connection.",
     "solution": "Implemented local storage to allow users to create, read, update, and delete tasks offline, syncing changes when the connection is restored.",
-    "date": "2025-08-20"
+    "date": "2025-04-10"
   }
 ]

@@ -10,7 +10,6 @@ import {
   Download,
   Heart,
   Coffee,
-  ArrowUp,
 } from "lucide-react";
 
 const Footer = () => {
@@ -61,10 +60,6 @@ const Footer = () => {
       color: "hover:text-galaxy-text-accent",
     },
   ];
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   return (
     <footer className="relative bg-galaxy-void border-t border-galaxy-border overflow-hidden">

@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { promises as fs } from "fs";
+import path from "path";
 
 type ProjectData = {
   id: string;
@@ -23,13 +25,9 @@ type ProjectData = {
 
 // Helper function to load projects
 async function loadProjects(): Promise<ProjectData[]> {
-  const response = await fetch(
-    `${
-      process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
-    }/projects.json`,
-    { cache: "no-store" }
-  );
-  return response.json();
+  const filePath = path.join(process.cwd(), "public", "projects.json");
+  const fileContents = await fs.readFile(filePath, "utf8");
+  return JSON.parse(fileContents);
 }
 
 // Generate static paths for all projects
@@ -41,9 +39,14 @@ export async function generateStaticParams() {
 }
 
 // Generate metadata for SEO
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
   const projectsData = await loadProjects();
-  const project = projectsData.find((p: ProjectData) => p.id === params.id);
+  const project = projectsData.find((p: ProjectData) => p.id === id);
 
   if (!project) {
     return {
@@ -60,11 +63,12 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 export default async function ProjectDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   // Find project by exact ID match
   const projectsData = await loadProjects();
-  const project = projectsData.find((p: ProjectData) => p.id === params.id);
+  const project = projectsData.find((p: ProjectData) => p.id === id);
 
   if (!project) {
     notFound();

@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { Home, User, FolderOpen, Mail, Sparkles } from "lucide-react";
+import { Home, User, FolderOpen, Sparkles } from "lucide-react";
 
 // ============================================================================
 // SCROLL DETECTION HOOK
