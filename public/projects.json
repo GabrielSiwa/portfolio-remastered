@@ -43,6 +43,17 @@
     "date": "2025-08-20"
   },
   {
+    "id": "coffee-mates",
+    "title": "Coffee Mates - Capstone Project Overview Website",
+    "short": "Showcase website for Coffee Mates group projects",
+    "description": "A comprehensive overview website for the Coffee Mates capstone project, featuring project details, team information, and a showcase of individual contributions.",
+    "image": "/images/projects/CoffeeMates.png",
+    "techStack": ["Next.js", "TypeScript", "Tailwind CSS"],
+    "problem": "The Coffee Mates project lacked a centralized platform to showcase its objectives, team members, and individual contributions.",
+    "solution": "Developed a dedicated overview website using Next.js and Tailwind CSS to present the project in a cohesive manner, highlighting key features and team efforts.",
+    "date": "2025-08-20"
+  },
+    {
     "id": "studdy-task-manager",
     "title": "Studdy - Task Manager",
     "short": "Task Management App that uses Local Storage for Offline Access ",
