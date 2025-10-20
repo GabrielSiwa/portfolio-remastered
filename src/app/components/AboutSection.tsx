@@ -4,9 +4,9 @@ import React, { useState, useEffect, useMemo, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { RotateCcw, Filter } from "lucide-react";
-import SkillFlip from "../components/SkillFlip";
-import AnimatedReveal from "../components/AnimatedReveal";
-import SectionParticles from "../components/SectionParticles";
+import SkillFlip from "./SkillFlip";
+import AnimatedReveal from "./AnimatedReveal";
+import SectionParticles from "./SectionParticles";
 
 // ============================================================================
 // TYPE DEFINITIONS - Modern TypeScript with strict typing

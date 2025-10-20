@@ -4,8 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { Github } from "lucide-react"; // Add GitHub icon import
-import AnimatedReveal from "../components/AnimatedReveal";
-import SectionParticles from "../components/SectionParticles";
+import AnimatedReveal from "./AnimatedReveal";
 
 // Helper function to get local video URL
 function getLocalVideoUrl(url: string): string | null {
@@ -128,9 +127,6 @@ export default function ProjectsPage() {
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-12 relative">
-      {/* subtle particles and animated reveal like the Hero */}
-      <SectionParticles count={12} />
-
       <AnimatedReveal>
         <h1 className="text-4xl font-semibold mb-8 text-center">
           Featured Projects
@@ -245,16 +241,12 @@ export default function ProjectsPage() {
                     ) : null}
 
                     {/* More Details Button */}
-                    {project.detailsUrl && (
-                      <Link
-                        href={project.detailsUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-5 py-2 border border-galaxy-text-accent text-galaxy-text-accent rounded hover:bg-galaxy-text-accent hover:text-galaxy-dark transition-colors"
-                      >
-                        More Details
-                      </Link>
-                    )}
+                    <Link
+                      href={`/projects/${project.id}`}
+                      className="px-5 py-2 border border-galaxy-text-accent text-galaxy-text-accent rounded hover:bg-galaxy-text-accent hover:text-galaxy-dark transition-colors"
+                    >
+                      More Details
+                    </Link>
 
                     {/* GitHub Repository Button */}
                     {project.repositoryUrl && (

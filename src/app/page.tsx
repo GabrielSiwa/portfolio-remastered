@@ -1,23 +1,30 @@
 import Hero from "./components/Hero";
-import AboutPage from "./about/page";
-// import ContactPage from "./contact/page";
-import Projects from "./projects/page";
+import AboutSection from "./components/AboutSection";
+import ProjectsSection from "./components/ProjectsSection";
+import ContactSection from "./components/ContactSection";
+import ConstellationLayer from "./components/ConstellationLayer";
+
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen relative">
+      {/* ConstellationLayer exclusive to homepage */}
+      <ConstellationLayer />
+
       <section id="hero">
         <Hero />
       </section>
 
       <section id="projects">
-        <Projects />
+        <ProjectsSection />
       </section>
+
       <section id="about">
-        <AboutPage />
+        <AboutSection />
       </section>
-      {/* <section id="contact">
-        <ContactPage />
-      </section> */}
+
+      <section id="contact">
+        <ContactSection />
+      </section>
     </main>
   );
 }
