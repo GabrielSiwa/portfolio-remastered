@@ -1,6 +1,6 @@
 [
   {
-    "id": "pots-pharmacy-order-tracking-system",
+    "id": "pots",
     "title": "POTS — Pharmacy Order Tracking System",
     "short": "Real-time pharmacy order tracking and management platform",
     "description": "A digital platform that enables pharmacies to place, view, and track compounding orders in real time. Features secure authentication, multi-stage order tracking, role-based access, and content safety.",
@@ -26,7 +26,7 @@
     "date": "2025-08-21"
   },
   {
-    "id": "eyemo-accessibility",
+    "id": "eyemo",
     "title": "EyeMo — AI Voice-Controlled Accessibility",
     "short": "Tap-activated voice commands, OCR and scene analysis for visual accessibility",
     "description": "EyeMo empowers people with visual impairments through tap-activated voice commands, instant OCR with speech output, AI-powered scene analysis, and voice-announced location services using Azure and OpenAI.",
@@ -53,8 +53,8 @@
     "solution": "Developed a dedicated overview website using Next.js and Tailwind CSS to present the project in a cohesive manner, highlighting key features and team efforts.",
     "date": "2025-08-20"
   },
-    {
-    "id": "studdy-task-manager",
+  {
+    "id": "studdy",
     "title": "Studdy - Task Manager",
     "short": "Task Management App that uses Local Storage for Offline Access ",
     "description": "Studdy is a task management app that helps users organize their tasks using local storage for offline access.",
