@@ -1,8 +1,24 @@
 import Hero from "./components/Hero";
-import AboutSection from "./components/AboutSection";
 import ProjectsSection from "./components/ProjectsSection";
-import ContactSection from "./components/ContactSection";
 import ConstellationLayer from "./components/ConstellationLayer";
+import dynamic from "next/dynamic";
+
+// Lazy load below-fold sections for better LCP performance
+const AboutSection = dynamic(() => import("./components/AboutSection"), {
+  loading: () => (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="animate-pulse text-galaxy-text-accent">Loading...</div>
+    </div>
+  ),
+});
+
+const ContactSection = dynamic(() => import("./components/ContactSection"), {
+  loading: () => (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="animate-pulse text-galaxy-text-accent">Loading...</div>
+    </div>
+  ),
+});
 
 export default function Home() {
   return (

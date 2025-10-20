@@ -113,7 +113,8 @@ const CONSTELLATIONS = [
 
 const generateCosmicParticles = (viewport: ViewportSize): CosmicParticle[] => {
   const particles: CosmicParticle[] = [];
-  const particleCount = viewport.isLaptop ? 50 : 80; // Adjust count based on screen size
+  // Reduced particle count for better performance (was 50-80, now 25-40)
+  const particleCount = viewport.isLaptop ? 25 : 40;
 
   const colors = [
     "rgba(255, 50, 50, 0.9)",
@@ -375,6 +376,7 @@ const ConstellationLayer: React.FC = () => {
                   : particle.type === "nebula"
                   ? "blur(2px)"
                   : "none",
+              willChange: "transform, opacity", // Optimize animations
             }}
             animate={{
               y: [0, -20, 0],

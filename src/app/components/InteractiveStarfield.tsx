@@ -38,19 +38,19 @@ interface MousePosition {
 
 const STARFIELD_CONFIG = {
   STAR_COUNT: {
-    LAYER_1: 50,
-    LAYER_2: 40,
-    LAYER_3: 30,
+    LAYER_1: 30, // Reduced from 50
+    LAYER_2: 25, // Reduced from 40
+    LAYER_3: 20, // Reduced from 30
   },
   SHOOTING_STAR: {
-    FREQUENCY: 8000,
+    FREQUENCY: 10000, // Increased from 8000 for less frequent spawning
     DURATION: 2000,
-    COUNT: 3,
+    COUNT: 2, // Reduced from 3
   },
   NEBULA: {
     SIZE: 120,
     OPACITY: 0.15,
-    FOLLOW_SPEED: 0.05, // Reduced for better performance
+    FOLLOW_SPEED: 0.05, // Already optimized
   },
 } as const;
 
@@ -332,26 +332,33 @@ const InteractiveStarfield: React.FC = () => {
 
       {/* Cosmic dust particles */}
       <div className="absolute inset-0">
-        {Array.from({ length: 8 }, (_, i) => (
-          <motion.div
-            key={`dust-${i}`}
-            className="absolute w-0.5 h-0.5 bg-galaxy-stardust rounded-full opacity-30"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              x: [0, Math.random() * 100 - 50],
-              y: [0, Math.random() * 100 - 50],
-              opacity: [0.1, 0.5, 0.1],
-            }}
-            transition={{
-              duration: 10 + Math.random() * 10,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-            }}
-          />
-        ))}
+        {Array.from(
+          { length: 5 },
+          (
+            _,
+            i // Reduced from 8 to 5
+          ) => (
+            <motion.div
+              key={`dust-${i}`}
+              className="absolute w-0.5 h-0.5 bg-galaxy-stardust rounded-full opacity-30"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                willChange: "transform, opacity", // Performance optimization
+              }}
+              animate={{
+                x: [0, Math.random() * 100 - 50],
+                y: [0, Math.random() * 100 - 50],
+                opacity: [0.1, 0.5, 0.1],
+              }}
+              transition={{
+                duration: 10 + Math.random() * 10,
+                repeat: Infinity,
+                delay: Math.random() * 5,
+              }}
+            />
+          )
+        )}
       </div>
     </div>
   );

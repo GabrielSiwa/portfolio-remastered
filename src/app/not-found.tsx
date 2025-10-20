@@ -135,14 +135,14 @@ export default function NotFound() {
     return () => clearTimeout(timer);
   }, []);
 
-  const starSize = 6; // Match ConstellationLayer default size
-  const strokeWidth = 2; // Match ConstellationLayer stroke width
+  const starSize = 12; // Match ConstellationLayer default size
+  const strokeWidth = 4; // Match ConstellationLayer stroke width
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-black">
       {/* Content Layer */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-4 pt-24">
-        <div className="w-full max-w-6xl px-4">
+      <div className="relative z-10 min-h-screen flex items-center justify-center p-2 pt-24">
+        <div className="w-full max-w-6xl px-2">
           {/* Constellation "404" - matching ConstellationLayer style */}
           <motion.div className="relative w-full aspect-[2/1] mx-auto">
             {/* Constellation Stars - styled exactly like ConstellationLayer */}
@@ -221,7 +221,7 @@ export default function NotFound() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.5 }}
           >
-            <h1 className="text-4xl md:text-6xl font-bold text-white">
+            <h1 className="text-4xl md:text-6xl font-bold text-white ">
               Lost in Space
             </h1>
             <p className="text-lg md:text-xl text-galaxy-text-accent/80 max-w-2xl mx-auto">
@@ -240,7 +240,7 @@ export default function NotFound() {
             >
               <Link
                 href="/"
-                className="inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-white text-lg"
+                className="inline-flex items-center gap-3 px-8 py-4 mb-8 rounded-xl font-bold text-white text-lg"
                 style={{
                   background: "linear-gradient(135deg, #1a234a, #2a3a6c)",
                   border: "1px solid #3b4b8c",
@@ -259,10 +259,6 @@ export default function NotFound() {
                 Return to Earth
               </Link>
             </motion.div>
-
-            <p className="text-xs text-galaxy-text-accent/50 pt-4">
-              or use the navigation above to explore the galaxy
-            </p>
           </motion.div>
         </div>
       </div>
