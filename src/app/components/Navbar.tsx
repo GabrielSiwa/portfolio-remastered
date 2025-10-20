@@ -216,8 +216,8 @@ const Navbar = () => {
   const navItems: NavItem[] = useMemo(
     () => [
       { name: "Home", href: "#hero", icon: Home },
-      { name: "About", href: "#about", icon: User },
       { name: "Projects", href: "#projects", icon: FolderOpen },
+      { name: "About", href: "#about", icon: User },
       { name: "Contact", href: "#contact", icon: Mail },
     ],
     []
