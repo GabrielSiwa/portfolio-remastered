@@ -12,7 +12,7 @@ export default function ContactPage() {
 
       <div className="space-y-4">
         <a
-          href="mailto:gabriel@example.com"
+          href="mailto:siwagabrielira@gmail.com"
           className="inline-block galaxy-button px-6 py-3 rounded"
         >
           Email me
