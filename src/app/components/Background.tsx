@@ -2,7 +2,6 @@
 
 import React from "react";
 import InteractiveStarfield from "./InteractiveStarfield";
-import ConstellationLayer from "./ConstellationLayer";
 import OrbitalNavigation from "./OrbitalNavigation";
 
 const Background: React.FC = () => {
@@ -12,7 +11,6 @@ const Background: React.FC = () => {
         <OrbitalNavigation size="medium" />
       </section>
       <InteractiveStarfield />
-      <ConstellationLayer />
     </>
   );
 };

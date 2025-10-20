@@ -116,12 +116,12 @@ const generateCosmicParticles = (viewport: ViewportSize): CosmicParticle[] => {
   const particleCount = viewport.isLaptop ? 50 : 80; // Adjust count based on screen size
 
   const colors = [
-    "rgba(255, 50, 50, 0.9)", 
-    "rgba(50, 255, 50, 0.8)", 
-    "rgba(255, 255, 50, 0.8)", 
-    "rgba(255, 100, 255, 0.7)", 
-    "rgba(50, 255, 255, 0.7)", 
-    "rgba(255, 150, 50, 0.6)", 
+    "rgba(255, 50, 50, 0.9)",
+    "rgba(50, 255, 50, 0.8)",
+    "rgba(255, 255, 50, 0.8)",
+    "rgba(255, 100, 255, 0.7)",
+    "rgba(50, 255, 255, 0.7)",
+    "rgba(255, 150, 50, 0.6)",
   ];
 
   for (let i = 0; i < particleCount; i++) {
@@ -254,7 +254,7 @@ const ConstellationLayer: React.FC = () => {
   const cosmicParticles = useMemo(() => {
     if (viewport.width < 1024) return [];
     return generateCosmicParticles(viewport);
-  }, [viewport.width, viewport.height]);
+  }, [viewport]);
 
   // ========================================================================
   // VIEWPORT TRACKING
