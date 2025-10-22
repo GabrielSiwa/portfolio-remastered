@@ -77,15 +77,18 @@ const Hero = () => {
   }, [hoveredTech]);
 
   // Lock scroll and handle Escape when full panel is open
+  // Lock scroll and handle Escape when full panel is open
   useEffect(() => {
     if (activeTech) {
       document.body.style.overflow = "hidden";
+      document.body.setAttribute("data-modal-open", "true");
       const handleEscape = (e: KeyboardEvent) => {
         if (e.key === "Escape") setActiveTech(null);
       };
       window.addEventListener("keydown", handleEscape);
       return () => {
         document.body.style.overflow = "";
+        document.body.removeAttribute("data-modal-open");
         window.removeEventListener("keydown", handleEscape);
       };
     }
@@ -99,7 +102,7 @@ const Hero = () => {
       python: ["Python"],
       typescript: ["TypeScript"],
       reactnative: ["React Native", "Expo"],
-      java: ["Svelte"], // Java icon shows Svelte projects
+      java: ["Svelte"],
     };
 
     const relevantTechs = techMap[techName] || [];
@@ -190,319 +193,334 @@ const Hero = () => {
         </motion.div>
 
         {/* Floating Tech Orbits */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{
-            opacity: activeTech ? 0 : 1,
-            scale: activeTech ? 0.95 : 1,
-          }}
-          transition={{ delay: activeTech ? 0 : 1.0, duration: 0.35 }}
-          style={{ pointerEvents: activeTech ? "none" : "auto" }}
-          className="mb-4 mt-4 relative w-full max-w-lg mx-auto h-64"
-        >
-          {/* Central Hub */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-            <motion.div
-              animate={{
-                rotate: 360,
-                boxShadow: [
-                  "0 0 20px rgba(139, 92, 246, 0.4)",
-                  "0 0 40px rgba(139, 92, 246, 0.6)",
-                  "0 0 20px rgba(139, 92, 246, 0.4)",
-                ],
-              }}
-              transition={{
-                rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-                boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" },
-              }}
-              className="w-16 h-16 rounded-full bg-gradient-to-r from-galaxy-glow to-galaxy-starfield flex items-center justify-center border-2 border-galaxy-cosmic"
-            >
-              <Code className="w-8 h-8 text-white" />
-            </motion.div>
-          </div>
-
-          {/* Orbital Paths */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <motion.div
-              className="absolute border border-galaxy-border/20 rounded-full"
-              style={{
-                width: "200px",
-                height: "200px",
-                left: "-100px",
-                top: "-100px",
-              }}
-              animate={{ rotate: 360 }}
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-            />
-            <motion.div
-              className="absolute border border-galaxy-border/10 rounded-full"
-              style={{
-                width: "280px",
-                height: "280px",
-                left: "-140px",
-                top: "-140px",
-              }}
-              animate={{ rotate: -360 }}
-              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-            />
-          </div>
-
-          {/* Orbiting Tech Icons - Inner Ring */}
-          {[
-            {
-              Icon: SiJavascript,
-              name: "javascript",
-              color: "bg-yellow-400",
-              borderColor: "border-yellow-500/40",
-              delay: 0,
-              radius: 100,
-              duration: 12,
-            },
-            {
-              Icon: SiReact,
-              name: "react",
-              color: "bg-cyan-600",
-              borderColor: "border-cyan-500/40",
-              delay: 4,
-              radius: 100,
-              duration: 12,
-            },
-            {
-              Icon: SiPython,
-              name: "python",
-              color: "bg-green-500",
-              borderColor: "border-green-500/40",
-              delay: 8,
-              radius: 100,
-              duration: 12,
-            },
-          ].map((tech, index) => (
-            <motion.div
-              key={`inner-${index}`}
-              className="absolute top-1/2 left-1/2"
-              style={{
-                marginLeft: "-20px",
-                marginTop: "-20px",
-              }}
-              animate={{
-                x: [
-                  Math.cos((tech.delay * Math.PI) / 6) * tech.radius,
-                  Math.cos(((tech.delay + 1) * Math.PI) / 6) * tech.radius,
-                  Math.cos(((tech.delay + 2) * Math.PI) / 6) * tech.radius,
-                  Math.cos(((tech.delay + 3) * Math.PI) / 6) * tech.radius,
-                  Math.cos(((tech.delay + 4) * Math.PI) / 6) * tech.radius,
-                  Math.cos(((tech.delay + 5) * Math.PI) / 6) * tech.radius,
-                  Math.cos(((tech.delay + 6) * Math.PI) / 6) * tech.radius,
-                  Math.cos(((tech.delay + 7) * Math.PI) / 6) * tech.radius,
-                  Math.cos(((tech.delay + 8) * Math.PI) / 6) * tech.radius,
-                  Math.cos(((tech.delay + 9) * Math.PI) / 6) * tech.radius,
-                  Math.cos(((tech.delay + 10) * Math.PI) / 6) * tech.radius,
-                  Math.cos(((tech.delay + 11) * Math.PI) / 6) * tech.radius,
-                  Math.cos((tech.delay * Math.PI) / 6) * tech.radius,
-                ],
-                y: [
-                  Math.sin((tech.delay * Math.PI) / 6) * tech.radius,
-                  Math.sin(((tech.delay + 1) * Math.PI) / 6) * tech.radius,
-                  Math.sin(((tech.delay + 2) * Math.PI) / 6) * tech.radius,
-                  Math.sin(((tech.delay + 3) * Math.PI) / 6) * tech.radius,
-                  Math.sin(((tech.delay + 4) * Math.PI) / 6) * tech.radius,
-                  Math.sin(((tech.delay + 5) * Math.PI) / 6) * tech.radius,
-                  Math.sin(((tech.delay + 6) * Math.PI) / 6) * tech.radius,
-                  Math.sin(((tech.delay + 7) * Math.PI) / 6) * tech.radius,
-                  Math.sin(((tech.delay + 8) * Math.PI) / 6) * tech.radius,
-                  Math.sin(((tech.delay + 9) * Math.PI) / 6) * tech.radius,
-                  Math.sin(((tech.delay + 10) * Math.PI) / 6) * tech.radius,
-                  Math.sin(((tech.delay + 11) * Math.PI) / 6) * tech.radius,
-                  Math.sin((tech.delay * Math.PI) / 6) * tech.radius,
-                ],
-              }}
-              transition={{
-                duration: tech.duration,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            >
+        {!activeTech && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95, height: 0 }}
+            transition={{ duration: 0.35 }}
+            className="mb-4 mt-4 relative w-full max-w-lg mx-auto h-64"
+          >
+            {/* Central Hub */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
               <motion.div
-                onHoverStart={() => setHoveredTech(tech.name)}
-                onHoverEnd={() => setHoveredTech(null)}
-                onClick={() => setActiveTech(tech.name)}
-                onTap={() => setActiveTech(tech.name)}
-                whileHover={{ scale: 1.15 }}
-                whileTap={{ scale: 0.95, rotate: 360 }}
-                className={`w-12 h-12 ${tech.color} rounded-full flex items-center justify-center border-2 ${tech.borderColor} shadow-lg cursor-pointer`}
+                animate={{
+                  rotate: 360,
+                  boxShadow: [
+                    "0 0 20px rgba(139, 92, 246, 0.4)",
+                    "0 0 40px rgba(139, 92, 246, 0.6)",
+                    "0 0 20px rgba(139, 92, 246, 0.4)",
+                  ],
+                }}
+                transition={{
+                  rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+                  boxShadow: {
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  },
+                }}
+                className="w-16 h-16 rounded-full bg-gradient-to-r from-galaxy-glow to-galaxy-starfield flex items-center justify-center border-2 border-galaxy-cosmic"
+              >
+                <Code className="w-8 h-8 text-white" />
+              </motion.div>
+            </div>
+
+            {/* Orbital Paths */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <motion.div
+                className="absolute border border-galaxy-border/20 rounded-full"
                 style={{
-                  boxShadow: `0 0 20px ${tech.color.replace(
-                    "bg-",
-                    "rgba("
-                  )}, 0.4)`,
+                  width: "200px",
+                  height: "200px",
+                  left: "-100px",
+                  top: "-100px",
+                }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              />
+              <motion.div
+                className="absolute border border-galaxy-border/10 rounded-full"
+                style={{
+                  width: "280px",
+                  height: "280px",
+                  left: "-140px",
+                  top: "-140px",
+                }}
+                animate={{ rotate: -360 }}
+                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+              />
+            </div>
+
+            {/* Orbiting Tech Icons - Inner Ring */}
+            {[
+              {
+                Icon: SiJavascript,
+                name: "javascript",
+                color: "bg-yellow-400",
+                borderColor: "border-yellow-500/40",
+                delay: 0,
+                radius: 100,
+                duration: 12,
+              },
+              {
+                Icon: SiReact,
+                name: "react",
+                color: "bg-cyan-600",
+                borderColor: "border-cyan-500/40",
+                delay: 4,
+                radius: 100,
+                duration: 12,
+              },
+              {
+                Icon: SiPython,
+                name: "python",
+                color: "bg-green-500",
+                borderColor: "border-green-500/40",
+                delay: 8,
+                radius: 100,
+                duration: 12,
+              },
+            ].map((tech, index) => (
+              <motion.div
+                key={`inner-${index}`}
+                className="absolute top-1/2 left-1/2"
+                style={{
+                  marginLeft: "-20px",
+                  marginTop: "-20px",
+                }}
+                animate={{
+                  x: [
+                    Math.cos((tech.delay * Math.PI) / 6) * tech.radius,
+                    Math.cos(((tech.delay + 1) * Math.PI) / 6) * tech.radius,
+                    Math.cos(((tech.delay + 2) * Math.PI) / 6) * tech.radius,
+                    Math.cos(((tech.delay + 3) * Math.PI) / 6) * tech.radius,
+                    Math.cos(((tech.delay + 4) * Math.PI) / 6) * tech.radius,
+                    Math.cos(((tech.delay + 5) * Math.PI) / 6) * tech.radius,
+                    Math.cos(((tech.delay + 6) * Math.PI) / 6) * tech.radius,
+                    Math.cos(((tech.delay + 7) * Math.PI) / 6) * tech.radius,
+                    Math.cos(((tech.delay + 8) * Math.PI) / 6) * tech.radius,
+                    Math.cos(((tech.delay + 9) * Math.PI) / 6) * tech.radius,
+                    Math.cos(((tech.delay + 10) * Math.PI) / 6) * tech.radius,
+                    Math.cos(((tech.delay + 11) * Math.PI) / 6) * tech.radius,
+                    Math.cos((tech.delay * Math.PI) / 6) * tech.radius,
+                  ],
+                  y: [
+                    Math.sin((tech.delay * Math.PI) / 6) * tech.radius,
+                    Math.sin(((tech.delay + 1) * Math.PI) / 6) * tech.radius,
+                    Math.sin(((tech.delay + 2) * Math.PI) / 6) * tech.radius,
+                    Math.sin(((tech.delay + 3) * Math.PI) / 6) * tech.radius,
+                    Math.sin(((tech.delay + 4) * Math.PI) / 6) * tech.radius,
+                    Math.sin(((tech.delay + 5) * Math.PI) / 6) * tech.radius,
+                    Math.sin(((tech.delay + 6) * Math.PI) / 6) * tech.radius,
+                    Math.sin(((tech.delay + 7) * Math.PI) / 6) * tech.radius,
+                    Math.sin(((tech.delay + 8) * Math.PI) / 6) * tech.radius,
+                    Math.sin(((tech.delay + 9) * Math.PI) / 6) * tech.radius,
+                    Math.sin(((tech.delay + 10) * Math.PI) / 6) * tech.radius,
+                    Math.sin(((tech.delay + 11) * Math.PI) / 6) * tech.radius,
+                    Math.sin((tech.delay * Math.PI) / 6) * tech.radius,
+                  ],
+                }}
+                transition={{
+                  duration: tech.duration,
+                  repeat: Infinity,
+                  ease: "linear",
                 }}
               >
-                <tech.Icon className="w-6 h-6 text-white" />
+                <motion.div
+                  onHoverStart={() => setHoveredTech(tech.name)}
+                  onHoverEnd={() => setHoveredTech(null)}
+                  onClick={() => {
+                    setHoveredTech(null);
+                    setActiveTech(tech.name);
+                  }}
+                  onTap={() => {
+                    setHoveredTech(null);
+                    setActiveTech(tech.name);
+                  }}
+                  whileHover={{ scale: 1.15 }}
+                  whileTap={{ scale: 0.95, rotate: 360 }}
+                  className={`w-12 h-12 ${tech.color} rounded-full flex items-center justify-center border-2 ${tech.borderColor} shadow-lg cursor-pointer`}
+                  style={{
+                    boxShadow: `0 0 20px ${tech.color.replace(
+                      "bg-",
+                      "rgba("
+                    )}, 0.4)`,
+                  }}
+                >
+                  <tech.Icon className="w-6 h-6 text-white" />
+                </motion.div>
               </motion.div>
-            </motion.div>
-          ))}
+            ))}
 
-          {/* Orbiting Tech Icons - Outer Ring */}
-          {[
-            {
-              Icon: SiTypescript,
-              name: "typescript",
-              color: "bg-blue-500",
-              borderColor: "border-blue-500/40",
-              delay: 0,
-              radius: 140,
-              duration: 16,
-            },
-            {
-              Icon: TbBrandReactNative,
-              name: "reactnative",
-              color: "bg-cyan-900",
-              borderColor: "border-cyan-500/40",
-              delay: 5.33,
-              radius: 140,
-              duration: 16,
-            },
-            {
-              Icon: FaJava,
-              name: "java",
-              color: "bg-orange-500",
-              borderColor: "border-orange-500/40",
-              delay: 10.66,
-              radius: 140,
-              duration: 16,
-            },
-          ].map((tech, index) => (
-            <motion.div
-              key={`outer-${index}`}
-              className="absolute top-1/2 left-1/2"
-              style={{
-                marginLeft: "-20px",
-                marginTop: "-20px",
-              }}
-              animate={{
-                x: [
-                  Math.cos((tech.delay * Math.PI) / 8) * tech.radius,
-                  Math.cos(((tech.delay + 1) * Math.PI) / 8) * tech.radius,
-                  Math.cos(((tech.delay + 2) * Math.PI) / 8) * tech.radius,
-                  Math.cos(((tech.delay + 3) * Math.PI) / 8) * tech.radius,
-                  Math.cos(((tech.delay + 4) * Math.PI) / 8) * tech.radius,
-                  Math.cos(((tech.delay + 5) * Math.PI) / 8) * tech.radius,
-                  Math.cos(((tech.delay + 6) * Math.PI) / 8) * tech.radius,
-                  Math.cos(((tech.delay + 7) * Math.PI) / 8) * tech.radius,
-                  Math.cos(((tech.delay + 8) * Math.PI) / 8) * tech.radius,
-                  Math.cos(((tech.delay + 9) * Math.PI) / 8) * tech.radius,
-                  Math.cos(((tech.delay + 10) * Math.PI) / 8) * tech.radius,
-                  Math.cos(((tech.delay + 11) * Math.PI) / 8) * tech.radius,
-                  Math.cos(((tech.delay + 12) * Math.PI) / 8) * tech.radius,
-                  Math.cos(((tech.delay + 13) * Math.PI) / 8) * tech.radius,
-                  Math.cos(((tech.delay + 14) * Math.PI) / 8) * tech.radius,
-                  Math.cos(((tech.delay + 15) * Math.PI) / 8) * tech.radius,
-                  Math.cos((tech.delay * Math.PI) / 8) * tech.radius,
-                ],
-                y: [
-                  Math.sin((tech.delay * Math.PI) / 8) * tech.radius,
-                  Math.sin(((tech.delay + 1) * Math.PI) / 8) * tech.radius,
-                  Math.sin(((tech.delay + 2) * Math.PI) / 8) * tech.radius,
-                  Math.sin(((tech.delay + 3) * Math.PI) / 8) * tech.radius,
-                  Math.sin(((tech.delay + 4) * Math.PI) / 8) * tech.radius,
-                  Math.sin(((tech.delay + 5) * Math.PI) / 8) * tech.radius,
-                  Math.sin(((tech.delay + 6) * Math.PI) / 8) * tech.radius,
-                  Math.sin(((tech.delay + 7) * Math.PI) / 8) * tech.radius,
-                  Math.sin(((tech.delay + 8) * Math.PI) / 8) * tech.radius,
-                  Math.sin(((tech.delay + 9) * Math.PI) / 8) * tech.radius,
-                  Math.sin(((tech.delay + 10) * Math.PI) / 8) * tech.radius,
-                  Math.sin(((tech.delay + 11) * Math.PI) / 8) * tech.radius,
-                  Math.sin(((tech.delay + 12) * Math.PI) / 8) * tech.radius,
-                  Math.sin(((tech.delay + 13) * Math.PI) / 8) * tech.radius,
-                  Math.sin(((tech.delay + 14) * Math.PI) / 8) * tech.radius,
-                  Math.sin(((tech.delay + 15) * Math.PI) / 8) * tech.radius,
-                  Math.sin((tech.delay * Math.PI) / 8) * tech.radius,
-                ],
-              }}
-              transition={{
-                duration: tech.duration,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            >
+            {/* Orbiting Tech Icons - Outer Ring */}
+            {[
+              {
+                Icon: SiTypescript,
+                name: "typescript",
+                color: "bg-blue-500",
+                borderColor: "border-blue-500/40",
+                delay: 0,
+                radius: 140,
+                duration: 16,
+              },
+              {
+                Icon: TbBrandReactNative,
+                name: "reactnative",
+                color: "bg-cyan-900",
+                borderColor: "border-cyan-500/40",
+                delay: 5.33,
+                radius: 140,
+                duration: 16,
+              },
+              {
+                Icon: FaJava,
+                name: "java",
+                color: "bg-orange-500",
+                borderColor: "border-orange-500/40",
+                delay: 10.66,
+                radius: 140,
+                duration: 16,
+              },
+            ].map((tech, index) => (
               <motion.div
-                onHoverStart={() => setHoveredTech(tech.name)}
-                onHoverEnd={() => setHoveredTech(null)}
-                onClick={() => setActiveTech(tech.name)}
-                onTap={() => setActiveTech(tech.name)}
-                whileHover={{ scale: 1.15 }}
-                whileTap={{ scale: 0.95, rotate: 360 }}
-                className={`w-12 h-12 ${tech.color} rounded-full flex items-center justify-center border-2 ${tech.borderColor} shadow-lg cursor-pointer`}
+                key={`outer-${index}`}
+                className="absolute top-1/2 left-1/2"
                 style={{
-                  boxShadow: `0 0 20px ${tech.color.replace(
-                    "bg-",
-                    "rgba("
-                  )}, 0.4)`,
+                  marginLeft: "-20px",
+                  marginTop: "-20px",
+                }}
+                animate={{
+                  x: [
+                    Math.cos((tech.delay * Math.PI) / 8) * tech.radius,
+                    Math.cos(((tech.delay + 1) * Math.PI) / 8) * tech.radius,
+                    Math.cos(((tech.delay + 2) * Math.PI) / 8) * tech.radius,
+                    Math.cos(((tech.delay + 3) * Math.PI) / 8) * tech.radius,
+                    Math.cos(((tech.delay + 4) * Math.PI) / 8) * tech.radius,
+                    Math.cos(((tech.delay + 5) * Math.PI) / 8) * tech.radius,
+                    Math.cos(((tech.delay + 6) * Math.PI) / 8) * tech.radius,
+                    Math.cos(((tech.delay + 7) * Math.PI) / 8) * tech.radius,
+                    Math.cos(((tech.delay + 8) * Math.PI) / 8) * tech.radius,
+                    Math.cos(((tech.delay + 9) * Math.PI) / 8) * tech.radius,
+                    Math.cos(((tech.delay + 10) * Math.PI) / 8) * tech.radius,
+                    Math.cos(((tech.delay + 11) * Math.PI) / 8) * tech.radius,
+                    Math.cos(((tech.delay + 12) * Math.PI) / 8) * tech.radius,
+                    Math.cos(((tech.delay + 13) * Math.PI) / 8) * tech.radius,
+                    Math.cos(((tech.delay + 14) * Math.PI) / 8) * tech.radius,
+                    Math.cos(((tech.delay + 15) * Math.PI) / 8) * tech.radius,
+                    Math.cos((tech.delay * Math.PI) / 8) * tech.radius,
+                  ],
+                  y: [
+                    Math.sin((tech.delay * Math.PI) / 8) * tech.radius,
+                    Math.sin(((tech.delay + 1) * Math.PI) / 8) * tech.radius,
+                    Math.sin(((tech.delay + 2) * Math.PI) / 8) * tech.radius,
+                    Math.sin(((tech.delay + 3) * Math.PI) / 8) * tech.radius,
+                    Math.sin(((tech.delay + 4) * Math.PI) / 8) * tech.radius,
+                    Math.sin(((tech.delay + 5) * Math.PI) / 8) * tech.radius,
+                    Math.sin(((tech.delay + 6) * Math.PI) / 8) * tech.radius,
+                    Math.sin(((tech.delay + 7) * Math.PI) / 8) * tech.radius,
+                    Math.sin(((tech.delay + 8) * Math.PI) / 8) * tech.radius,
+                    Math.sin(((tech.delay + 9) * Math.PI) / 8) * tech.radius,
+                    Math.sin(((tech.delay + 10) * Math.PI) / 8) * tech.radius,
+                    Math.sin(((tech.delay + 11) * Math.PI) / 8) * tech.radius,
+                    Math.sin(((tech.delay + 12) * Math.PI) / 8) * tech.radius,
+                    Math.sin(((tech.delay + 13) * Math.PI) / 8) * tech.radius,
+                    Math.sin(((tech.delay + 14) * Math.PI) / 8) * tech.radius,
+                    Math.sin(((tech.delay + 15) * Math.PI) / 8) * tech.radius,
+                    Math.sin((tech.delay * Math.PI) / 8) * tech.radius,
+                  ],
+                }}
+                transition={{
+                  duration: tech.duration,
+                  repeat: Infinity,
+                  ease: "linear",
                 }}
               >
-                <tech.Icon className="w-6 h-6 text-white" />
+                <motion.div
+                  onHoverStart={() => setHoveredTech(tech.name)}
+                  onHoverEnd={() => setHoveredTech(null)}
+                  onClick={() => {
+                    setHoveredTech(null);
+                    setActiveTech(tech.name);
+                  }}
+                  onTap={() => {
+                    setHoveredTech(null);
+                    setActiveTech(tech.name);
+                  }}
+                  whileHover={{ scale: 1.15 }}
+                  whileTap={{ scale: 0.95, rotate: 360 }}
+                  className={`w-12 h-12 ${tech.color} rounded-full flex items-center justify-center border-2 ${tech.borderColor} shadow-lg cursor-pointer`}
+                  style={{
+                    boxShadow: `0 0 20px ${tech.color.replace(
+                      "bg-",
+                      "rgba("
+                    )}, 0.4)`,
+                  }}
+                >
+                  <tech.Icon className="w-6 h-6 text-white" />
+                </motion.div>
               </motion.div>
-            </motion.div>
-          ))}
+            ))}
 
-          {/* Fixed Stable Mini Preview Panel - Only on Hover */}
-          <AnimatePresence>
-            {hoveredTech && !activeTech && (
-              <motion.div
-                key="hover-preview"
-                initial={{ opacity: 0, y: 8, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 8, scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-                className={`absolute left-1/2 transform -translate-x-1/2 z-60 pointer-events-none w-[280px] max-w-[90vw] ${
-                  getTechProjects(hoveredTech).length > 2
-                    ? "-bottom-12"
-                    : "-bottom-24"
-                }`}
-              >
-                <div className="bg-galaxy-cosmic border border-galaxy-border rounded-lg p-3 shadow-2xl backdrop-blur-sm">
-                  <div className="text-[10px] text-galaxy-text-muted mb-2 uppercase tracking-wide">
-                    {hoveredTech} Related Projects
-                  </div>
+            {/* Fixed Stable Mini Preview Panel - Only on Hover */}
+            <AnimatePresence>
+              {hoveredTech && !activeTech && (
+                <motion.div
+                  key="hover-preview"
+                  initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  className={`absolute left-1/2 transform -translate-x-1/2 z-60 pointer-events-none w-[280px] max-w-[90vw] ${
+                    getTechProjects(hoveredTech).length > 2
+                      ? "-bottom-12"
+                      : "-bottom-24"
+                  }`}
+                >
+                  <div className="bg-galaxy-cosmic border border-galaxy-border rounded-lg p-3 shadow-2xl backdrop-blur-sm">
+                    <div className="text-[10px] text-galaxy-text-muted mb-2 uppercase tracking-wide">
+                      {hoveredTech} Related Projects
+                    </div>
 
-                  {/* Dynamic content container - auto-adjusts height */}
-                  <div className="space-y-2">
-                    {getTechProjects(hoveredTech).length > 0 ? (
-                      getTechProjects(hoveredTech).map((project, idx) => (
-                        <div
-                          key={project.id}
-                          className={
-                            idx > 0
-                              ? "pt-2 border-t border-galaxy-border/30"
-                              : ""
-                          }
-                        >
-                          <div className="flex items-center gap-2 mb-1">
-                            <StatusDot status={project.status} />
-                            <div className="text-xs font-bold text-galaxy-text-secondary flex-1 line-clamp-2">
-                              {project.title}
+                    {/* Dynamic content container - auto-adjusts height */}
+                    <div className="space-y-2">
+                      {getTechProjects(hoveredTech).length > 0 ? (
+                        getTechProjects(hoveredTech).map((project, idx) => (
+                          <div
+                            key={project.id}
+                            className={
+                              idx > 0
+                                ? "pt-2 border-t border-galaxy-border/30"
+                                : ""
+                            }
+                          >
+                            <div className="flex items-center gap-2 mb-1">
+                              <StatusDot status={project.status} />
+                              <div className="text-xs font-bold text-galaxy-text-secondary flex-1 line-clamp-2">
+                                {project.title}
+                              </div>
+                            </div>
+                            <div className="text-[10px] text-galaxy-text-muted leading-relaxed line-clamp-3">
+                              {project.short}
                             </div>
                           </div>
-                          <div className="text-[10px] text-galaxy-text-muted leading-relaxed line-clamp-3">
-                            {project.short}
-                          </div>
+                        ))
+                      ) : (
+                        <div className="text-xs text-galaxy-text-muted text-center py-2">
+                          {hoveredTech === "python"
+                            ? "Worked with Python"
+                            : "Experience with this tech"}
                         </div>
-                      ))
-                    ) : (
-                      <div className="text-xs text-galaxy-text-muted text-center py-2">
-                        {hoveredTech === "python"
-                          ? "Worked with Python"
-                          : "Experience with this tech"}
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
-                </div>
-                {/* Arrow pointer */}
-                <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-b-[8px] border-transparent border-b-galaxy-border" />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
+                  {/* Arrow pointer */}
+                  <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-b-[8px] border-transparent border-b-galaxy-border" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        )}
 
         {/* Simplified Description */}
         <motion.div
@@ -692,3 +710,6 @@ const Hero = () => {
 };
 
 export default Hero;
+
+// Export the activeTech state for parent components
+export { Hero };

@@ -357,7 +357,7 @@ const ConstellationLayer: React.FC = () => {
   const tooltipConfig = getTooltipSize(viewport);
 
   return (
-    <>
+    <div className="constellation-layer">
       {/* Cosmic Particle Background */}
       <div className="absolute inset-0 pointer-events-none z-10">
         {cosmicParticles.map((particle) => (
@@ -543,7 +543,7 @@ const ConstellationLayer: React.FC = () => {
           </motion.div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

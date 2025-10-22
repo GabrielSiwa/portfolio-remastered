@@ -365,3 +365,10 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-galaxy-highlight);
 }
+
+/* Hide constellation background when modal is open */
+body[data-modal-open="true"] .constellation-layer {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-out;
+}
