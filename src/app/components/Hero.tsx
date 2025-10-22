@@ -2,15 +2,7 @@
 
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
-import {
-  Github,
-  Linkedin,
-  Download,
-  Code,
-  Sparkles,
-  Coffee,
-  Heart,
-} from "lucide-react";
+import { Github, Linkedin, Download, Code, Heart } from "lucide-react";
 import { SiReact, SiPython, SiTypescript, SiJavascript } from "react-icons/si";
 import { FaJava } from "react-icons/fa";
 import { TbBrandReactNative } from "react-icons/tb";
@@ -177,80 +169,241 @@ const Hero = () => {
           </div>
         </motion.div>
 
-        {/* Tech Stack Icons */}
+        {/* Floating Tech Orbits */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 1.0, duration: 0.8 }}
-          className="mb-6"
+          className="mb-4 mt-4 relative w-full max-w-lg mx-auto h-64"
         >
-          <div className="flex flex-wrap items-center justify-center gap-4 max-w-md mx-auto">
-            {/* JavaScript */}
+          {/* Central Hub */}
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
             <motion.div
-              whileHover={{ scale: 1.2, y: -5 }}
-              className="p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20 hover:border-yellow-500/40 transition-all duration-300"
-              title="JavaScript"
+              animate={{
+                rotate: 360,
+                boxShadow: [
+                  "0 0 20px rgba(139, 92, 246, 0.4)",
+                  "0 0 40px rgba(139, 92, 246, 0.6)",
+                  "0 0 20px rgba(139, 92, 246, 0.4)",
+                ],
+              }}
+              transition={{
+                rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+                boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+              }}
+              className="w-16 h-16 rounded-full bg-gradient-to-r from-galaxy-glow to-galaxy-starfield flex items-center justify-center border-2 border-galaxy-cosmic"
             >
-              <div className="w-8 h-8 bg-yellow-400 rounded flex items-center justify-center text-black font-bold text-sm">
-                <SiJavascript className="w-4 h-4" aria-hidden />
-              </div>
-            </motion.div>
-
-            {/* TypeScript */}
-            <motion.div
-              whileHover={{ scale: 1.2, y: -5 }}
-              className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300"
-              title="TypeScript"
-            >
-              <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center text-white font-bold text-sm">
-                <SiTypescript className="w-4 h-4" aria-hidden />
-              </div>
-            </motion.div>
-
-            {/* React */}
-            <motion.div
-              whileHover={{ scale: 1.2, y: -5 }}
-              className="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300"
-              title="React"
-            >
-              <div className="w-8 h-8 bg-cyan-600 rounded flex items-center justify-center text-white font-bold text-sm">
-                <SiReact className="w-4 h-4" aria-hidden />
-              </div>
-            </motion.div>
-
-            {/* React Native */}
-            <motion.div
-              whileHover={{ scale: 1.2, y: -5 }}
-              className="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300"
-              title="React Native"
-            >
-              <div className="w-8 h-8 bg-cyan-900 rounded flex items-center justify-center text-white font-bold text-sm">
-                <TbBrandReactNative className="w-4 h-4" aria-hidden />
-              </div>
-            </motion.div>
-
-            {/* Python */}
-            <motion.div
-              whileHover={{ scale: 1.2, y: -5 }}
-              className="p-3 rounded-lg bg-green-500/10 border border-green-500/20 hover:border-green-500/40 transition-all duration-300"
-              title="Python"
-            >
-              <div className="w-8 h-8 bg-green-500 rounded flex items-center justify-center text-white font-bold text-sm">
-                <SiPython className="w-4 h-4" aria-hidden />
-              </div>
-            </motion.div>
-
-            {/* Java */}
-            <motion.div
-              whileHover={{ scale: 1.2, y: -5 }}
-              className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20 hover:border-orange-500/40 transition-all duration-300"
-              title="Java"
-            >
-              <div className="w-8 h-8 bg-orange-500 rounded flex items-center justify-center text-white font-bold text-sm">
-                <FaJava className="w-4 h-4" aria-hidden />
-              </div>
+              <Code className="w-8 h-8 text-white" />
             </motion.div>
           </div>
+
+          {/* Orbital Paths */}
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <motion.div
+              className="absolute border border-galaxy-border/20 rounded-full"
+              style={{
+                width: "200px",
+                height: "200px",
+                left: "-100px",
+                top: "-100px",
+              }}
+              animate={{ rotate: 360 }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.div
+              className="absolute border border-galaxy-border/10 rounded-full"
+              style={{
+                width: "280px",
+                height: "280px",
+                left: "-140px",
+                top: "-140px",
+              }}
+              animate={{ rotate: -360 }}
+              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+            />
+          </div>
+
+          {/* Orbiting Tech Icons - Inner Ring */}
+          {[
+            {
+              Icon: SiJavascript,
+              color: "bg-yellow-400",
+              borderColor: "border-yellow-500/40",
+              delay: 0,
+              radius: 100,
+              duration: 12,
+            },
+            {
+              Icon: SiReact,
+              color: "bg-cyan-600",
+              borderColor: "border-cyan-500/40",
+              delay: 4,
+              radius: 100,
+              duration: 12,
+            },
+            {
+              Icon: SiPython,
+              color: "bg-green-500",
+              borderColor: "border-green-500/40",
+              delay: 8,
+              radius: 100,
+              duration: 12,
+            },
+          ].map((tech, index) => (
+            <motion.div
+              key={`inner-${index}`}
+              className="absolute top-1/2 left-1/2"
+              style={{
+                marginLeft: "-20px",
+                marginTop: "-20px",
+              }}
+              animate={{
+                x: [
+                  Math.cos((tech.delay * Math.PI) / 6) * tech.radius,
+                  Math.cos(((tech.delay + 1) * Math.PI) / 6) * tech.radius,
+                  Math.cos(((tech.delay + 2) * Math.PI) / 6) * tech.radius,
+                  Math.cos(((tech.delay + 3) * Math.PI) / 6) * tech.radius,
+                  Math.cos(((tech.delay + 4) * Math.PI) / 6) * tech.radius,
+                  Math.cos(((tech.delay + 5) * Math.PI) / 6) * tech.radius,
+                  Math.cos(((tech.delay + 6) * Math.PI) / 6) * tech.radius,
+                  Math.cos(((tech.delay + 7) * Math.PI) / 6) * tech.radius,
+                  Math.cos(((tech.delay + 8) * Math.PI) / 6) * tech.radius,
+                  Math.cos(((tech.delay + 9) * Math.PI) / 6) * tech.radius,
+                  Math.cos(((tech.delay + 10) * Math.PI) / 6) * tech.radius,
+                  Math.cos(((tech.delay + 11) * Math.PI) / 6) * tech.radius,
+                  Math.cos((tech.delay * Math.PI) / 6) * tech.radius,
+                ],
+                y: [
+                  Math.sin((tech.delay * Math.PI) / 6) * tech.radius,
+                  Math.sin(((tech.delay + 1) * Math.PI) / 6) * tech.radius,
+                  Math.sin(((tech.delay + 2) * Math.PI) / 6) * tech.radius,
+                  Math.sin(((tech.delay + 3) * Math.PI) / 6) * tech.radius,
+                  Math.sin(((tech.delay + 4) * Math.PI) / 6) * tech.radius,
+                  Math.sin(((tech.delay + 5) * Math.PI) / 6) * tech.radius,
+                  Math.sin(((tech.delay + 6) * Math.PI) / 6) * tech.radius,
+                  Math.sin(((tech.delay + 7) * Math.PI) / 6) * tech.radius,
+                  Math.sin(((tech.delay + 8) * Math.PI) / 6) * tech.radius,
+                  Math.sin(((tech.delay + 9) * Math.PI) / 6) * tech.radius,
+                  Math.sin(((tech.delay + 10) * Math.PI) / 6) * tech.radius,
+                  Math.sin(((tech.delay + 11) * Math.PI) / 6) * tech.radius,
+                  Math.sin((tech.delay * Math.PI) / 6) * tech.radius,
+                ],
+              }}
+              transition={{
+                duration: tech.duration,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.3, rotate: 360 }}
+                className={`w-12 h-12 ${tech.color} rounded-full flex items-center justify-center border-2 ${tech.borderColor} shadow-lg cursor-pointer`}
+                style={{
+                  boxShadow: `0 0 20px ${tech.color.replace(
+                    "bg-",
+                    "rgba("
+                  )}, 0.4)`,
+                }}
+              >
+                <tech.Icon className="w-6 h-6 text-white" />
+              </motion.div>
+            </motion.div>
+          ))}
+
+          {/* Orbiting Tech Icons - Outer Ring */}
+          {[
+            {
+              Icon: SiTypescript,
+              color: "bg-blue-500",
+              borderColor: "border-blue-500/40",
+              delay: 0,
+              radius: 140,
+              duration: 16,
+            },
+            {
+              Icon: TbBrandReactNative,
+              color: "bg-cyan-900",
+              borderColor: "border-cyan-500/40",
+              delay: 5.33,
+              radius: 140,
+              duration: 16,
+            },
+            {
+              Icon: FaJava,
+              color: "bg-orange-500",
+              borderColor: "border-orange-500/40",
+              delay: 10.66,
+              radius: 140,
+              duration: 16,
+            },
+          ].map((tech, index) => (
+            <motion.div
+              key={`outer-${index}`}
+              className="absolute top-1/2 left-1/2"
+              style={{
+                marginLeft: "-20px",
+                marginTop: "-20px",
+              }}
+              animate={{
+                x: [
+                  Math.cos((tech.delay * Math.PI) / 8) * tech.radius,
+                  Math.cos(((tech.delay + 1) * Math.PI) / 8) * tech.radius,
+                  Math.cos(((tech.delay + 2) * Math.PI) / 8) * tech.radius,
+                  Math.cos(((tech.delay + 3) * Math.PI) / 8) * tech.radius,
+                  Math.cos(((tech.delay + 4) * Math.PI) / 8) * tech.radius,
+                  Math.cos(((tech.delay + 5) * Math.PI) / 8) * tech.radius,
+                  Math.cos(((tech.delay + 6) * Math.PI) / 8) * tech.radius,
+                  Math.cos(((tech.delay + 7) * Math.PI) / 8) * tech.radius,
+                  Math.cos(((tech.delay + 8) * Math.PI) / 8) * tech.radius,
+                  Math.cos(((tech.delay + 9) * Math.PI) / 8) * tech.radius,
+                  Math.cos(((tech.delay + 10) * Math.PI) / 8) * tech.radius,
+                  Math.cos(((tech.delay + 11) * Math.PI) / 8) * tech.radius,
+                  Math.cos(((tech.delay + 12) * Math.PI) / 8) * tech.radius,
+                  Math.cos(((tech.delay + 13) * Math.PI) / 8) * tech.radius,
+                  Math.cos(((tech.delay + 14) * Math.PI) / 8) * tech.radius,
+                  Math.cos(((tech.delay + 15) * Math.PI) / 8) * tech.radius,
+                  Math.cos((tech.delay * Math.PI) / 8) * tech.radius,
+                ],
+                y: [
+                  Math.sin((tech.delay * Math.PI) / 8) * tech.radius,
+                  Math.sin(((tech.delay + 1) * Math.PI) / 8) * tech.radius,
+                  Math.sin(((tech.delay + 2) * Math.PI) / 8) * tech.radius,
+                  Math.sin(((tech.delay + 3) * Math.PI) / 8) * tech.radius,
+                  Math.sin(((tech.delay + 4) * Math.PI) / 8) * tech.radius,
+                  Math.sin(((tech.delay + 5) * Math.PI) / 8) * tech.radius,
+                  Math.sin(((tech.delay + 6) * Math.PI) / 8) * tech.radius,
+                  Math.sin(((tech.delay + 7) * Math.PI) / 8) * tech.radius,
+                  Math.sin(((tech.delay + 8) * Math.PI) / 8) * tech.radius,
+                  Math.sin(((tech.delay + 9) * Math.PI) / 8) * tech.radius,
+                  Math.sin(((tech.delay + 10) * Math.PI) / 8) * tech.radius,
+                  Math.sin(((tech.delay + 11) * Math.PI) / 8) * tech.radius,
+                  Math.sin(((tech.delay + 12) * Math.PI) / 8) * tech.radius,
+                  Math.sin(((tech.delay + 13) * Math.PI) / 8) * tech.radius,
+                  Math.sin(((tech.delay + 14) * Math.PI) / 8) * tech.radius,
+                  Math.sin(((tech.delay + 15) * Math.PI) / 8) * tech.radius,
+                  Math.sin((tech.delay * Math.PI) / 8) * tech.radius,
+                ],
+              }}
+              transition={{
+                duration: tech.duration,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.3, rotate: 360 }}
+                className={`w-12 h-12 ${tech.color} rounded-full flex items-center justify-center border-2 ${tech.borderColor} shadow-lg cursor-pointer`}
+                style={{
+                  boxShadow: `0 0 20px ${tech.color.replace(
+                    "bg-",
+                    "rgba("
+                  )}, 0.4)`,
+                }}
+              >
+                <tech.Icon className="w-6 h-6 text-white" />
+              </motion.div>
+            </motion.div>
+          ))}
         </motion.div>
 
         {/* Simplified Description */}
@@ -317,7 +470,7 @@ const Hero = () => {
         </motion.div>
 
         {/* Tech Stack Icons */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2.2, duration: 0.8 }}
@@ -342,7 +495,7 @@ const Hero = () => {
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </motion.div> */}
       </motion.div>
     </div>
   );

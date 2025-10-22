@@ -219,6 +219,13 @@ export default function ProjectsPage() {
                   )}
 
                   <div className="flex flex-wrap gap-3 mt-6">
+                    {/* More Details Button */}
+                    <Link
+                      href={`/projects/${project.id}`}
+                      className="px-5 py-2 border border-galaxy-text-accent text-galaxy-text-accent rounded hover:bg-galaxy-text-accent hover:text-galaxy-nebula transition-colors"
+                    >
+                      More Details
+                    </Link>
                     {/* Demo/CTA Button */}
                     {project.cta?.url && !localVideoUrl ? (
                       <Link
@@ -239,14 +246,6 @@ export default function ProjectsPage() {
                         Live Demo
                       </Link>
                     ) : null}
-
-                    {/* More Details Button */}
-                    <Link
-                      href={`/projects/${project.id}`}
-                      className="px-5 py-2 border border-galaxy-text-accent text-galaxy-text-accent rounded hover:bg-galaxy-text-accent hover:text-galaxy-dark transition-colors"
-                    >
-                      More Details
-                    </Link>
 
                     {/* GitHub Repository Button */}
                     {project.repositoryUrl && (
