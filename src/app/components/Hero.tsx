@@ -1,25 +1,116 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Github, Linkedin, Download, Code, Heart } from "lucide-react";
 import { SiReact, SiPython, SiTypescript, SiJavascript } from "react-icons/si";
 import { FaJava } from "react-icons/fa";
 import { TbBrandReactNative } from "react-icons/tb";
 
+// Subtle status dot component
+const StatusDot = ({ status }: { status?: string }) => {
+  if (!status) return null;
+
+  const statusConfig: Record<string, { color: string; label: string }> = {
+    completed: { color: "bg-green-400", label: "Completed" },
+    ongoing: { color: "bg-blue-400", label: "Ongoing" },
+    "in-development": { color: "bg-yellow-400", label: "In Development" },
+  };
+
+  const config = statusConfig[status] || statusConfig.completed;
+
+  return (
+    <div className="relative group">
+      <div className={`w-2 h-2 rounded-full ${config.color} animate-pulse`} />
+      {/* Tooltip */}
+      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+        <div className="bg-galaxy-cosmic border border-galaxy-border rounded px-2 py-1 text-[9px] text-galaxy-text-secondary">
+          {config.label}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Project type from projects.json
+interface Project {
+  id: string;
+  title: string;
+  short: string;
+  techStack: string[];
+  status?: string;
+  image?: string;
+}
+
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  // Splash reveal will animate the full name instead of typing
+  const [hoveredTech, setHoveredTech] = useState<string | null>(null);
+  const [activeTech, setActiveTech] = useState<string | null>(null);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const autoHideTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
 
-  // Floating animation for profile image
-  // const floatingAnimation = {
-  //   y: [0, -20, 0],
-  //   transition: {
-  //     duration: 4,
-  //     repeat: Infinity,
-  //     ease: "easeInOut" as const,
-  //   },
-  // };
+  // Load projects from projects.json
+  useEffect(() => {
+    fetch("/projects.json")
+      .then((res) => res.json())
+      .then((data) => setProjects(data))
+      .catch((err) => console.error("Failed to load projects:", err));
+  }, []);
+
+  useEffect(() => {
+    if (autoHideTimerRef.current) {
+      clearTimeout(autoHideTimerRef.current);
+    }
+
+    if (hoveredTech) {
+      autoHideTimerRef.current = setTimeout(() => {
+        setHoveredTech(null);
+      }, 5000);
+    }
+
+    return () => {
+      if (autoHideTimerRef.current) {
+        clearTimeout(autoHideTimerRef.current);
+      }
+    };
+  }, [hoveredTech]);
+
+  // Lock scroll and handle Escape when full panel is open
+  useEffect(() => {
+    if (activeTech) {
+      document.body.style.overflow = "hidden";
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === "Escape") setActiveTech(null);
+      };
+      window.addEventListener("keydown", handleEscape);
+      return () => {
+        document.body.style.overflow = "";
+        window.removeEventListener("keydown", handleEscape);
+      };
+    }
+  }, [activeTech]);
+
+  // Map tech to relevant projects dynamically
+  const getTechProjects = (techName: string) => {
+    const techMap: Record<string, string[]> = {
+      javascript: ["JavaScript"],
+      react: ["React", "Next.js"],
+      python: ["Python"],
+      typescript: ["TypeScript"],
+      reactnative: ["React Native", "Expo"],
+      java: ["Svelte"], // Java icon shows Svelte projects
+    };
+
+    const relevantTechs = techMap[techName] || [];
+    const relatedProjects = projects.filter((project) =>
+      project.techStack.some((tech) =>
+        relevantTechs.some((rt) => tech.includes(rt))
+      )
+    );
+
+    return relatedProjects.slice(0, 2); // Show max 2 projects
+  };
 
   // Social links data
   const socialLinks = [
@@ -48,77 +139,7 @@ const Hero = () => {
       ref={containerRef}
       className="relative min-h-screen overflow-hidden pt-20"
     >
-      {/* Background layers are provided globally by RootLayout's <Background /> */}
-
       <motion.div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4">
-        {/* Profile Image with Enhanced Scroll Behavior */}
-        {/* <motion.div
-          initial={{ scale: 0, rotate: -180 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{
-            type: "spring",
-            stiffness: 260,
-            damping: 20,
-            delay: 0.2,
-          }}
-          className="mb-4"
-        > */}
-        {/* <motion.div animate={floatingAnimation} className="relative">
-            Simple Image Container
-            <div className="w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden border-4 border-galaxy-border glow-galaxy">
-              <Image
-                src="/images/profile.png"
-                alt="Gabriel Siwa Profile"
-                width={224}
-                height={224}
-                className="w-full h-full object-cover"
-                priority
-              />
-            </div> */}
-
-        {/* Rotating ring around profile
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 border-2 border-dashed border-galaxy-plasma rounded-full opacity-30"
-            /> */}
-
-        {/* Sparkles around profile - Only render on client
-            {isClient && (
-              <>
-                {[...Array(6)].map((_, i) => {
-                  const angle = (i * 60 * Math.PI) / 180;
-                  const radius = 35;
-                  const x = 50 + radius * Math.cos(angle);
-                  const y = 50 + radius * Math.sin(angle);
-
-                  return (
-                    <motion.div
-                      key={i}
-                      className="absolute transform -translate-x-1/2 -translate-y-1/2"
-                      style={{
-                        left: `${x}%`,
-                        top: `${y}%`,
-                      }}
-                      animate={{
-                        scale: [1, 1.5, 1],
-                        opacity: [0.5, 1, 0.5],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        delay: i * 0.3,
-                      }}
-                    >
-                      <Sparkles className="w-4 h-4 text-galaxy-stardust" />
-                    </motion.div>
-                  );
-                })}
-              </>
-            )} */}
-        {/* </motion.div>
-        </motion.div> */}
-
         {/* Main Heading with Splash Reveal */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -136,7 +157,6 @@ const Hero = () => {
               GABRIEL SIWA
             </motion.span>
 
-            {/* subtle splash burst */}
             <motion.span
               aria-hidden
               className="absolute block w-48 h-48 rounded-full bg-galaxy-plasma/10 pointer-events-none"
@@ -147,7 +167,7 @@ const Hero = () => {
           </h1>
         </motion.div>
 
-        {/* Enhanced Subtitle with Multiple Titles */}
+        {/* Enhanced Subtitle */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -161,7 +181,7 @@ const Hero = () => {
             <div className="flex items-center space-x-2 text-galaxy-text-accent">
               <span className="text-lg md:text-xl font-medium">
                 Tech Enthusiast
-              </span>{" "}
+              </span>
               <span className="text-lg md:text-xl font-medium">
                 AI Explorer
               </span>
@@ -172,8 +192,12 @@ const Hero = () => {
         {/* Floating Tech Orbits */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1.0, duration: 0.8 }}
+          animate={{
+            opacity: activeTech ? 0 : 1,
+            scale: activeTech ? 0.95 : 1,
+          }}
+          transition={{ delay: activeTech ? 0 : 1.0, duration: 0.35 }}
+          style={{ pointerEvents: activeTech ? "none" : "auto" }}
           className="mb-4 mt-4 relative w-full max-w-lg mx-auto h-64"
         >
           {/* Central Hub */}
@@ -227,6 +251,7 @@ const Hero = () => {
           {[
             {
               Icon: SiJavascript,
+              name: "javascript",
               color: "bg-yellow-400",
               borderColor: "border-yellow-500/40",
               delay: 0,
@@ -235,6 +260,7 @@ const Hero = () => {
             },
             {
               Icon: SiReact,
+              name: "react",
               color: "bg-cyan-600",
               borderColor: "border-cyan-500/40",
               delay: 4,
@@ -243,6 +269,7 @@ const Hero = () => {
             },
             {
               Icon: SiPython,
+              name: "python",
               color: "bg-green-500",
               borderColor: "border-green-500/40",
               delay: 8,
@@ -296,7 +323,12 @@ const Hero = () => {
               }}
             >
               <motion.div
-                whileHover={{ scale: 1.3, rotate: 360 }}
+                onHoverStart={() => setHoveredTech(tech.name)}
+                onHoverEnd={() => setHoveredTech(null)}
+                onClick={() => setActiveTech(tech.name)}
+                onTap={() => setActiveTech(tech.name)}
+                whileHover={{ scale: 1.15 }}
+                whileTap={{ scale: 0.95, rotate: 360 }}
                 className={`w-12 h-12 ${tech.color} rounded-full flex items-center justify-center border-2 ${tech.borderColor} shadow-lg cursor-pointer`}
                 style={{
                   boxShadow: `0 0 20px ${tech.color.replace(
@@ -314,6 +346,7 @@ const Hero = () => {
           {[
             {
               Icon: SiTypescript,
+              name: "typescript",
               color: "bg-blue-500",
               borderColor: "border-blue-500/40",
               delay: 0,
@@ -322,6 +355,7 @@ const Hero = () => {
             },
             {
               Icon: TbBrandReactNative,
+              name: "reactnative",
               color: "bg-cyan-900",
               borderColor: "border-cyan-500/40",
               delay: 5.33,
@@ -330,6 +364,7 @@ const Hero = () => {
             },
             {
               Icon: FaJava,
+              name: "java",
               color: "bg-orange-500",
               borderColor: "border-orange-500/40",
               delay: 10.66,
@@ -391,7 +426,12 @@ const Hero = () => {
               }}
             >
               <motion.div
-                whileHover={{ scale: 1.3, rotate: 360 }}
+                onHoverStart={() => setHoveredTech(tech.name)}
+                onHoverEnd={() => setHoveredTech(null)}
+                onClick={() => setActiveTech(tech.name)}
+                onTap={() => setActiveTech(tech.name)}
+                whileHover={{ scale: 1.15 }}
+                whileTap={{ scale: 0.95, rotate: 360 }}
                 className={`w-12 h-12 ${tech.color} rounded-full flex items-center justify-center border-2 ${tech.borderColor} shadow-lg cursor-pointer`}
                 style={{
                   boxShadow: `0 0 20px ${tech.color.replace(
@@ -404,6 +444,56 @@ const Hero = () => {
               </motion.div>
             </motion.div>
           ))}
+
+          {/* Fixed Stable Mini Preview Panel - Only on Hover */}
+          <AnimatePresence>
+            {hoveredTech && !activeTech && (
+              <motion.div
+                key="hover-preview"
+                initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="absolute -bottom-24 left-1/2 transform -translate-x-1/2 z-60 pointer-events-none w-[280px]"
+              >
+                <div className="bg-galaxy-cosmic border border-galaxy-border rounded-lg p-3 shadow-2xl backdrop-blur-sm">
+                  <div className="text-[10px] text-galaxy-text-muted mb-2 uppercase tracking-wide">
+                    Related Projects
+                  </div>
+                  {getTechProjects(hoveredTech).length > 0 ? (
+                    getTechProjects(hoveredTech).map((project, idx) => (
+                      <div
+                        key={project.id}
+                        className={
+                          idx > 0
+                            ? "mt-2 pt-2 border-t border-galaxy-border/30"
+                            : ""
+                        }
+                      >
+                        <div className="flex items-center gap-2 mb-1">
+                          <StatusDot status={project.status} />
+                          <div className="text-xs font-bold text-galaxy-text-secondary flex-1">
+                            {project.title}
+                          </div>
+                        </div>
+                        <div className="text-[10px] text-galaxy-text-muted leading-relaxed">
+                          {project.short}
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-xs text-galaxy-text-muted text-center py-2">
+                      {hoveredTech === "python"
+                        ? "Worked with Python"
+                        : "Experience with this tech"}
+                    </div>
+                  )}
+                </div>
+                {/* Arrow pointer */}
+                <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-b-[8px] border-transparent border-b-galaxy-border" />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
 
         {/* Simplified Description */}
@@ -469,33 +559,125 @@ const Hero = () => {
           ))}
         </motion.div>
 
-        {/* Tech Stack Icons */}
-        {/* <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.2, duration: 0.8 }}
-          className="absolute right-8 top-1/2 transform -translate-y-1/2 hidden lg:block"
-        >
-          <div className="flex flex-col space-y-4">
-            {[Coffee, Code, Sparkles].map((Icon, index) => (
+        {/* Full Project Showcase Panel - Slides from Bottom on Click */}
+        <AnimatePresence>
+          {activeTech && (
+            <motion.div
+              key="project-showcase"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-end md:items-center justify-center"
+              aria-hidden={false}
+            >
+              {/* Backdrop overlay - click to close */}
+              <div
+                className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                onClick={() => setActiveTech(null)}
+              />
+
+              {/* Project Panel */}
               <motion.div
-                key={index}
-                animate={{
-                  rotate: [0, 360],
-                  scale: [1, 1.1, 1],
-                }}
-                transition={{
-                  duration: 3 + index,
-                  repeat: Infinity,
-                  delay: index * 0.5,
-                }}
-                className="p-2 rounded-full bg-galaxy-cosmic/50 border border-galaxy-border text-galaxy-text-accent"
+                ref={panelRef}
+                role="dialog"
+                aria-modal="true"
+                initial={{ y: 300, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 300, opacity: 0 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="relative w-full md:w-3/4 lg:w-2/3 max-h-[85vh] overflow-auto bg-galaxy-cosmic border border-galaxy-border rounded-t-2xl md:rounded-2xl p-6 z-50"
+                onClick={(e) => e.stopPropagation()}
               >
-                <Icon className="w-5 h-5" />
+                {/* Header */}
+                <div className="flex items-start justify-between gap-4 mb-6">
+                  <div>
+                    <h3 className="text-2xl font-bold text-galaxy-text-secondary">
+                      {activeTech?.toUpperCase()} Projects
+                    </h3>
+                    <div className="text-sm text-galaxy-text-muted mt-1">
+                      `Projects using {activeTech}`
+                    </div>
+                  </div>
+                  <button
+                    aria-label="Close projects showcase"
+                    onClick={() => setActiveTech(null)}
+                    className="text-galaxy-text-muted hover:text-white text-2xl leading-none transition-colors"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                {/* Project Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {getTechProjects(activeTech || "").map((project) => (
+                    <article
+                      key={project.id}
+                      className="bg-galaxy-surface/50 border border-galaxy-border/30 rounded-xl p-4 hover:border-galaxy-border transition-all"
+                    >
+                      <div className="flex gap-4">
+                        {/* Project Image/Placeholder */}
+                        <div className="w-28 h-20 bg-galaxy-void rounded-lg overflow-hidden flex-shrink-0">
+                          {project.image ? (
+                            <img
+                              src={project.image}
+                              alt={project.title}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-700 to-pink-600">
+                              <span className="text-white text-2xl font-bold opacity-40">
+                                {project.title.charAt(0)}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Project Info */}
+                        <div className="flex-1">
+                          <div className="flex items-start justify-between gap-2 mb-2">
+                            <h4 className="text-sm font-bold text-galaxy-text-secondary leading-tight">
+                              {project.title}
+                            </h4>
+                            <StatusDot status={project.status} />
+                          </div>
+                          <p className="text-xs text-galaxy-text-muted leading-relaxed mb-3">
+                            {project.short}
+                          </p>
+
+                          {/* Tech Stack Tags */}
+                          <div className="flex gap-2 flex-wrap">
+                            {(project.techStack || [])
+                              .slice(0, 5)
+                              .map((tech) => (
+                                <span
+                                  key={tech}
+                                  className="text-[10px] px-2 py-1 bg-galaxy-border/10 text-galaxy-text-accent rounded-md"
+                                >
+                                  {tech}
+                                </span>
+                              ))}
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+
+                  {/* Empty State */}
+                  {getTechProjects(activeTech || "").length === 0 && (
+                    <div className="col-span-2 text-center py-12 text-galaxy-text-muted">
+                      <Code className="w-12 h-12 mx-auto mb-3 opacity-20" />
+                      <p>
+                        {activeTech === "python"
+                          ? "Worked with Python on various projects"
+                          : `No ${activeTech} projects available yet`}
+                      </p>
+                    </div>
+                  )}
+                </div>
               </motion.div>
-            ))}
-          </div>
-        </motion.div> */}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     </div>
   );
