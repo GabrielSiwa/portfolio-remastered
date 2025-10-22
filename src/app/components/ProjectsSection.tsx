@@ -195,7 +195,23 @@ export default function ProjectsPage() {
                           style={{ objectFit: "cover" }}
                         />
                       </div>
-                    ) : null;
+                    ) : (
+                      <div className="w-full h-72 bg-gradient-to-br from-galaxy-cosmic to-galaxy-starfield flex items-center justify-center">
+                        <div className="flex flex-wrap gap-2 justify-center p-4">
+                          {project.techStack.slice(0, 4).map((tech, i) => (
+                            <div
+                              key={i}
+                              className="w-12 h-12 bg-galaxy-border/20 rounded-lg flex items-center justify-center backdrop-blur-sm"
+                            >
+                              {/* Tech icon or first letter */}
+                              <span className="text-xs font-bold">
+                                {tech.slice(0, 2)}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
                   })()
                 )}
 
