@@ -454,40 +454,48 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 8, scale: 0.95 }}
                 transition={{ duration: 0.2 }}
-                className="absolute -bottom-24 left-1/2 transform -translate-x-1/2 z-60 pointer-events-none w-[280px]"
+                className={`absolute left-1/2 transform -translate-x-1/2 z-60 pointer-events-none w-[280px] max-w-[90vw] ${
+                  getTechProjects(hoveredTech).length > 2
+                    ? "-bottom-12"
+                    : "-bottom-24"
+                }`}
               >
                 <div className="bg-galaxy-cosmic border border-galaxy-border rounded-lg p-3 shadow-2xl backdrop-blur-sm">
                   <div className="text-[10px] text-galaxy-text-muted mb-2 uppercase tracking-wide">
-                    Related Projects
+                    {hoveredTech} Related Projects
                   </div>
-                  {getTechProjects(hoveredTech).length > 0 ? (
-                    getTechProjects(hoveredTech).map((project, idx) => (
-                      <div
-                        key={project.id}
-                        className={
-                          idx > 0
-                            ? "mt-2 pt-2 border-t border-galaxy-border/30"
-                            : ""
-                        }
-                      >
-                        <div className="flex items-center gap-2 mb-1">
-                          <StatusDot status={project.status} />
-                          <div className="text-xs font-bold text-galaxy-text-secondary flex-1">
-                            {project.title}
+
+                  {/* Dynamic content container - auto-adjusts height */}
+                  <div className="space-y-2">
+                    {getTechProjects(hoveredTech).length > 0 ? (
+                      getTechProjects(hoveredTech).map((project, idx) => (
+                        <div
+                          key={project.id}
+                          className={
+                            idx > 0
+                              ? "pt-2 border-t border-galaxy-border/30"
+                              : ""
+                          }
+                        >
+                          <div className="flex items-center gap-2 mb-1">
+                            <StatusDot status={project.status} />
+                            <div className="text-xs font-bold text-galaxy-text-secondary flex-1 line-clamp-2">
+                              {project.title}
+                            </div>
+                          </div>
+                          <div className="text-[10px] text-galaxy-text-muted leading-relaxed line-clamp-3">
+                            {project.short}
                           </div>
                         </div>
-                        <div className="text-[10px] text-galaxy-text-muted leading-relaxed">
-                          {project.short}
-                        </div>
+                      ))
+                    ) : (
+                      <div className="text-xs text-galaxy-text-muted text-center py-2">
+                        {hoveredTech === "python"
+                          ? "Worked with Python"
+                          : "Experience with this tech"}
                       </div>
-                    ))
-                  ) : (
-                    <div className="text-xs text-galaxy-text-muted text-center py-2">
-                      {hoveredTech === "python"
-                        ? "Worked with Python"
-                        : "Experience with this tech"}
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
                 {/* Arrow pointer */}
                 <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-b-[8px] border-transparent border-b-galaxy-border" />
@@ -595,7 +603,7 @@ const Hero = () => {
                       {activeTech?.toUpperCase()} Projects
                     </h3>
                     <div className="text-sm text-galaxy-text-muted mt-1">
-                      `Projects using {activeTech}`
+                      Projects using {activeTech}
                     </div>
                   </div>
                   <button
