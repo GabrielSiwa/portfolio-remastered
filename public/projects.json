@@ -87,7 +87,7 @@
     "title": "Purchase Order Web Application",
     "short": "Modern reactive web app built with Svelte framework",
     "description": "A lightweight, reactive web application showcasing Svelte's efficient rendering and state management capabilities.",
-    "techStack": ["Svelte", "Java", "PostgreSQL", "Argon2"],
+    "techStack": ["Svelte", "Java", "PostgreSQL", "Argon2", "JavaScript"],
     "problem": "Need for a performant, reactive web application with minimal bundle size.",
     "solution": "Leveraged Svelte's compile-time approach to deliver a fast, reactive user experience with optimized bundle sizes.",
     "date": "2022-08-21",
