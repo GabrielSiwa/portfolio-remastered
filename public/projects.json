@@ -23,7 +23,8 @@
     ],
     "problem": "Pharmacies had no automated order-tracking — staff had to call compounding centers to check order status, causing delays, lost orders, and heavy manual overhead.",
     "solution": "Built a real-time Pharmacy Order Tracking System with a centralized dashboard, role-based access, and automated workflows to reduce manual processing and improve visibility.",
-    "date": "2025-08-21"
+    "date": "2025-08-21",
+    "status": "completed"
   },
   {
     "id": "eyemo",
@@ -40,7 +41,21 @@
     "techStack": ["React Native", "Expo", "Azure", "OpenAI", "TypeScript"],
     "problem": "People with visual impairments lacked fast, on-device tools for quick scene understanding and OCR-assisted reading.",
     "solution": "Developed EyeMo: a tap-activated, voice-controlled app with OCR, AI scene analysis, and location announcements, powered by Azure and OpenAI, to improve situational awareness.",
-    "date": "2025-08-20"
+    "date": "2025-08-20",
+    "status": "completed"
+  },
+  {
+    "id": "sort-visual",
+    "title": "Sort Visual - Sorting Algorithm Visualizer",
+    "short": "Interactive visualization of sorting algorithms",
+    "description": "An interactive web application that visualizes various sorting algorithms, allowing users to understand their mechanics and performance through dynamic animations and user-controlled parameters.",
+    "videoUrl": "/demo/SortVisual-Ad.mp4",
+    "repositoryUrl": "",
+    "techStack": ["Python", "Flask", "JavaScript", "HTML", "CSS"],
+    "problem": "Students often struggle to grasp the concepts and mechanics of sorting algorithms through static visualizations.",
+    "solution": "Created an interactive platform that allows users to visualize and manipulate sorting algorithms in real-time, enhancing understanding and engagement.",
+    "date": "2025-10-20",
+    "status": "ongoing"
   },
   {
     "id": "coffee-mates",
@@ -52,7 +67,8 @@
     "techStack": ["Next.js", "TypeScript", "Tailwind CSS"],
     "problem": "The Coffee Mates project lacked a centralized platform to showcase its objectives, team members, and individual contributions.",
     "solution": "Developed a dedicated overview website using Next.js and Tailwind CSS to present the project in a cohesive manner, highlighting key features and team efforts.",
-    "date": "2025-08-16"
+    "date": "2025-08-16",
+    "status": "completed"
   },
   {
     "id": "studdy",
@@ -63,6 +79,18 @@
     "techStack": ["React Native", "Expo", "TypeScript"],
     "problem": "Users need a reliable way to manage tasks without an internet connection.",
     "solution": "Implemented local storage to allow users to create, read, update, and delete tasks offline, syncing changes when the connection is restored.",
-    "date": "2025-04-10"
+    "date": "2025-04-10",
+    "status": "completed"
+  },
+  {
+    "id": "purchase-order",
+    "title": "Purchase Order Web Application",
+    "short": "Modern reactive web app built with Svelte framework",
+    "description": "A lightweight, reactive web application showcasing Svelte's efficient rendering and state management capabilities.",
+    "techStack": ["Svelte", "Java", "PostgreSQL", "Argon2"],
+    "problem": "Need for a performant, reactive web application with minimal bundle size.",
+    "solution": "Leveraged Svelte's compile-time approach to deliver a fast, reactive user experience with optimized bundle sizes.",
+    "date": "2022-08-21",
+    "status": "completed"
   }
 ]
