@@ -8,6 +8,7 @@ import {
   SiNextdotjs,
   SiNodedotjs,
   SiTailwindcss,
+  SiAndroidstudio,
   SiMongodb,
   SiPython,
   SiSharp,
@@ -18,12 +19,12 @@ import {
   SiBitbucket,
   SiDocker,
   SiMysql,
-  SiFirebase,
   SiGit,
   SiLinux,
   SiUbuntu,
   SiApple,
   SiGooglecloud,
+  SiAmazon,
   SiOpenai,
   SiTrello,
 } from "react-icons/si";
@@ -77,10 +78,8 @@ const ICON_MAP: Record<string, IconComponent> = {
   // Backend & Infrastructure
   nodejs: SiNodedotjs,
   mongodb: SiMongodb,
-  azure: HiCloud,
   docker: SiDocker,
   mysql: SiMysql,
-  firebase: SiFirebase,
 
   // Development Tools
   vscode: DiVisualstudio,
@@ -88,6 +87,7 @@ const ICON_MAP: Record<string, IconComponent> = {
   github: SiGithub,
   bitbucket: SiBitbucket,
   trello: SiTrello,
+  androidstudio: SiAndroidstudio,
 
   // Platforms & OS
   vercel: SiVercel,
@@ -98,6 +98,8 @@ const ICON_MAP: Record<string, IconComponent> = {
   macos: SiApple,
 
   // Cloud & AI
+  azure: HiCloud,
+  aws: SiAmazon,
   gcp: SiGooglecloud,
   openai: SiOpenai,
   ml: FaBrain,
@@ -131,10 +133,10 @@ const FALLBACK_IMAGE = {
 
 /**
  * SkillFlip Component
- * 
+ *
  * Interactive 3D flip card displaying technology skills with icons and experience levels.
  * Features hover interactions and programmatic flip control for animations.
- * 
+ *
  * Features:
  * - 3D CSS flip animation with GPU acceleration
  * - Hover interactions for manual exploration
@@ -142,145 +144,139 @@ const FALLBACK_IMAGE = {
  * - Comprehensive icon mapping for technology stack
  * - Accessible with proper semantic structure
  * - Performance optimized with memoization
- * 
+ *
  * @param skill - Name of the technology/skill
  * @param years - Years of experience with the technology
  * @param icon - Icon identifier for the technology
  * @param forceFlip - External control for flip state (for auto-rotation)
  */
-const SkillFlip: React.FC<SkillFlipProps> = React.memo(({
-  skill,
-  years,
-  icon,
-  forceFlip = false,
-}) => {
-  // ========================================================================
-  // STATE & MEMOIZED VALUES
-  // ========================================================================
-  
-  const [isFlipped, setIsFlipped] = useState(false);
+const SkillFlip: React.FC<SkillFlipProps> = React.memo(
+  ({ skill, years, icon, forceFlip = false }) => {
+    // ========================================================================
+    // STATE & MEMOIZED VALUES
+    // ========================================================================
 
-  /**
-   * Memoized year label for grammatical correctness
-   */
-  const yearLabel = useMemo(() => 
-    years === 1 ? "year" : "years", 
-    [years]
-  );
+    const [isFlipped, setIsFlipped] = useState(false);
 
-  /**
-   * Memoized icon component lookup with fallback handling
-   */
-  const IconComponent = useMemo(() => 
-    icon && ICON_MAP[icon] ? ICON_MAP[icon] : null, 
-    [icon]
-  );
+    /**
+     * Memoized year label for grammatical correctness
+     */
+    const yearLabel = useMemo(() => (years === 1 ? "year" : "years"), [years]);
 
-  // ========================================================================
-  // EVENT HANDLERS
-  // ========================================================================
-  
-  const handleMouseEnter = useCallback(() => {
-    setIsFlipped(true);
-  }, []);
+    /**
+     * Memoized icon component lookup with fallback handling
+     */
+    const IconComponent = useMemo(
+      () => (icon && ICON_MAP[icon] ? ICON_MAP[icon] : null),
+      [icon]
+    );
 
-  const handleMouseLeave = useCallback(() => {
-    if (!forceFlip) {
-      setIsFlipped(false);
-    }
-  }, [forceFlip]);
+    // ========================================================================
+    // EVENT HANDLERS
+    // ========================================================================
 
-  // ========================================================================
-  // EFFECTS
-  // ========================================================================
-  
-  /**
-   * Handle forced flip state for auto-rotation animations
-   */
-  useEffect(() => {
-    if (forceFlip) {
+    const handleMouseEnter = useCallback(() => {
       setIsFlipped(true);
-      const timeout = setTimeout(() => {
+    }, []);
+
+    const handleMouseLeave = useCallback(() => {
+      if (!forceFlip) {
         setIsFlipped(false);
-      }, ANIMATION_CONFIG.FLIP_DURATION);
+      }
+    }, [forceFlip]);
 
-      return () => clearTimeout(timeout);
-    }
-  }, [forceFlip]);
+    // ========================================================================
+    // EFFECTS
+    // ========================================================================
 
-  // ========================================================================
-  // RENDER
-  // ========================================================================
-  
-  return (
-    <div
-      className="w-32 h-16 perspective cursor-pointer"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      role="button"
-      tabIndex={0}
-      aria-label={`${skill} - ${years} ${yearLabel} of experience`}
-    >
+    /**
+     * Handle forced flip state for auto-rotation animations
+     */
+    useEffect(() => {
+      if (forceFlip) {
+        setIsFlipped(true);
+        const timeout = setTimeout(() => {
+          setIsFlipped(false);
+        }, ANIMATION_CONFIG.FLIP_DURATION);
+
+        return () => clearTimeout(timeout);
+      }
+    }, [forceFlip]);
+
+    // ========================================================================
+    // RENDER
+    // ========================================================================
+
+    return (
       <div
-        className={`
+        className="w-32 h-16 perspective cursor-pointer"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        role="button"
+        tabIndex={0}
+        aria-label={`${skill} - ${years} ${yearLabel} of experience`}
+      >
+        <div
+          className={`
           relative w-full h-full transition-transform duration-1000 transform-gpu 
           border-3 rounded-md ${isFlipped ? "rotate-y-180" : ""}
         `}
-        style={{ 
-          transformStyle: "preserve-3d",
-          transitionDuration: ANIMATION_CONFIG.TRANSITION_DURATION,
-        }}
-      >
-        {/* Front Face: Technology Icon */}
-        <div className="absolute inset-0 backface-hidden flex items-center justify-center rounded bg-galaxy-nebula p-1">
-          <div className="w-7 h-7 relative flex items-center justify-center">
-            {IconComponent ? (
-              <IconComponent 
-                className="w-6 h-6 text-galaxy-text-primary" 
-                aria-hidden="true"
-              />
-            ) : (
-              <Image
-                src={FALLBACK_IMAGE.src}
-                alt={`${skill} icon`}
-                fill
-                style={{ objectFit: "contain" }}
-                sizes="28px"
-              />
-            )}
+          style={{
+            transformStyle: "preserve-3d",
+            transitionDuration: ANIMATION_CONFIG.TRANSITION_DURATION,
+          }}
+        >
+          {/* Front Face: Technology Icon */}
+          <div className="absolute inset-0 backface-hidden flex items-center justify-center rounded bg-galaxy-nebula p-1">
+            <div className="w-7 h-7 relative flex items-center justify-center">
+              {IconComponent ? (
+                <IconComponent
+                  className="w-6 h-6 text-galaxy-text-primary"
+                  aria-hidden="true"
+                />
+              ) : (
+                <Image
+                  src={FALLBACK_IMAGE.src}
+                  alt={`${skill} icon`}
+                  fill
+                  style={{ objectFit: "contain" }}
+                  sizes="28px"
+                />
+              )}
+            </div>
+          </div>
+
+          {/* Back Face: Skill Details */}
+          <div
+            className="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center justify-center rounded bg-galaxy-plasma p-1"
+            style={{ transform: "rotateY(180deg)" }}
+          >
+            <span className="text-[12px] font-semibold text-center leading-tight">
+              {skill}
+            </span>
+            <span className="text-xs text-galaxy-text-secondary">
+              {years} {yearLabel}
+            </span>
           </div>
         </div>
 
-        {/* Back Face: Skill Details */}
-        <div
-          className="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center justify-center rounded bg-galaxy-plasma p-1"
-          style={{ transform: "rotateY(180deg)" }}
-        >
-          <span className="text-[12px] font-semibold text-center leading-tight">
-            {skill}
-          </span>
-          <span className="text-xs text-galaxy-text-secondary">
-            {years} {yearLabel}
-          </span>
-        </div>
+        {/* CSS-in-JS for 3D transforms */}
+        <style jsx>{`
+          .perspective {
+            perspective: 700px;
+          }
+          .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+          }
+          .rotate-y-180 {
+            transform: rotateY(180deg);
+          }
+        `}</style>
       </div>
-
-      {/* CSS-in-JS for 3D transforms */}
-      <style jsx>{`
-        .perspective { 
-          perspective: 700px; 
-        }
-        .backface-hidden { 
-          backface-visibility: hidden; 
-          -webkit-backface-visibility: hidden; 
-        }
-        .rotate-y-180 { 
-          transform: rotateY(180deg); 
-        }
-      `}</style>
-    </div>
-  );
-});
+    );
+  }
+);
 
 SkillFlip.displayName = "SkillFlip";
 

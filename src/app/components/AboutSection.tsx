@@ -56,13 +56,18 @@ const skillCategories = {
     { name: "Java", years: 3, icon: "java" },
     { name: "Python", years: 3, icon: "python" },
     { name: "Node.js", years: 2, icon: "nodejs" },
+    { name: "MySQL", years: 3, icon: "mysql" },
     { name: "MongoDB", years: 2, icon: "mongodb" },
-    { name: "Azure Cloud", years: 1, icon: "azure" },
     { name: "C#", years: 1, icon: "csharp" },
   ],
   mobile: [
     { name: "React Native", years: 2, icon: "reactnative" },
     { name: "Expo Go", years: 2, icon: "expo" },
+  ],
+  cloud: [
+    { name: "Azure Cloud", years: 1, icon: "azure" },
+    { name: "AWS", years: 1, icon: "aws" },
+    { name: "Google Cloud", years: 1, icon: "gcp" },
   ],
   ai: [
     { name: "OpenAI API", years: 1, icon: "openai" },
@@ -74,10 +79,17 @@ const skillCategories = {
   tools: [
     { name: "Visual Studio Code", years: 6, icon: "vscode" },
     { name: "Git", years: 4, icon: "github" },
+    { name: "Android Studio", years: 2, icon: "androidstudio" },
     { name: "BitBucket", years: 1, icon: "bitbucket" },
     { name: "Docker", years: 1, icon: "docker" },
     { name: "Vercel", years: 1, icon: "vercel" },
     { name: "Trello", years: 1, icon: "trello" },
+  ],
+  os: [
+    { name: "Windows", years: 10, icon: "windows" },
+    { name: "Ubuntu", years: 2, icon: "ubuntu" },
+    { name: "Linux", years: 1, icon: "linux" },
+    { name: "macOS", years: 1, icon: "macos" },
   ],
 } as const;
 
@@ -89,8 +101,10 @@ const categoryThemes = {
   frontend: "from-cyan-500/20 to-blue-500/20 border-cyan-500/30",
   backend: "from-green-500/20 to-emerald-500/20 border-green-500/30",
   mobile: "from-purple-500/20 to-violet-500/20 border-purple-500/30",
+  cloud: "from-blue-500/20 to-indigo-500/20 border-blue-500/30",
   ai: "from-orange-500/20 to-red-500/20 border-orange-500/30",
   tools: "from-yellow-500/20 to-amber-500/20 border-yellow-500/30",
+  os: "from-slate-500/20 to-gray-500/20 border-slate-500/30",
 } as const;
 
 /**
@@ -100,8 +114,10 @@ const categoryLabels = {
   frontend: "Frontend",
   backend: "Backend",
   mobile: "Mobile",
+  cloud: "Cloud & Infrastructure",
   ai: "AI & Machine Learning",
   tools: "Tools & DevOps",
+  os: "Operating Systems",
 } as const;
 
 /**
@@ -132,16 +148,37 @@ const filterConfiguration = {
         "Expo Go",
       ] as const,
     },
-    { label: "Databases", value: "databases", skills: ["MongoDB"] as const },
+    {
+      label: "Databases",
+      value: "databases",
+      skills: ["MongoDB", "MySQL"] as const,
+    },
     {
       label: "Cloud & DevOps",
       value: "cloud",
-      skills: ["Azure Cloud", "Azure AI", "Docker", "Vercel"] as const,
+      skills: [
+        "Azure Cloud",
+        "AWS",
+        "Google Cloud",
+        "Docker",
+        "Vercel",
+      ] as const,
     },
     {
       label: "Tools",
       value: "tools",
-      skills: ["Visual Studio Code", "Git", "BitBucket", "Trello"] as const,
+      skills: [
+        "Visual Studio Code",
+        "Git",
+        "Android Studio",
+        "BitBucket",
+        "Trello",
+      ] as const,
+    },
+    {
+      label: "Operating Systems",
+      value: "os",
+      skills: ["Windows", "Ubuntu", "Linux", "macOS"] as const,
     },
     {
       label: "AI/ML",
@@ -256,11 +293,35 @@ const skillExpertise = {
     "Index Optimization",
     "Database Performance",
   ],
+  MySQL: [
+    "Relational Database Design",
+    "SQL Query Writing",
+    "CRUD Operations",
+    "Database Schema Management",
+    "Joins And Relationships",
+    "Query Optimization",
+    "Data Integrity And Constraints",
+  ],
+
+  // Cloud & Infrastructure
   "Azure Cloud": [
     "Cloud Service Deployment",
     "Resource Management",
-    "Basic DevOps Practices",
-    "Service Integration",
+    "DevOps Integration",
+    "Service Configuration",
+    "Cloud Cost Optimization",
+  ],
+  AWS: [
+    "Cloud Infrastructure Setup",
+    "Service Provisioning",
+    "Resource Management",
+    "Basic Cloud Architecture",
+  ],
+  "Google Cloud": [
+    "Cloud Platform Services",
+    "Resource Deployment",
+    "Service Configuration",
+    "Cloud Integration",
   ],
 
   // Mobile Development
@@ -351,6 +412,47 @@ const skillExpertise = {
     "Team Collaboration",
     "Workflow Setup",
     "Board Customization",
+  ],
+  "Android Studio": [
+    "IDE Navigation And Setup",
+    "Project Configuration",
+    "Build System Management",
+    "Debugging Tools",
+    "Emulator Usage",
+    "Version Control Integration",
+  ],
+
+  // Operating Systems
+  Windows: [
+    "System Administration",
+    "File System Management",
+    "Command Line Interface",
+    "Software Installation",
+    "System Configuration",
+    "Troubleshooting And Diagnostics",
+    "Network Configuration",
+    "Security Best Practices",
+    "PowerShell Scripting",
+    "Task Automation",
+  ],
+  Ubuntu: [
+    "Linux Distribution Usage",
+    "Package Management",
+    "Terminal Commands",
+    "System Administration",
+    "Server Configuration",
+  ],
+  Linux: [
+    "Command Line Proficiency",
+    "File System Navigation",
+    "Basic System Administration",
+    "Shell Scripting",
+  ],
+  macOS: [
+    "macOS Environment",
+    "Terminal Usage",
+    "Development Tools",
+    "System Preferences",
   ],
 } as const;
 
