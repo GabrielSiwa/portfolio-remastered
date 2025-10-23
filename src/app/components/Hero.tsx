@@ -32,6 +32,52 @@ const StatusDot = ({ status }: { status?: string }) => {
   );
 };
 
+// Rotating titles configuration
+const CORE_TITLES = [
+  "Full-Stack Developer",
+  "Frontend Developer",
+  "Backend Developer",
+] as const;
+
+const SPECIALIZED_TITLES = [
+  "Cloud Developer",
+  "Mobile Developer",
+  "Database Developer",
+  "Prompt Engineer",
+] as const;
+
+const ROTATING_TITLES = [...CORE_TITLES, ...SPECIALIZED_TITLES];
+
+// Rotating Title Component
+const RotatingTitle = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % ROTATING_TITLES.length);
+    }, 5000); // Rotate every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative h-8 md:h-10 lg:h-12 w-full overflow-hidden flex items-center justify-center">
+      <AnimatePresence mode="wait">
+        <motion.h2
+          key={currentIndex}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          className="text-xl md:text-2xl lg:tNext-3xl font-medium text-galaxy-text-secondary whitespace-nowrap"
+        >
+          {ROTATING_TITLES[currentIndex]}
+        </motion.h2>
+      </AnimatePresence>
+    </div>
+  );
+};
+
 // Project type from projects.json
 interface Project {
   id: string;
@@ -170,25 +216,24 @@ const Hero = () => {
           </h1>
         </motion.div>
 
-        {/* Enhanced Subtitle */}
+        {/* Enhanced Subtitle with Rotating Title */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.8 }}
           className="mb-6"
         >
-          <div className="flex flex-col items-center space-y-2">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-medium text-galaxy-text-secondary">
-              Software Developer
-            </h2>
-            <div className="flex items-center space-x-2 text-galaxy-text-accent">
-              <span className="text-lg md:text-xl font-medium">
-                Tech Enthusiast
-              </span>
-              <span className="text-lg md:text-xl font-medium">
-                AI Explorer
-              </span>
-            </div>
+          <RotatingTitle />
+
+          {/* Keep the secondary tags below */}
+          <div className="flex items-center justify-center space-x-3 mt-3 text-galaxy-text-accent">
+            <span className="text-sm md:text-base font-medium">
+              Tech Enthusiast
+            </span>
+            <span className="text-galaxy-text-muted">•</span>
+            <span className="text-sm md:text-base font-medium">
+              AI Explorer
+            </span>
           </div>
         </motion.div>
 
