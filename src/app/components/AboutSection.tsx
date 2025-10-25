@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
-import AnimatedReveal from "./AnimatedReveal";
+import { Fade } from "react-awesome-reveal";
 import SectionParticles from "./SectionParticles";
 
 // Context Provider
@@ -32,25 +31,34 @@ const AboutPage: React.FC = () => {
         <SectionParticles count={10} />
 
         {/* Bio Section */}
-        <AnimatedReveal className="mb-12">
-          <BioSection />
-        </AnimatedReveal>
+        <div className="mb-12">
+          <Fade triggerOnce direction="up" fraction={0.3}>
+            <BioSection />
+          </Fade>
+        </div>
 
         {/* Skills Section */}
-        <AnimatedReveal>
-          <motion.div
-            className="space-y-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
+        <div className="space-y-8">
+          <Fade triggerOnce direction="up" delay={100} fraction={0.3}>
             <SkillsHeader />
+          </Fade>
+
+          <Fade triggerOnce direction="up" delay={150} fraction={0.3}>
             <FilterPanel />
+          </Fade>
+
+          <Fade triggerOnce direction="up" delay={200} fraction={0.3}>
             <CategoryNavigation />
+          </Fade>
+
+          <Fade triggerOnce direction="up" delay={250} fraction={0.3}>
             <StatusInfo />
+          </Fade>
+
+          <Fade triggerOnce direction="up" delay={300} fraction={0.3}>
             <SkillsDisplay />
-          </motion.div>
-        </AnimatedReveal>
+          </Fade>
+        </div>
       </main>
     </SkillsProvider>
   );

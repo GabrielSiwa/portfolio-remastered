@@ -3,8 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import { Github } from "lucide-react"; // Add GitHub icon import
-import AnimatedReveal from "./AnimatedReveal";
+import { Github } from "lucide-react";
+import { Fade } from "react-awesome-reveal";
 
 // Helper function to get local video URL
 function getLocalVideoUrl(url: string): string | null {
@@ -127,163 +127,168 @@ export default function ProjectsPage() {
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-12 relative">
-      <AnimatedReveal>
+      <Fade triggerOnce direction="up" fraction={0.3}>
         <h1 className="text-4xl font-semibold mb-8 text-center">
           Featured Projects
         </h1>
-      </AnimatedReveal>
+      </Fade>
 
       {projects.length === 0 ? (
         <p className="text-center text-galaxy-text-muted">
           No projects found. Add entries to public/projects.json
         </p>
       ) : (
-        <AnimatedReveal className="grid gap-8 grid-cols-1 md:grid-cols-2">
-          {projects.map((project) => {
+        <div className="grid gap-8 grid-cols-1 md:grid-cols-2">
+          {projects.map((project, index) => {
             const localVideoUrl = getLocalVideoUrl(project.videoUrl || "");
 
             return (
-              <article
+              <Fade
                 key={project.id}
-                className="bg-white/5 rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300"
+                triggerOnce
+                direction="up"
+                delay={index * 100}
+                fraction={0.2}
               >
-                {localVideoUrl ? (
-                  <div className="w-full h-72 relative group">
-                    <video
-                      src={localVideoUrl}
-                      className="w-full h-full object-cover group-hover:[&::-webkit-media-controls]:opacity-100 [&::-webkit-media-controls]:opacity-0 [&::-webkit-media-controls]:transition-opacity [&::-webkit-media-controls]:duration-300"
-                      muted
-                      loop
-                      controls
-                      onMouseEnter={(e) => {
-                        e.currentTarget.play();
-                        e.currentTarget.muted = false;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.pause();
-                        e.currentTarget.muted = true;
-                      }}
-                    >
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
-                ) : (
-                  // Check for a Google Drive preview URL
-                  (() => {
-                    const drivePreview = getGoogleDrivePreviewUrl(
-                      project.videoUrl || ""
-                    );
-                    if (drivePreview) {
-                      return (
+                <article className="bg-white/5 rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                  {localVideoUrl ? (
+                    <div className="w-full h-72 relative group">
+                      <video
+                        src={localVideoUrl}
+                        className="w-full h-full object-cover group-hover:[&::-webkit-media-controls]:opacity-100 [&::-webkit-media-controls]:opacity-0 [&::-webkit-media-controls]:transition-opacity [&::-webkit-media-controls]:duration-300"
+                        muted
+                        loop
+                        controls
+                        onMouseEnter={(e) => {
+                          e.currentTarget.play();
+                          e.currentTarget.muted = false;
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.pause();
+                          e.currentTarget.muted = true;
+                        }}
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  ) : (
+                    // Check for a Google Drive preview URL
+                    (() => {
+                      const drivePreview = getGoogleDrivePreviewUrl(
+                        project.videoUrl || ""
+                      );
+                      if (drivePreview) {
+                        return (
+                          <div className="w-full h-72 relative">
+                            <iframe
+                              src={drivePreview}
+                              title={`${project.title} demo`}
+                              className="w-full h-full"
+                              allow="autoplay; encrypted-media"
+                            />
+                          </div>
+                        );
+                      }
+
+                      return project.image ? (
                         <div className="w-full h-72 relative">
-                          <iframe
-                            src={drivePreview}
-                            title={`${project.title} demo`}
-                            className="w-full h-full"
-                            allow="autoplay; encrypted-media"
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            style={{ objectFit: "cover" }}
                           />
                         </div>
-                      );
-                    }
-
-                    return project.image ? (
-                      <div className="w-full h-72 relative">
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          style={{ objectFit: "cover" }}
-                        />
-                      </div>
-                    ) : (
-                      <div className="w-full h-72 bg-gradient-to-br from-galaxy-cosmic to-galaxy-starfield flex items-center justify-center">
-                        <div className="flex flex-wrap gap-2 justify-center p-4">
-                          {(project.techStack ?? [])
-                            .slice(0, 4)
-                            .map((tech, i) => (
-                              <div
-                                key={i}
-                                className="w-12 h-12 bg-galaxy-border/20 rounded-lg flex items-center justify-center backdrop-blur-sm"
-                              >
-                                {/* Tech icon or first letter */}
-                                <span className="text-xs font-bold">
-                                  {tech.slice(0, 2)}
-                                </span>
-                              </div>
-                            ))}
+                      ) : (
+                        <div className="w-full h-72 bg-gradient-to-br from-galaxy-cosmic to-galaxy-starfield flex items-center justify-center">
+                          <div className="flex flex-wrap gap-2 justify-center p-4">
+                            {(project.techStack ?? [])
+                              .slice(0, 4)
+                              .map((tech, i) => (
+                                <div
+                                  key={i}
+                                  className="w-12 h-12 bg-galaxy-border/20 rounded-lg flex items-center justify-center backdrop-blur-sm"
+                                >
+                                  {/* Tech icon or first letter */}
+                                  <span className="text-xs font-bold">
+                                    {tech.slice(0, 2)}
+                                  </span>
+                                </div>
+                              ))}
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })()
-                )}
-
-                <div className="p-8">
-                  <h2 className="text-3xl font-bold mb-3">{project.title}</h2>
-                  <p className="text-lg text-galaxy-text-muted mb-4">
-                    {project.short || project.description}
-                  </p>
-
-                  {project.techStack && project.techStack.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.techStack.map((t) => (
-                        <span
-                          key={t}
-                          className="text-xs px-2 py-1 rounded bg-white/5 text-galaxy-text-muted"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
+                      );
+                    })()
                   )}
 
-                  <div className="flex flex-wrap gap-3 mt-6">
-                    {/* More Details Button */}
-                    <Link
-                      href={`/projects/${project.id}`}
-                      className="px-5 py-2 border border-galaxy-text-accent text-galaxy-text-accent rounded hover:bg-galaxy-text-accent hover:text-galaxy-nebula transition-colors"
-                    >
-                      More Details
-                    </Link>
-                    {/* Demo/CTA Button */}
-                    {project.cta?.url && !localVideoUrl ? (
-                      <Link
-                        href={project.cta.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-5 py-2 galaxy-button rounded"
-                      >
-                        {project.cta.label || "View Demo"}
-                      </Link>
-                    ) : project.demoUrl ? (
-                      <Link
-                        href={project.demoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-5 py-2 galaxy-button rounded"
-                      >
-                        Live Demo
-                      </Link>
-                    ) : null}
+                  <div className="p-8">
+                    <h2 className="text-3xl font-bold mb-3">{project.title}</h2>
+                    <p className="text-lg text-galaxy-text-muted mb-4">
+                      {project.short || project.description}
+                    </p>
 
-                    {/* GitHub Repository Button */}
-                    {project.repositoryUrl && (
-                      <Link
-                        href={project.repositoryUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-5 py-2 border border-gray-500 text-gray-300 rounded hover:bg-gray-500 hover:text-white transition-colors flex items-center gap-2"
-                        title="View Repository"
-                      >
-                        <Github size={16} />
-                        <span className="hidden sm:inline">Repository</span>
-                      </Link>
+                    {project.techStack && project.techStack.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {project.techStack.map((t) => (
+                          <span
+                            key={t}
+                            className="text-xs px-2 py-1 rounded bg-white/5 text-galaxy-text-muted"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
                     )}
+
+                    <div className="flex flex-wrap gap-3 mt-6">
+                      {/* More Details Button */}
+                      <Link
+                        href={`/projects/${project.id}`}
+                        className="px-5 py-2 border border-galaxy-text-accent text-galaxy-text-accent rounded hover:bg-galaxy-text-accent hover:text-galaxy-nebula transition-colors"
+                      >
+                        More Details
+                      </Link>
+                      {/* Demo/CTA Button */}
+                      {project.cta?.url && !localVideoUrl ? (
+                        <Link
+                          href={project.cta.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-5 py-2 galaxy-button rounded"
+                        >
+                          {project.cta.label || "View Demo"}
+                        </Link>
+                      ) : project.demoUrl ? (
+                        <Link
+                          href={project.demoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-5 py-2 galaxy-button rounded"
+                        >
+                          Live Demo
+                        </Link>
+                      ) : null}
+
+                      {/* GitHub Repository Button */}
+                      {project.repositoryUrl && (
+                        <Link
+                          href={project.repositoryUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-5 py-2 border border-gray-500 text-gray-300 rounded hover:bg-gray-500 hover:text-white transition-colors flex items-center gap-2"
+                          title="View Repository"
+                        >
+                          <Github size={16} />
+                          <span className="hidden sm:inline">Repository</span>
+                        </Link>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </article>
+                </article>
+              </Fade>
             );
           })}
-        </AnimatedReveal>
+        </div>
       )}
     </main>
   );
