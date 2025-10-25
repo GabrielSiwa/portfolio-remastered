@@ -243,7 +243,7 @@ const Hero = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95, height: 0 }}
-            transition={{ duration: 0.35 }}
+            transition={{ delay: 1.6, duration: 0.8, ease: "easeOut" }}
             className="mb-4 mt-4 relative w-full max-w-lg mx-auto h-64"
           >
             {/* Central Hub */}
