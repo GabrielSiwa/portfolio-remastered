@@ -47,12 +47,11 @@ import {
   FaRobot,
   FaTerminal,
   FaWindows,
-  FaLock,
 } from "react-icons/fa";
 import { HiCloud } from "react-icons/hi";
 import { TbPrompt } from "react-icons/tb";
 import { VscTerminalPowershell } from "react-icons/vsc";
-import { Palette, Shield, Component } from "lucide-react";
+import { Shield } from "lucide-react";
 
 // ============================================================================
 // TYPE DEFINITIONS
