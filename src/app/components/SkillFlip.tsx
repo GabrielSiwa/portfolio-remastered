@@ -27,6 +27,18 @@ import {
   SiAmazon,
   SiOpenai,
   SiTrello,
+  SiBootstrap,
+  SiCss3,
+  SiHtml5,
+  SiPrisma,
+  SiFramer,
+  SiPostgresql,
+  SiYarn,
+  SiNpm,
+  SiPostman,
+  SiAuth0,
+  SiMui,
+  SiShadcnui,
 } from "react-icons/si";
 import { DiVisualstudio } from "react-icons/di";
 import {
@@ -35,10 +47,12 @@ import {
   FaRobot,
   FaTerminal,
   FaWindows,
+  FaLock,
 } from "react-icons/fa";
 import { HiCloud } from "react-icons/hi";
 import { TbPrompt } from "react-icons/tb";
 import { VscTerminalPowershell } from "react-icons/vsc";
+import { Palette, Shield, Component } from "lucide-react";
 
 // ============================================================================
 // TYPE DEFINITIONS
@@ -74,12 +88,22 @@ const ICON_MAP: Record<string, IconComponent> = {
   nextjs: SiNextdotjs,
   tailwindcss: SiTailwindcss,
   reactnative: SiReact,
+  bootstrap: SiBootstrap,
+  css: SiCss3,
+  html: SiHtml5,
+  shadcnui: SiShadcnui,
+  nextui: SiMui,
+  framer: SiFramer,
+  nextauth: SiAuth0,
 
   // Backend & Infrastructure
   nodejs: SiNodedotjs,
   mongodb: SiMongodb,
   docker: SiDocker,
   mysql: SiMysql,
+  prisma: SiPrisma,
+  mongoose: SiMongodb,
+  postgresql: SiPostgresql,
 
   // Development Tools
   vscode: DiVisualstudio,
@@ -88,6 +112,9 @@ const ICON_MAP: Record<string, IconComponent> = {
   bitbucket: SiBitbucket,
   trello: SiTrello,
   androidstudio: SiAndroidstudio,
+  yarn: SiYarn,
+  npm: SiNpm,
+  postman: SiPostman,
 
   // Platforms & OS
   vercel: SiVercel,
@@ -105,6 +132,9 @@ const ICON_MAP: Record<string, IconComponent> = {
   ml: FaBrain,
   ai: FaRobot,
   prompt: TbPrompt,
+
+  // Security & Auth
+  argon2: Shield,
 
   // Terminal & CLI
   bash: FaTerminal,
