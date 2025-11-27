@@ -149,10 +149,11 @@ export default function ProjectsPage() {
                 direction="up"
                 delay={index * 100}
                 fraction={0.2}
+                className="h-full"
               >
-                <article className="bg-white/5 rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                <article className="bg-white/5 rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300 h-full flex flex-col">
                   {localVideoUrl ? (
-                    <div className="w-full h-72 relative group">
+                    <div className="w-full h-72 relative group flex-shrink-0">
                       <video
                         src={localVideoUrl}
                         className="w-full h-full object-cover group-hover:[&::-webkit-media-controls]:opacity-100 [&::-webkit-media-controls]:opacity-0 [&::-webkit-media-controls]:transition-opacity [&::-webkit-media-controls]:duration-300"
@@ -179,7 +180,7 @@ export default function ProjectsPage() {
                       );
                       if (drivePreview) {
                         return (
-                          <div className="w-full h-72 relative">
+                          <div className="w-full h-72 relative flex-shrink-0">
                             <iframe
                               src={drivePreview}
                               title={`${project.title} demo`}
@@ -191,7 +192,7 @@ export default function ProjectsPage() {
                       }
 
                       return project.image ? (
-                        <div className="w-full h-72 relative">
+                        <div className="w-full h-72 relative flex-shrink-0">
                           <Image
                             src={project.image}
                             alt={project.title}
@@ -200,7 +201,7 @@ export default function ProjectsPage() {
                           />
                         </div>
                       ) : (
-                        <div className="w-full h-72 bg-gradient-to-br from-galaxy-cosmic to-galaxy-starfield flex items-center justify-center">
+                        <div className="w-full h-72 bg-gradient-to-br from-galaxy-cosmic to-galaxy-starfield flex items-center justify-center flex-shrink-0">
                           <div className="flex flex-wrap gap-2 justify-center p-4">
                             {(project.techStack ?? [])
                               .slice(0, 4)
@@ -221,7 +222,7 @@ export default function ProjectsPage() {
                     })()
                   )}
 
-                  <div className="p-8">
+                  <div className="p-8 flex flex-col flex-grow">
                     <h2 className="text-3xl font-bold mb-3">{project.title}</h2>
                     <p className="text-lg text-galaxy-text-muted mb-4">
                       {project.short || project.description}
@@ -240,7 +241,7 @@ export default function ProjectsPage() {
                       </div>
                     )}
 
-                    <div className="flex flex-wrap gap-3 mt-6">
+                    <div className="flex flex-wrap gap-3 mt-auto pt-4">
                       {/* More Details Button */}
                       <Link
                         href={`/projects/${project.id}`}

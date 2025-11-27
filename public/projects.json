@@ -1,15 +1,24 @@
 [
   {
+    "id": "portfolio-remastered",
+    "title": "Portfolio Remastered",
+    "short": "Interactive developer portfolio with cosmic theme and custom animations",
+    "description": "A modern, interactive developer portfolio built with Next.js 13+ and TypeScript. Features a custom-built constellation engine, particle systems, 3D skill visualizations, and a comprehensive admin CMS for content management.",
+    "image": "/images/projects/portfolio.png",
+    "repositoryUrl": "https://github.com/GabrielSiwa/portfolio-remastered",
+    "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "React Context"],
+    "problem": "Standard portfolios often lack interactivity and fail to demonstrate technical creativity beyond basic layout skills.",
+    "solution": "Built an immersive 'cosmic' experience with mathematically generated starfields, interactive constellations, and a custom CMS, showcasing both frontend artistry and backend structure.",
+    "date": "2025-11-26",
+    "status": "ongoing"
+  },
+  {
     "id": "pots",
-    "title": "POTS — Pharmacy Order Tracking System",
+    "title": "POTS: Pharmacy Order Tracking System",
     "short": "Real-time pharmacy order tracking and management platform",
     "description": "A digital platform that enables pharmacies to place, view, and track compounding orders in real time. Features secure authentication, multi-stage order tracking, role-based access, and content safety.",
     "image": "/images/projects/tracking.png",
-    "videoUrl": "https://drive.google.com/file/d/1pCVGkfGAhbcDpvzAsYjBE6xmcYPhl00_/view?usp=sharing",
-    "cta": {
-      "label": "View Live Demo",
-      "url": "https://drive.google.com/file/d/1pCVGkfGAhbcDpvzAsYjBE6xmcYPhl00_/view?usp=sharing"
-    },
+
     "detailsUrl": "https://coffee-mates.vercel.app/",
     "techStack": [
       "React",
@@ -28,7 +37,7 @@
   },
   {
     "id": "eyemo",
-    "title": "EyeMo — AI Voice-Controlled Accessibility",
+    "title": "EyeMo: AI Voice-Controlled Accessibility",
     "short": "Tap-activated voice commands, OCR and scene analysis for visual accessibility",
     "description": "EyeMo empowers people with visual impairments through tap-activated voice commands, instant OCR with speech output, AI-powered scene analysis, and voice-announced location services using Azure and OpenAI.",
     "videoUrl": "/demo/EyeMo-Ad.mp4",
@@ -46,7 +55,7 @@
   },
   {
     "id": "sort-visual",
-    "title": "Sort Visual - Sorting Algorithm Visualizer",
+    "title": "Sort Visual: Sorting Algorithm Visualizer",
     "short": "Interactive visualization of sorting algorithms",
     "description": "An interactive web application that visualizes various sorting algorithms, allowing users to understand their mechanics and performance through dynamic animations and user-controlled parameters.",
     "videoUrl": "",
@@ -59,10 +68,14 @@
   },
   {
     "id": "coffee-mates",
-    "title": "Coffee Mates - Capstone Project Overview Website",
+    "title": "Coffee Mates: Capstone Project Overview Website",
     "short": "Showcase website for Coffee Mates group projects",
     "description": "A comprehensive overview website for the group Coffee Mates Projects, featuring project details, team information, and a showcase of individual contributions.",
     "image": "/images/projects/CoffeeMates.png",
+    "cta": {
+      "label": "Visit the website",
+      "url": "https://coffee-mates.vercel.app/"
+    },
     "repositoryUrl": "https://github.com/GabrielSiwa/coffee-mates/",
     "techStack": ["Next.js", "TypeScript", "Tailwind CSS"],
     "problem": "The Coffee Mates project lacked a centralized platform to showcase its objectives, team members, and individual contributions.",
@@ -72,7 +85,7 @@
   },
   {
     "id": "studdy",
-    "title": "Studdy - Task Manager",
+    "title": "Studdy: Task Manager",
     "short": "Task Management App that uses Local Storage for Offline Access ",
     "description": "Studdy is a task management app that helps users organize their tasks using local storage for offline access.",
     "image": "/images/projects/Studdy.png",
@@ -80,6 +93,53 @@
     "problem": "Users need a reliable way to manage tasks without an internet connection.",
     "solution": "Implemented local storage to allow users to create, read, update, and delete tasks offline, syncing changes when the connection is restored.",
     "date": "2025-04-10",
+    "status": "completed"
+  },
+
+  {
+    "id": "equipment-village-rental",
+    "title": "Equipment Village: Rental Management System",
+    "short": "Rental management system to manage equipment, customers, rentals, and reports",
+    "description": "A .NET MAUI Blazor hybrid application that centralizes inventory, customer data, rental transactions, and reporting for equipment rental businesses. Includes Razor components for Equipment, Customers, Rentals, and Reports and uses a local SQL Server (.mdf) database for persistence.",
+    "image": "/images/projects/villagerentals.png",
+    "repositoryUrl": "https://github.com/GabrielSiwa/Village-Rental",
+    "detailsUrl": "",
+    "techStack": [
+      "C#",
+      ".NET MAUI",
+      "Blazor (Razor Components)",
+      "XAML",
+      "SQL Server (.mdf LocalDB)",
+      "Visual Studio"
+    ],
+    "problem": "Small equipment rental businesses struggled to track inventory, customers, and rental transactions using manual methods or scattered spreadsheets.",
+    "solution": "Implemented an integrated rental management system with modules for managing equipment, customers, rentals, and reports, enabling staff to maintain accurate records and generate up-to-date business reports.",
+    "date": "2024-08-16",
+    "status": "completed"
+  },
+  {
+    "id": "delilah-doggy-daycare",
+    "title": "Delilah: Doggy Daycare",
+    "short": "Static site with booking and contact pages for a doggy daycare",
+    "description": "A lightweight static website providing online booking and contact functionality for a doggy daycare. Implements booking and contact pages with vanilla JavaScript and shared CSS styles.",
+    "image": "/images/projects/daycare.png",
+    "repositoryUrl": "https://github.com/GabrielSiwa/Delilah-Doggy-Daycare",
+    "techStack": ["HTML", "CSS", "JavaScript"],
+    "problem": "Small daycares needed a simple online presence to accept bookings and provide contact information without heavy backend infrastructure.",
+    "solution": "Delivered a minimal, easy-to-host static site with booking and contact pages, reusable CSS, and client-side scripts for form handling.",
+    "date": "2024-04-26",
+    "status": "completed"
+  },
+  {
+    "id": "library-management-system",
+    "title": "Library Management System",
+    "short": "Console-based library catalog with CSV persistence",
+    "description": "A Python CLI application that manages a library catalog using a Book class and CSV file storage. Supports loading/saving catalogs, searching, borrowing/returning books, admin actions (add/remove/print), and simple passcode-protected librarian menu.",
+    "repositoryUrl": "https://github.com/GabrielSiwa/Library-Management-System",
+    "techStack": ["Python", "CSV"],
+    "problem": "Small libraries or practice projects needed a lightweight, file-backed catalog without a web backend.",
+    "solution": "Delivered a minimal, easy-to-run command-line app that persists books to CSV, provides search and borrowing workflows, and includes an admin menu for catalog management.",
+    "date": "2024-04-20",
     "status": "completed"
   },
   {
