@@ -6,6 +6,7 @@ import { Github, Linkedin, Download, Code, Heart } from "lucide-react";
 import { SiReact, SiPython, SiTypescript, SiJavascript } from "react-icons/si";
 import { FaJava } from "react-icons/fa";
 import { TbBrandReactNative } from "react-icons/tb";
+import Image from "next/image";
 
 // Subtle status dot component
 const StatusDot = ({ status }: { status?: string }) => {
@@ -686,13 +687,13 @@ const Hero = () => {
                       className="bg-galaxy-surface/50 border border-galaxy-border/30 rounded-xl p-4 hover:border-galaxy-border transition-all"
                     >
                       <div className="flex gap-4">
-                        {/* Project Image/Placeholder */}
-                        <div className="w-28 h-20 bg-galaxy-void rounded-lg overflow-hidden flex-shrink-0">
+                        <div className="w-28 h-20 bg-galaxy-void rounded-lg overflow-hidden flex-shrink-0 relative">
                           {project.image ? (
-                            <img
+                            <Image
                               src={project.image}
                               alt={project.title}
-                              className="w-full h-full object-cover"
+                              fill
+                              className="object-cover"
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-700 to-pink-600">
