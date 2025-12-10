@@ -6,7 +6,7 @@
     "description": "A modern, interactive developer portfolio built with Next.js 13+ and TypeScript. Features a custom-built constellation engine, particle systems, 3D skill visualizations, and a comprehensive admin CMS for content management.",
     "image": "/images/projects/portfolio.png",
     "repositoryUrl": "https://github.com/GabrielSiwa/portfolio-remastered",
-    "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "React Context"],
+    "techStack": ["Next.js", "TypeScript", "Tailwind CSS ", "React Context"],
     "problem": "Standard portfolios often lack interactivity and fail to demonstrate technical creativity beyond basic layout skills.",
     "solution": "Built an immersive 'cosmic' experience with mathematically generated starfields, interactive constellations, and a custom CMS, showcasing both frontend artistry and backend structure.",
     "date": "2025-11-26",
@@ -41,7 +41,6 @@
     "short": "Tap-activated voice commands, OCR and scene analysis for visual accessibility",
     "description": "EyeMo empowers people with visual impairments through tap-activated voice commands, instant OCR with speech output, AI-powered scene analysis, and voice-announced location services using Azure and OpenAI.",
     "videoUrl": "/demo/EyeMo-Ad.mp4",
-    "repositoryUrl": "https://github.com/GabrielSiwa/EyeMo",
     "cta": {
       "label": "View Live Demo",
       "url": "https://coffee-mates.vercel.app/"
@@ -54,13 +53,13 @@
     "status": "completed"
   },
   {
-    "id": "sort-visual",
+    "id": "viz-sort",
     "title": "Sort Visual: Sorting Algorithm Visualizer",
     "short": "Interactive visualization of sorting algorithms",
     "description": "An interactive web application that visualizes various sorting algorithms, allowing users to understand their mechanics and performance through dynamic animations and user-controlled parameters.",
     "videoUrl": "",
-    "repositoryUrl": "",
-    "techStack": ["Python", "Flask", "JavaScript", "HTML", "CSS"],
+    "repositoryUrl": "https://github.com/GabrielSiwa/VizSorter",
+    "techStack": ["Java", "Flask", "JavaScript", "HTML", "CSS"],
     "problem": "Students often struggle to grasp the concepts and mechanics of sorting algorithms through static visualizations.",
     "solution": "Created an interactive platform that allows users to visualize and manipulate sorting algorithms in real-time, enhancing understanding and engagement.",
     "date": "2025-10-20",
