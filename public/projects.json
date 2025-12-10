@@ -18,7 +18,6 @@
     "short": "Real-time pharmacy order tracking and management platform",
     "description": "A digital platform that enables pharmacies to place, view, and track compounding orders in real time. Features secure authentication, multi-stage order tracking, role-based access, and content safety.",
     "image": "/images/projects/tracking.png",
-
     "detailsUrl": "https://coffee-mates.vercel.app/",
     "techStack": [
       "React",
@@ -57,7 +56,6 @@
     "title": "Sort Visual: Sorting Algorithm Visualizer",
     "short": "Interactive visualization of sorting algorithms",
     "description": "An interactive web application that visualizes various sorting algorithms, allowing users to understand their mechanics and performance through dynamic animations and user-controlled parameters.",
-    "videoUrl": "",
     "repositoryUrl": "https://github.com/GabrielSiwa/VizSorter",
     "techStack": ["Java", "Flask", "JavaScript", "HTML", "CSS"],
     "problem": "Students often struggle to grasp the concepts and mechanics of sorting algorithms through static visualizations.",
