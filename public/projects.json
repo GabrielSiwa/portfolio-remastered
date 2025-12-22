@@ -56,12 +56,13 @@
     "title": "Sort Visual: Sorting Algorithm Visualizer",
     "short": "Interactive visualization of sorting algorithms",
     "description": "An interactive web application that visualizes various sorting algorithms, allowing users to understand their mechanics and performance through dynamic animations and user-controlled parameters.",
+    "image": "/images/projects/viz-sort.png",
     "repositoryUrl": "https://github.com/GabrielSiwa/VizSorter",
     "techStack": ["Java", "Flask", "JavaScript", "HTML", "CSS"],
     "problem": "Students often struggle to grasp the concepts and mechanics of sorting algorithms through static visualizations.",
     "solution": "Created an interactive platform that allows users to visualize and manipulate sorting algorithms in real-time, enhancing understanding and engagement.",
     "date": "2025-10-20",
-    "status": "ongoing"
+    "status": "completed"
   },
   {
     "id": "coffee-mates",
