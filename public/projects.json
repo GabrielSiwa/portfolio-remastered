@@ -59,7 +59,7 @@
     "image": "/images/projects/viz-sort.png",
     "cta": {
       "label": "View Live Demo",
-      "url": "vizsorter.up.railway.app/"
+      "url": "https://viz-sorter.vercel.app/"
     },
     "repositoryUrl": "https://github.com/GabrielSiwa/VizSorter",
     "techStack": ["Java", "Flask", "JavaScript", "HTML", "CSS", "Railway"],
