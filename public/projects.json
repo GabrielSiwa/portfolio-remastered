@@ -1,5 +1,31 @@
 [
   {
+    "id": "service-desk-portal",
+    "title": "Service Desk Portal",
+    "short": "Full-stack PHP ticket and asset management system with JSON-RPC API and real-time AJAX",
+    "description": "A production-ready Service Desk Portal built with PHP 8.x, MySQL, and vanilla JavaScript. Features secure authentication with bcrypt hashing, CSRF protection, role-based access control, and a JSON-RPC 2.0 API enabling real-time AJAX interactions without page reloads. Demonstrates modern PHP practices, clean architecture, and security best practices.",
+    "image": "/images/projects/service-desk.png",
+    "repositoryUrl": "https://github.com/GabrielSiwa/ServiceDeskPortal",
+    "cta": {
+      "label": "View Live Demo",
+      "url": "https://servicedeskportal.up.railway.app/"
+    },
+    "techStack": [
+      "PHP 8.4.16",
+      "MySQL 9.4",
+      "JSON-RPC 2.0",
+      "JavaScript (Fetch API)",
+      "Bootstrap 5",
+      "PDO",
+      "Git",
+      "Railway"
+    ],
+    "problem": "IT teams need an efficient way to manage support tickets and track assets without heavy frameworks or complex deployment requirements.",
+    "solution": "Built a full-stack ticket management system with secure authentication, role-based permissions (admin/tech), real-time AJAX updates via JSON-RPC API, and clean separation of concerns. Implemented PDO prepared statements for SQL injection prevention, bcrypt password hashing, CSRF tokens, and XSS protection.",
+    "date": "2025-12-23",
+    "status": "completed"
+  },
+  {
     "id": "portfolio-remastered",
     "title": "Portfolio Remastered",
     "short": "Interactive developer portfolio with cosmic theme and custom animations",
