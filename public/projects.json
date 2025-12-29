@@ -1,5 +1,43 @@
 [
   {
+    "id": "xaplanz",
+    "title": "XAPlanz: Site Plan Creator & Viewer",
+    "short": "Interactive site planning tool with real-time collaboration and PDF export",
+    "description": "XAPlanz is a modern web-based site planning application built with Vue 3 and Supabase. Create detailed site maps with interactive drawing tools, manage multiple site plans, share plans securely with view-only links, and export designs to PDF. Features real-time data sync, role-based authentication, and an intuitive drag-and-drop interface powered by Leaflet mapping.",
+    "image": "/images/projects/xaplanz.png",
+    "repositoryUrl": "https://github.com/GabrielSiwa/XAPlanz",
+    "cta": {
+      "label": "View Live Demo",
+      "url": "https://xaplanz.vercel.app"
+    },
+    "techStack": [
+      "Vue 3",
+      "TypeScript",
+      "Vite",
+      "Supabase",
+      "Leaflet",
+      "Geoman",
+      "Tailwind CSS",
+      "Pinia",
+      "HTML2Canvas",
+      "jsPDF",
+      "Tabler Icons"
+    ],
+    "problem": "Site planners and architects need an efficient way to create, manage, and share site plans without expensive desktop software or complex installation processes. Teams require real-time collaboration and secure sharing capabilities.",
+    "solution": "Built XAPlanz as a cloud-native SPA with Supabase for real-time database syncing, interactive Leaflet-based drawing tools, secure authentication, and shareable view-only links. Enables users to create detailed site maps, manage multiple projects, and export to PDF—all from a browser.",
+    "features": [
+      "Interactive site drawing with Leaflet and Geoman",
+      "Real-time plan synchronization via Supabase",
+      "Secure authentication and role-based access",
+      "Share plans with secure view-only links",
+      "Export plans to PDF with high-quality rendering",
+      "Multi-site project management",
+      "Responsive design for desktop and tablet use"
+    ],
+    "date": "2025-12-29",
+    "status": "ongoing"
+  },
+  {
     "id": "service-desk-portal",
     "title": "Service Desk Portal",
     "short": "Full-stack PHP ticket and asset management system with JSON-RPC API and real-time AJAX",
