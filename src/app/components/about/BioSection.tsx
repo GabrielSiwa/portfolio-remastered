@@ -62,7 +62,9 @@ export const BioSection: React.FC = () => {
 
                 <p>
                 Reduced the QA defects by{" "}
-                <span className="text-galaxy-text-accent font-medium">47% by implementing test plan and strategy between sprints ensuring quality code</span>. I rebuilt our CI/CD pipelines with{" "}
+                <span className="text-galaxy-text-accent font-medium">47% by implementing unit test coverage for critical API endpoints and React components, catching edge cases before they reached QA</span>
+                . 
+                Rebuilt our CI/CD pipelines with{" "}
                 <span className="text-galaxy-text-accent font-medium">
                   GitHub Actions and deployed using Azure
                 </span>
@@ -70,9 +72,9 @@ export const BioSection: React.FC = () => {
               </p>
 
               <p>
-                I specialize in{" "}
+                Specializing in{" "}
                 <span className="text-galaxy-text-accent font-medium">
-                  REST API design, database optimization, and secure authentication
+                  REST API design, database optimization, secure authentication, and building type-safe React UIs
                 </span>
                 . Currently expanding my AWS deployment experience with{" "}
                 <span className="text-galaxy-text-accent font-medium">
@@ -82,7 +84,7 @@ export const BioSection: React.FC = () => {
               </p>
 
               <p>
-                <span className="text-galaxy-moonbeam font-semibold italic">Philosophy:</span> Ship features that work the first time. Write code that&apos;s fast, testable, and maintainable from backend queries to frontend UIs.
+                <span className="text-galaxy-moonbeam font-medium"></span> Ship features that work the first time. Write code that&apos;s fast, testable, and maintainable from backend queries to frontend UIs.
               </p>
 
               {/* Availability Status */}
