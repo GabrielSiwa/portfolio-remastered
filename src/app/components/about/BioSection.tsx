@@ -49,23 +49,32 @@ export const BioSection: React.FC = () => {
 
             <div className="text-md text-galaxy-text-secondary leading-relaxed space-y-4">
               <p>
-                I&apos;m a Full Stack Software Developer with 2+ years building production systems in{" "}
+                I&apos;m a Full Stack Software Developer with 2 years building production systems in{" "}
                 <span className="text-galaxy-text-accent font-medium">
                   React, TypeScript, Node.js, and cloud platforms (Azure, AWS)
                 </span>
-                . I specialize in shipping features that reduce defects and automate deployments.
+                .
               </p>
 
               <p>
-                At SAIT, I led frontend-backend integration using REST APIs and WebSockets, reducing QA defects by ~47%. I rebuilt our CI/CD pipeline with{" "}
+                At SAIT, I designed and implemented REST API contracts between React frontends and Node.js backends, defining request/response schemas with TypeScript interfaces that prevented runtime errors and cut integration bugs by 40%.
+                </p>
+
+                <p>
+                Reduced the QA defects by{" "}
+                <span className="text-galaxy-text-accent font-medium">47% by implementing test plan and strategy between sprints ensuring quality code</span>. I rebuilt our CI/CD pipelines with{" "}
                 <span className="text-galaxy-text-accent font-medium">
-                  GitHub Actions and Azure
+                  GitHub Actions and deployed using Azure
                 </span>
                 , cutting release times from 45 minutes to 5 minutes.
               </p>
 
               <p>
-                I focus on REST API design, database optimization, and secure authentication—currently expanding my AWS deployment experience with{" "}
+                I specialize in{" "}
+                <span className="text-galaxy-text-accent font-medium">
+                  REST API design, database optimization, and secure authentication
+                </span>
+                . Currently expanding my AWS deployment experience with{" "}
                 <span className="text-galaxy-text-accent font-medium">
                   EC2, RDS, and Lambda
                 </span>
@@ -73,27 +82,31 @@ export const BioSection: React.FC = () => {
               </p>
 
               <p>
-                I write code that&apos;s fast, testable, and maintainable—whether it&apos;s optimizing database queries or building intuitive UIs.
+                <span className="text-galaxy-moonbeam font-semibold italic">Philosophy:</span> Ship features that work the first time. Write code that&apos;s fast, testable, and maintainable from backend queries to frontend UIs.
               </p>
+
               {/* Availability Status */}
-            <div className="flex items-center space-x-2 text-sm">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              <span className="text-galaxy-text-secondary">
-                Actively seeking full-time software developer opportunities
-              </span>
-            </div>
-            <div className="flex mx-auto my-auto justify-center">
-              <a
-                href="https://www.linkedin.com/in/gabrielsiwa/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-galaxy-plasma text-galaxy-text font-semibold py-2 px-5 rounded-lg shadow-md
-               hover:bg-galaxy-plasma/90 hover:shadow-lg hover:-translate-y-0.5 transition
-               focus:outline-none focus:ring-2 focus:ring-galaxy-plasma focus:ring-offset-2"
-              >
-                Open to Opportunities
-              </a>
-            </div>
+              <div className="pt-4 space-y-4">
+                <div className="flex items-center space-x-2 text-sm">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                  <span className="text-galaxy-text-secondary">
+                    Actively seeking full-time software developer opportunities
+                  </span>
+                </div>
+                
+                <div className="flex justify-start">
+                  <a
+                    href="https://www.linkedin.com/in/gabrielsiwa/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-galaxy-plasma text-galaxy-text font-semibold py-2 px-5 rounded-lg shadow-md
+                  hover:bg-galaxy-plasma/90 hover:shadow-lg hover:-translate-y-0.5 transition
+                  focus:outline-none focus:ring-2 focus:ring-galaxy-plasma focus:ring-offset-2"
+                  >
+                    Open to Opportunities
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
