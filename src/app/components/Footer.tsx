@@ -11,6 +11,7 @@ import {
   Heart,
   Coffee,
 } from "lucide-react";
+import { MagneticButton, GradientText, StaggerContainer } from "./ui";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -108,12 +109,9 @@ const Footer = () => {
           <motion.div variants={itemVariants}>
             {/* Cap line length so it's easier to read */}
             <div className="mb-6 max-w-prose">
-              <motion.h3
-                className="text-2xl font-bold text-galaxy-text-primary mb-2"
-                whileHover={{ scale: 1.02 }}
-              >
-                Gabriel Siwa
-              </motion.h3>
+              <GradientText animate className="text-3xl font-black mb-2 inline-block">
+                GABRIEL SIWA
+              </GradientText>
               <p className="text-galaxy-text-accent font-medium mb-3">
                 Software Developer
               </p>
@@ -121,9 +119,9 @@ const Footer = () => {
                 Passionate about creating innovative solutions with modern web
                 technologies. Recent{" "}
                 <span className="text-galaxy-text-accent font-semibold">
-                  Software Development graduate from SAIT (2025)
+                  Software Development graduate (2025)
                 </span>{" "}
-                with hands-on experience building real-world applications and
+                specializing in building real-world applications and
                 exploring cutting-edge technologies including AI and full-stack
                 development.
               </p>
@@ -132,29 +130,6 @@ const Footer = () => {
 
           {/* Contact & Social Section */}
           <motion.div variants={itemVariants} className="md:pl-4">
-            {/* Quick Navigation - Desktop only */}
-            {/* <div className="hidden md:block mb-6">
-              <h4 className="text-galaxy-text-secondary font-medium mb-4 flex items-center">
-                 <Sparkles className="w-4 h-4 mr-2" />
-                Quick Links
-              </h4>
-              <nav className="space-y-2">
-                {navLinks.map((link) => (
-                  <motion.a
-                    key={link.name}
-                    href={link.href}
-                    whileHover={{
-                      x: 5,
-                      color: "var(--color-galaxy-text-accent)",
-                    }}
-                    className="block text-galaxy-text-muted hover:text-galaxy-text-accent transition-colors duration-300"
-                  >
-                    {link.name}
-                  </motion.a>
-                ))}
-              </nav>
-            </div> */}
-
             {/* Contact Section */}
             <div>
               <h4 className="text-galaxy-text-secondary font-medium mb-4 flex items-center">
@@ -185,18 +160,17 @@ const Footer = () => {
               {/* Social Links */}
               <div className="flex space-x-3">
                 {socialLinks.map((social) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.1, y: -3 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`p-3 rounded-lg bg-galaxy-cosmic border border-galaxy-border hover:border-galaxy-glow hover-glow-galaxy transition-all duration-300 ${social.color}`}
-                    title={social.name}
-                  >
-                    <social.icon className="w-5 h-5" />
-                  </motion.a>
+                  <MagneticButton key={social.name} strength={0.3}>
+                    <motion.a
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`p-3 rounded-lg bg-galaxy-cosmic border border-galaxy-border hover:border-galaxy-glow hover-glow-galaxy transition-all duration-300 flex items-center justify-center ${social.color}`}
+                      title={social.name}
+                    >
+                      <social.icon className="w-5 h-5" />
+                    </motion.a>
+                  </MagneticButton>
                 ))}
               </div>
             </div>

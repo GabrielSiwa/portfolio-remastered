@@ -288,20 +288,6 @@ const SkillFlip: React.FC<SkillFlipProps> = React.memo(
             </span>
           </div>
         </div>
-
-        {/* CSS-in-JS for 3D transforms */}
-        <style jsx>{`
-          .perspective {
-            perspective: 700px;
-          }
-          .backface-hidden {
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-          }
-          .rotate-y-180 {
-            transform: rotateY(180deg);
-          }
-        `}</style>
       </div>
     );
   }

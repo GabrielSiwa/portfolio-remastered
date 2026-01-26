@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { Github } from "lucide-react";
 import { Fade } from "react-awesome-reveal";
+import { TiltCard, BlurReveal, GradientText } from "./ui";
 
 // Helper function to get local video URL
 function getLocalVideoUrl(url: string): string | null {
@@ -127,11 +128,11 @@ export default function ProjectsPage() {
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-12 relative">
-      <Fade triggerOnce direction="up" fraction={0.3}>
-        <h1 className="text-4xl font-semibold mb-8 text-center">
-          Featured Projects
+      <BlurReveal className="mb-12">
+        <h1 className="text-5xl md:text-6xl font-bold text-center">
+          <GradientText>Featured Projects</GradientText>
         </h1>
-      </Fade>
+      </BlurReveal>
 
       {projects.length === 0 ? (
         <p className="text-center text-galaxy-text-muted">
@@ -142,6 +143,7 @@ export default function ProjectsPage() {
           {projects.map((project, index) => {
             const localVideoUrl = getLocalVideoUrl(project.videoUrl || "");
 
+
             return (
               <Fade
                 key={project.id}
@@ -151,12 +153,13 @@ export default function ProjectsPage() {
                 fraction={0.2}
                 className="h-full"
               >
-                <article className="bg-white/5 rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300 h-full flex flex-col">
-                  {localVideoUrl ? (
-                    <div className="w-full h-72 relative group flex-shrink-0">
-                      <video
-                        src={localVideoUrl}
-                        className="w-full h-full object-cover group-hover:[&::-webkit-media-controls]:opacity-100 [&::-webkit-media-controls]:opacity-0 [&::-webkit-media-controls]:transition-opacity [&::-webkit-media-controls]:duration-300"
+                <TiltCard className="h-full">
+                  <article className="glass-card overflow-hidden h-full flex flex-col">
+                    {localVideoUrl ? (
+                      <div className="w-full h-72 relative group flex-shrink-0">
+                        <video
+                          src={localVideoUrl}
+                          className="w-full h-full object-cover group-hover:[&::-webkit-media-controls]:opacity-100 [&::-webkit-media-controls]:opacity-0 [&::-webkit-media-controls]:transition-opacity [&::-webkit-media-controls]:duration-300"
                         muted
                         loop
                         controls
@@ -245,7 +248,7 @@ export default function ProjectsPage() {
                       {/* More Details Button */}
                       <Link
                         href={`/projects/${project.id}`}
-                        className="px-5 py-2 border border-galaxy-text-accent text-galaxy-text-accent rounded hover:bg-galaxy-text-accent hover:text-galaxy-nebula transition-colors"
+                        className="px-5 py-2 border border-galaxy-text-accent/30 text-galaxy-text-accent rounded hover:bg-galaxy-text-accent/10 transition-all button-premium"
                       >
                         More Details
                       </Link>
@@ -255,7 +258,7 @@ export default function ProjectsPage() {
                           href={project.cta.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-5 py-2 galaxy-button rounded"
+                          className="px-5 py-2 galaxy-button rounded button-premium"
                         >
                           {project.cta.label || "View Demo"}
                         </Link>
@@ -264,7 +267,7 @@ export default function ProjectsPage() {
                           href={project.demoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-5 py-2 galaxy-button rounded"
+                          className="px-5 py-1.5 galaxy-button rounded button-premium"
                         >
                           Live Demo
                         </Link>
@@ -276,7 +279,7 @@ export default function ProjectsPage() {
                           href={project.repositoryUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-5 py-2 border border-gray-500 text-gray-300 rounded hover:bg-gray-500 hover:text-white transition-colors flex items-center gap-2"
+                          className="px-5 py-2 border border-gray-500/30 text-gray-300 rounded hover:bg-gray-500/20 hover:text-white transition-all flex items-center gap-2 button-premium"
                           title="View Repository"
                         >
                           <Github size={16} />
@@ -286,11 +289,12 @@ export default function ProjectsPage() {
                     </div>
                   </div>
                 </article>
-              </Fade>
-            );
-          })}
-        </div>
-      )}
-    </main>
-  );
+              </TiltCard>
+            </Fade>
+          );
+        })}
+      </div>
+    )}
+  </main>
+);
 }

@@ -7,6 +7,7 @@ import { SiReact, SiPython, SiTypescript, SiJavascript } from "react-icons/si";
 import { FaJava } from "react-icons/fa";
 import { TbBrandReactNative } from "react-icons/tb";
 import Image from "next/image";
+import { SplitText, GradientText, BlurReveal, MagneticButton } from "./ui";
 
 // Subtle status dot component
 const StatusDot = ({ status }: { status?: string }) => {
@@ -70,7 +71,7 @@ const RotatingTitle = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="text-xl md:text-2xl lg:tNext-3xl font-medium text-galaxy-text-secondary whitespace-nowrap"
+          className="text-xl md:text-2xl lg:text-3xl font-medium text-galaxy-text-secondary whitespace-nowrap"
         >
           {ROTATING_TITLES[currentIndex]}
         </motion.h2>
@@ -190,32 +191,22 @@ const Hero = () => {
       className="relative min-h-screen overflow-hidden pt-20"
     >
       <motion.div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4">
-        {/* Main Heading with Splash Reveal */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, duration: 0.9, ease: "anticipate" }}
-          className="mb-4"
-        >
-          <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold">
-            <motion.span
-              className="text-galaxy-gradient inline-block"
-              initial={{ scale: 0.6, opacity: 0 }}
-              animate={{ scale: [1.05, 0.98, 1], opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
-            >
-              GABRIEL SIWA
-            </motion.span>
-
+        {/* Main Heading with SplitText Reveal */}
+        <div className="mb-4 relative">
+          <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold tracking-tighter">
+            <GradientText className="relative z-10">
+              <SplitText text="GABRIEL SIWA" delay={0.2} staggerDelay={0.05} />
+            </GradientText>
+            
             <motion.span
               aria-hidden
-              className="absolute block w-48 h-48 rounded-full bg-galaxy-plasma/10 pointer-events-none"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 block w-64 h-64 rounded-full bg-galaxy-plasma/20 blur-3xl pointer-events-none"
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: [0, 1.2, 1.6], opacity: [0.6, 0.2, 0] }}
-              transition={{ delay: 0.55, duration: 0.9 }}
+              transition={{ delay: 0.55, duration: 1.2 }}
             />
           </h1>
-        </motion.div>
+        </div>
 
         {/* Enhanced Subtitle with Rotating Title */}
         <motion.div
@@ -568,44 +559,35 @@ const Hero = () => {
           </motion.div>
         )}
 
-        {/* Simplified Description */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="mb-6 max-w-2xl"
-        >
-          <p className="text-md text-galaxy-text-muted leading-relaxed">
+        {/* Simplified Description with BlurReveal */}
+        <BlurReveal delay={1.2} className="mb-8 max-w-2xl px-4">
+          <p className="text-lg md:text-xl text-galaxy-text-muted leading-relaxed">
             I love solving problems through code and bringing creative ideas to
             life. Whether it&apos;s building web applications or experimenting
             with new technologies, I&apos;m always excited to learn and create
             something meaningful.
           </p>
-        </motion.div>
+        </BlurReveal>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons with Magnetic Effect */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.4, duration: 0.8 }}
           className="flex flex-col sm:flex-row gap-4 mb-6"
         >
-          <motion.button
-            type="button"
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0 0 30px rgba(139, 95, 191, 0.4)",
-            }}
-            whileTap={{ scale: 0.95 }}
+          <MagneticButton
+            strength={0.2}
             onClick={() => {
               window.open("https://www.linkedin.com/in/gabrielsiwa", "_blank");
             }}
-            aria-label="Message Gabriel on LinkedIn"
-            className="galaxy-button flex items-center justify-center space-x-2 text-lg px-8 py-4"
+            className="group"
           >
-            <Heart className="w-5 h-5" />
-            <span>Let&apos;s Collaborate</span>
-          </motion.button>
+            <div className="galaxy-button flex items-center justify-center space-x-3 text-lg px-10 py-5 button-premium rounded-full">
+              <Heart className="w-5 h-5 group-hover:scale-125 transition-transform" />
+              <span>Let&apos;s Collaborate</span>
+            </div>
+          </MagneticButton>
         </motion.div>
 
         {/* Social Links */}

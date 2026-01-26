@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { Fade } from "react-awesome-reveal";
 import SectionParticles from "./SectionParticles";
 
 // Context Provider
@@ -15,6 +14,17 @@ import { CategoryNavigation } from "./about/CategoryNavigation";
 import { StatusInfo } from "./about/StatusInfo";
 import { SkillsDisplay } from "./about/SkillsDisplay";
 
+import { StaggerContainer, BlurReveal, GradientText } from "./ui";
+
+import dynamic from "next/dynamic";
+import { useState } from "react";
+
+// Lazy load Three.js component
+const SkillGlobe = dynamic(() => import("./three/SkillGlobe"), {
+  ssr: false,
+  loading: () => <div className="h-[500px] flex items-center justify-center text-galaxy-text-muted">Loading 3D Experience...</div>
+});
+
 /**
  * About Page Component
  *
@@ -25,40 +35,74 @@ import { SkillsDisplay } from "./about/SkillsDisplay";
  * - Components are purely presentational
  */
 const AboutPage: React.FC = () => {
+  const [viewMode, setViewMode] = useState<"grid" | "globe">("grid");
+
   return (
     <SkillsProvider>
       <main className="max-w-4xl mx-auto py-12 px-4 relative">
         <SectionParticles count={10} />
 
-        {/* Bio Section */}
-        <div className="mb-12">
-          <Fade triggerOnce direction="up" fraction={0.3}>
-            <BioSection />
-          </Fade>
+        <div className="text-center mb-12">
+          <BlurReveal>
+            <h1 className="text-4xl md:text-6xl font-bold mb-4">
+              <GradientText>About Me</GradientText>
+            </h1>
+          </BlurReveal>
         </div>
 
-        {/* Skills Section */}
-        <div className="space-y-8">
-          <Fade triggerOnce direction="up" delay={100} fraction={0.3}>
-            <SkillsHeader />
-          </Fade>
+        <StaggerContainer staggerDelay={0.15} initialDelay={0.2} className="space-y-12">
+          {/* Bio Section */}
+          <BioSection />
 
-          <Fade triggerOnce direction="up" delay={150} fraction={0.3}>
-            <FilterPanel />
-          </Fade>
+          {/* Skills Section */}
+          <div className="space-y-8">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <SkillsHeader />
+              <div className="flex bg-galaxy-cosmic/50 p-1 rounded-full border border-galaxy-border/30">
+                <button
+                  onClick={() => setViewMode("grid")}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                    viewMode === "grid"
+                      ? "bg-galaxy-glow text-white shadow-lg shadow-galaxy-glow/20"
+                      : "text-galaxy-text-muted hover:text-white"
+                  }`}
+                >
+                  Grid View
+                </button>
+                <button
+                  onClick={() => setViewMode("globe")}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                    viewMode === "globe"
+                      ? "bg-galaxy-glow text-white shadow-lg shadow-galaxy-glow/20"
+                      : "text-galaxy-text-muted hover:text-white"
+                  }`}
+                >
+                  3D Globe
+                </button>
+              </div>
+            </div>
 
-          <Fade triggerOnce direction="up" delay={200} fraction={0.3}>
-            <CategoryNavigation />
-          </Fade>
-
-          <Fade triggerOnce direction="up" delay={250} fraction={0.3}>
-            <StatusInfo />
-          </Fade>
-
-          <Fade triggerOnce direction="up" delay={300} fraction={0.3}>
-            <SkillsDisplay />
-          </Fade>
-        </div>
+            {viewMode === "grid" ? (
+              <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <FilterPanel />
+                <CategoryNavigation />
+                <StatusInfo />
+                <SkillsDisplay />
+              </div>
+            ) : (
+              <div className="animate-in fade-in zoom-in-95 duration-1000">
+                <div className="glass-card p-4 md:p-8">
+                  <div className="text-center mb-4">
+                    <p className="text-galaxy-text-muted text-sm italic">
+                      Drag to rotate • Scroll to zoom • Explore my technical galaxy
+                    </p>
+                  </div>
+                  <SkillGlobe />
+                </div>
+              </div>
+            )}
+          </div>
+        </StaggerContainer>
       </main>
     </SkillsProvider>
   );

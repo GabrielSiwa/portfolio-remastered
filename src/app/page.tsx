@@ -76,9 +76,9 @@ export default function Home() {
           <AboutSection />
         </section>
 
-        <section id="contact">
+        {/* <section id="contact">
           <ContactSection />
-        </section>
+        </section> */}
       </main>
     </>
   );

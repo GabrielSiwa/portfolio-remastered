@@ -49,78 +49,39 @@ export const BioSection: React.FC = () => {
 
             <div className="text-md text-galaxy-text-secondary leading-relaxed space-y-4">
               <p>
-                I&apos;m a backend-leaning software developer who ships secure,
-                reliable, cloud-backed apps and mobile experiences.
-              </p>
-
-              <p>
-                I work across{" "}
+                I&apos;m a Full Stack Software Developer with 2+ years building production systems in{" "}
                 <span className="text-galaxy-text-accent font-medium">
-                  React
-                </span>{" "}
-                and{" "}
-                <span className="text-galaxy-text-accent font-medium">
-                  TypeScript
-                </span>{" "}
-                on the client, and{" "}
-                <span className="text-galaxy-text-accent font-medium">
-                  Node.js
-                </span>{" "}
-                and{" "}
-                <span className="text-galaxy-text-accent font-medium">
-                  Java
-                </span>{" "}
-                with MongoDB/MSSQL on the server. I care about the intersection
-                of performance, reliability, and developer experience—clear API
-                contracts, predictable releases, and code that&apos;s easy to
-                read and test.
-              </p>
-
-              <p>
-                My toolbelt includes{" "}
-                <span className="text-galaxy-text-accent font-medium">
-                  Azure
-                </span>{" "}
-                for deployments,{" "}
-                <span className="text-galaxy-text-accent font-medium">
-                  GitHub Actions
-                </span>{" "}
-                for{" "}
-                <span className="text-galaxy-text-accent font-medium">
-                  CI/CD
+                  React, TypeScript, Node.js, and cloud platforms (Azure, AWS)
                 </span>
-                , and pragmatic testing, triage, and documentation to keep teams
-                moving.
+                . I specialize in shipping features that reduce defects and automate deployments.
               </p>
 
               <p>
-                I&apos;ve delivered measurable improvements in API
-                responsiveness and automated workflows that remove manual steps.
-                I&apos;m comfortable balancing speed with{" "}
+                At SAIT, I led frontend-backend integration using REST APIs and WebSockets, reducing QA defects by ~47%. I rebuilt our CI/CD pipeline with{" "}
                 <span className="text-galaxy-text-accent font-medium">
-                  security
-                </span>{" "}
-                practices like strong password hashing and input protection.
-              </p>
-
-              <p>
-                I collaborate well in Agile teams, give and receive thoughtful
-                code reviews, and learn new tools quickly.{" "}
-                <span className="text-galaxy-text-accent font-medium">
-                  I&apos;m always eager to tackle complex problems and create
-                  tools that empower users and teams.
+                  GitHub Actions and Azure
                 </span>
+                , cutting release times from 45 minutes to 5 minutes.
               </p>
-            </div>
 
-            {/* Availability Status */}
+              <p>
+                I focus on REST API design, database optimization, and secure authentication—currently expanding my AWS deployment experience with{" "}
+                <span className="text-galaxy-text-accent font-medium">
+                  EC2, RDS, and Lambda
+                </span>
+                .
+              </p>
+
+              <p>
+                I write code that&apos;s fast, testable, and maintainable—whether it&apos;s optimizing database queries or building intuitive UIs.
+              </p>
+              {/* Availability Status */}
             <div className="flex items-center space-x-2 text-sm">
               <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
               <span className="text-galaxy-text-secondary">
                 Actively seeking full-time software developer opportunities
               </span>
             </div>
-
             <div className="flex mx-auto my-auto justify-center">
               <a
                 href="https://www.linkedin.com/in/gabrielsiwa/"
@@ -132,6 +93,7 @@ export const BioSection: React.FC = () => {
               >
                 Open to Opportunities
               </a>
+            </div>
             </div>
           </div>
         </div>

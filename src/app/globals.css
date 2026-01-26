@@ -372,3 +372,305 @@ body[data-modal-open="true"] .constellation-layer {
   pointer-events: none;
   transition: opacity 0.3s ease-out;
 }
+
+/* ============================================================================
+   PREMIUM UI UTILITIES - ReactBits & Mobbin Inspired
+   ============================================================================ */
+
+/* Glassmorphism Card */
+.glass-card {
+  background: color-mix(in oklch, var(--color-galaxy-cosmic) 60%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid
+    color-mix(in oklch, var(--color-galaxy-aurora) 15%, transparent);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px
+      color-mix(in oklch, var(--color-galaxy-void) 50%, transparent),
+    inset 0 1px 0
+      color-mix(in oklch, var(--color-galaxy-stardust) 10%, transparent);
+}
+
+.glass-card-strong {
+  background: color-mix(in oklch, var(--color-galaxy-nebula) 80%, transparent);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid
+    color-mix(in oklch, var(--color-galaxy-aurora) 25%, transparent);
+  border-radius: 1rem;
+}
+
+/* Animated Shine Effect */
+.animate-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    110deg,
+    transparent 25%,
+    color-mix(in oklch, var(--color-galaxy-stardust) 15%, transparent) 50%,
+    transparent 75%
+  );
+  animation: shine 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  50%,
+  100% {
+    left: 100%;
+  }
+}
+
+/* Magnetic Hover Effect (pairs with JS) */
+.magnetic-hover {
+  transition: transform 0.15s ease-out;
+  will-change: transform;
+}
+
+/* Tilt Card Effect (pairs with JS for 3D transform) */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  will-change: transform;
+}
+
+.tilt-card:hover {
+  box-shadow: 0 25px 50px -12px
+    color-mix(in oklch, var(--color-galaxy-glow) 40%, transparent);
+}
+
+.tilt-card-inner {
+  transform: translateZ(40px);
+}
+
+/* Gradient Border Animation - Reimplemented for compatibility without @property */
+.gradient-border {
+  position: relative;
+  background: var(--color-galaxy-cosmic);
+  border-radius: 1rem;
+  z-index: 0;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    var(--color-galaxy-plasma),
+    var(--color-galaxy-aurora),
+    var(--color-galaxy-stardust),
+    var(--color-galaxy-moonbeam),
+    var(--color-galaxy-plasma)
+  );
+  z-index: -1;
+  animation: rotate-border 4s linear infinite;
+}
+
+@keyframes rotate-border {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Scroll Progress Indicator */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--color-galaxy-plasma),
+    var(--color-galaxy-aurora),
+    var(--color-galaxy-stardust)
+  );
+  transform-origin: left;
+  z-index: 9999;
+}
+
+/* Enhanced Button Hover States */
+.button-premium {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.button-premium::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    transparent 30%,
+    color-mix(in oklch, var(--color-galaxy-stardust) 20%, transparent) 50%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.button-premium:hover::before {
+  opacity: 1;
+}
+
+.button-premium:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px -10px
+    color-mix(in oklch, var(--color-galaxy-glow) 50%, transparent);
+}
+
+.button-premium:active {
+  transform: translateY(0);
+}
+
+/* Text Reveal Animation */
+.text-reveal {
+  clip-path: inset(0 100% 0 0);
+  animation: text-reveal 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+@keyframes text-reveal {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Blur Reveal Animation */
+.blur-reveal {
+  filter: blur(10px);
+  opacity: 0;
+  animation: blur-reveal 0.6s ease-out forwards;
+}
+
+@keyframes blur-reveal {
+  to {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+/* Floating Animation */
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Pulse Glow Animation */
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px
+      color-mix(in oklch, var(--color-galaxy-glow) 30%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 40px
+        color-mix(in oklch, var(--color-galaxy-glow) 60%, transparent),
+      0 0 60px color-mix(in oklch, var(--color-galaxy-aurora) 30%, transparent);
+  }
+}
+
+/* Underline Animation */
+.animated-underline {
+  position: relative;
+}
+
+.animated-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--color-galaxy-plasma),
+    var(--color-galaxy-aurora)
+  );
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.animated-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Stagger Children Animation (use with JS) */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: stagger-in 0.5s ease forwards;
+}
+
+@keyframes stagger-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Focus Ring for Accessibility */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-galaxy-aurora);
+  outline-offset: 2px;
+}
+
+/* Selection Styling */
+::selection {
+  background: color-mix(in oklch, var(--color-galaxy-aurora) 40%, transparent);
+  color: var(--color-galaxy-text-primary);
+}
+
+/* SkillFlip 3D Transforms */
+.perspective {
+  perspective: 1000px;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}

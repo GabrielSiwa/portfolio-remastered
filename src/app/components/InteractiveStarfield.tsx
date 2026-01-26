@@ -113,12 +113,7 @@ const InteractiveStarfield: React.FC = () => {
   // STATE MANAGEMENT
   // ========================================================================
 
-  const [stars] = useState<Star[]>(() => [
-    ...generateStars(STARFIELD_CONFIG.STAR_COUNT.LAYER_1, 1),
-    ...generateStars(STARFIELD_CONFIG.STAR_COUNT.LAYER_2, 2),
-    ...generateStars(STARFIELD_CONFIG.STAR_COUNT.LAYER_3, 3),
-  ]);
-
+  const [stars, setStars] = useState<Star[]>([]);
   const [shootingStars, setShootingStars] = useState<ShootingStar[]>([]);
   const [nebulaPosition, setNebulaPosition] = useState<MousePosition>({
     x: 50,
@@ -136,6 +131,15 @@ const InteractiveStarfield: React.FC = () => {
   const layer1Y = useTransform(scrollY, [0, 1000], [0, -100]);
   const layer2Y = useTransform(scrollY, [0, 1000], [0, -50]);
   const layer3Y = useTransform(scrollY, [0, 1000], [0, -20]);
+
+  // Initial star generation
+  useEffect(() => {
+    setStars([
+      ...generateStars(STARFIELD_CONFIG.STAR_COUNT.LAYER_1, 1),
+      ...generateStars(STARFIELD_CONFIG.STAR_COUNT.LAYER_2, 2),
+      ...generateStars(STARFIELD_CONFIG.STAR_COUNT.LAYER_3, 3),
+    ]);
+  }, []);
 
   // ========================================================================
   // EVENT HANDLERS

@@ -11,6 +11,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { Menu, X, Home, User, FolderOpen, Mail, Sparkles } from "lucide-react";
+import { GradientText, MagneticButton } from "./ui";
 
 import type {
   NavItem,
@@ -139,28 +140,28 @@ const NavItemComponent = React.memo(
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: index * 0.1 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
       >
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            onClick?.();
-          }}
-          className={`relative group px-3 py-2 text-sm font-medium transition-colors duration-200 flex items-center space-x-2 ${
-            isActive
-              ? "text-galaxy-text-accent"
-              : "text-galaxy-text-primary hover:text-galaxy-text-accent"
-          }`}
-        >
-          <IconComponent className="w-4 h-4" />
-          <span>{item.name}</span>
-          <span
-            className={`absolute inset-x-0 -bottom-1 h-0.5 bg-galaxy-gradient-primary transition-transform duration-200 ${
-              isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+        <MagneticButton strength={0.2}>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              onClick?.();
+            }}
+            className={`relative group px-4 py-2 text-sm font-medium transition-all duration-300 flex items-center space-x-2 rounded-full hover:bg-white/5 ${
+              isActive
+                ? "text-galaxy-text-accent"
+                : "text-galaxy-text-primary hover:text-galaxy-text-accent"
             }`}
-          />
-        </button>
+          >
+            <IconComponent className={`w-4 h-4 ${isActive ? "animate-pulse" : "group-hover:scale-110 transition-transform"}`} />
+            <span>{item.name}</span>
+            <span
+              className={`absolute inset-x-4 -bottom-0.5 h-0.5 bg-gradient-to-r from-galaxy-plasma to-galaxy-aurora rounded-full transition-all duration-300 ${
+                isActive ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
+              }`}
+            />
+          </button>
+        </MagneticButton>
       </motion.div>
     );
   }
@@ -170,31 +171,30 @@ NavItemComponent.displayName = "NavItem";
 
 // Logo component
 const Logo = React.memo(() => {
-  const logoVariants = {
-    hover: {
-      scale: 1.05,
-      transition: { duration: 0.2 },
-    },
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5 }}
-      variants={logoVariants}
-      whileHover="hover"
+      whileHover={{ scale: 1.05 }}
     >
-      <Link href="/" className="group flex items-center space-x-3">
+      <Link href="/" className="group flex items-center space-x-2">
         <div className="relative">
-          <span className="text-2xl font-bold text-galaxy-gradient hover:glow-galaxy transition-all duration-500">
-            TarO
-          </span>
-          <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-galaxy-gradient-primary group-hover:w-full transition-all duration-300"></div>
+          <GradientText animate className="text-2xl font-black tracking-tight drop-shadow-sm">
+            TARO
+          </GradientText>
+          <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-galaxy-plasma to-galaxy-stardust group-hover:w-full transition-all duration-300"></div>
         </div>
         <motion.div
-          whileHover={{ rotate: 180, scale: 1.2 }}
-          transition={{ duration: 0.3 }}
+          animate={{ 
+            rotate: [0, 10, -10, 10, 0],
+            scale: [1, 1.2, 1, 1.2, 1]
+          }}
+          transition={{ 
+            duration: 5, 
+            repeat: Infinity,
+            ease: "easeInOut" 
+          }}
         >
           <Sparkles className="w-5 h-5 text-galaxy-text-accent group-hover:text-galaxy-text-primary transition-colors duration-300" />
         </motion.div>
