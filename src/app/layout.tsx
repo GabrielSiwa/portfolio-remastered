@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Background from "./components/Background";
@@ -169,6 +170,7 @@ export default function RootLayout({
         <footer className="fixed bottom-4 right-4 z-50">
           <VisitCounter />
         </footer>
+        <SpeedInsights />
       </body>
     </html>
   );
