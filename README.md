@@ -25,11 +25,11 @@
 
 ### 📊 Real-Time Analytics
 
-- **Live Visitor Counter** - Socket.IO integration for real-time tracking
-  - WebSocket connection to analytics server
-  - Live visitor count updates
+- **Live Visitor Counter** - Serverless tracking powered by Upstash Redis
+  - REST API integration with Redis Edge database
+  - Live visitor count updates via HTTP polling
   - Easter egg animation for special visitor numbers
-  - Graceful fallback when server unavailable
+  - Graceful fallback for local development and offline states
 
 ### ⚡ Performance Optimizations
 
@@ -73,12 +73,9 @@
 - **@react-three/fiber** - React renderer for Three.js
 - **@react-three/drei** - Useful helpers (Float, Text, OrbitControls)
 
-### Real-Time
+### Database & Analytics
 
-- **Socket.IO Client** - WebSocket connections for live analytics
-
-### Monitoring & Analytics
-
+- **Upstash Redis** - Serverless Redis for visitor counting and analytics
 - **Vercel Analytics** - Production performance monitoring
 - **Webpack Bundle Analyzer** - Bundle size optimization
 
@@ -105,7 +102,7 @@ portfolio-remastered/
 │       │   ├── ProjectsSection.tsx
 │       │   └── ContactSection.tsx
 │       ├── hooks/
-│       │   └── useAnalytics.ts  # Socket.IO integration
+│       │   └── useAnalytics.ts  # Upstash Redis integration
 │       ├── lib/                 # Utility functions
 │       ├── api/                 # API routes
 │       └── projects/            # Project pages
@@ -195,23 +192,29 @@ const STARFIELD_CONFIG = {
 **File:** `src/app/hooks/useAnalytics.ts`
 
 ```typescript
-const socket = io(socketUrl, {
-  transports: ["websocket"],
-  reconnection: true,
-  reconnectionDelay: 1000,
-});
+const updateCount = async () => {
+  const response = await fetch("/api/visit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+  });
+  const data = await response.json();
+  setVisitorCount(data.count);
+};
 
-socket.on("visitorCount", (count: number) => {
-  setVisitorCount(count);
-});
+// Polling for live updates (every 10 seconds)
+const interval = setInterval(() => {
+  fetch("/api/visit", { method: "GET" })
+    .then(res => res.json())
+    .then(data => setVisitorCount(data.count));
+}, 10000);
 ```
 
 **Features:**
 
-- WebSocket connection to analytics server
-- Automatic reconnection on disconnect
-- Live visitor count updates
-- Easter egg triggers on special numbers
+- RESTful API interaction with Upstash Redis Edge
+- Automatic session-based unique visit tracking
+- Live visitor count updates via throttled polling
+- Easter egg triggers on special numbers (e.g., "67")
 
 ---
 
@@ -287,7 +290,7 @@ pnpm analyze
 
 - **Vercel Analytics** - Page views, visitor demographics, performance metrics
 - **Webpack Bundle Analyzer** - Bundle size tracking
-- **Real-time Analytics** - Live visitor counts via Socket.IO
+- **Real-time Analytics** - Live visitor counts via Upstash Redis
 
 ### Performance Targets
 
