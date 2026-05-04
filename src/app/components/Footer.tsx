@@ -55,12 +55,12 @@ const Footer = () => {
       icon: Github,
       color: "hover:text-gray-300",
     },
-    {
-      name: "Resume",
-      href: "/resume.pdf",
-      icon: Download,
-      color: "hover:text-galaxy-text-accent",
-    },
+    // {
+    //   name: "Resume",
+    //   href: "/resume.pdf",
+    //   icon: Download,
+    //   color: "hover:text-galaxy-text-accent",
+    // },
   ];
 
   return (
@@ -211,12 +211,11 @@ const Footer = () => {
               rel="noopener noreferrer"
             >
               <Image
-                src="https://ftp-yyc-webring.vercel.app/icon.white.svg"
+                src="/images/icon.white.svg"
                 alt="FTP-YYC Webring"
                 width={24}
                 height={24}
                 className="opacity-80"
-                unoptimized
               />
             </a>
             <a href="https://ftp-yyc-webring.vercel.app/#https://gabriel-siwa.vercel.app/?nav=next">

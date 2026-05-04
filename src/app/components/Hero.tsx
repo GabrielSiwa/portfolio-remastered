@@ -156,8 +156,8 @@ const Hero = () => {
     const relevantTechs = techMap[techName] || [];
     const relatedProjects = projects.filter((project) =>
       project.techStack.some((tech) =>
-        relevantTechs.some((rt) => tech.includes(rt))
-      )
+        relevantTechs.some((rt) => tech.includes(rt)),
+      ),
     );
 
     return relatedProjects.slice(0, 2); // Show max 2 projects
@@ -177,12 +177,12 @@ const Hero = () => {
       url: "https://github.com/GabrielSiwa",
       color: "hover:text-gray-300",
     },
-    {
-      name: "Resume",
-      icon: Download,
-      url: "/resume.pdf",
-      color: "hover:text-galaxy-text-accent",
-    },
+    // {
+    //   name: "Resume",
+    //   icon: Download,
+    //   url: "/resume.pdf",
+    //   color: "hover:text-galaxy-text-accent",
+    // },
   ];
 
   return (
@@ -197,7 +197,7 @@ const Hero = () => {
             <GradientText className="relative z-10">
               <SplitText text="GABRIEL SIWA" delay={0.2} staggerDelay={0.05} />
             </GradientText>
-            
+
             <motion.span
               aria-hidden
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 block w-64 h-64 rounded-full bg-galaxy-plasma/20 blur-3xl pointer-events-none"
@@ -381,7 +381,7 @@ const Hero = () => {
                   style={{
                     boxShadow: `0 0 20px ${tech.color.replace(
                       "bg-",
-                      "rgba("
+                      "rgba(",
                     )}, 0.4)`,
                   }}
                 >
@@ -490,7 +490,7 @@ const Hero = () => {
                   style={{
                     boxShadow: `0 0 20px ${tech.color.replace(
                       "bg-",
-                      "rgba("
+                      "rgba(",
                     )}, 0.4)`,
                   }}
                 >
