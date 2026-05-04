@@ -216,6 +216,7 @@ const Footer = () => {
                 width={24}
                 height={24}
                 className="opacity-80"
+                unoptimized
               />
             </a>
             <a href="https://ftp-yyc-webring.vercel.app/#https://gabriel-siwa.vercel.app/?nav=next">
