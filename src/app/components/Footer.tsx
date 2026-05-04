@@ -93,7 +93,7 @@ const Footer = () => {
         </div>
 
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-galaxy-cosmic/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-galaxy-cosmic/30 to-transparent" />
       </div>
 
       <motion.div
@@ -109,7 +109,10 @@ const Footer = () => {
           <motion.div variants={itemVariants}>
             {/* Cap line length so it's easier to read */}
             <div className="mb-6 max-w-prose">
-              <GradientText animate className="text-3xl font-black mb-2 inline-block">
+              <GradientText
+                animate
+                className="text-3xl font-black mb-2 inline-block"
+              >
                 GABRIEL SIWA
               </GradientText>
               <p className="text-galaxy-text-accent font-medium mb-3">
@@ -121,8 +124,8 @@ const Footer = () => {
                 <span className="text-galaxy-text-accent font-semibold">
                   Software Development graduate (2025)
                 </span>{" "}
-                specializing in building real-world applications and
-                exploring cutting-edge technologies including AI and full-stack
+                specializing in building real-world applications and exploring
+                cutting-edge technologies including AI and full-stack
                 development.
               </p>
             </div>
@@ -196,6 +199,24 @@ const Footer = () => {
                 in Calgary
               </span>
             </div>
+          </div>
+          <div className="flex gap-2 justify-center">
+            <a href="https://ftp-yyc-webring.vercel.app/#https://gabriel-siwa.vercel.app/?nav=prev">
+              ←
+            </a>
+            <a
+              href="https://ftp-yyc-webring.vercel.app/#https://gabriel-siwa.vercel.app/"
+              target="_blank"
+            >
+              <img
+                src="https://ftp-yyc-webring.vercel.app/icon.white.svg"
+                alt="FTP-YYC Webring"
+                style={{ width: "24px", height: "auto", opacity: 0.8 }}
+              />
+            </a>
+            <a href="https://ftp-yyc-webring.vercel.app/#https://gabriel-siwa.vercel.app/?nav=next">
+              →
+            </a>
           </div>
 
           {/* Call to Action */}
