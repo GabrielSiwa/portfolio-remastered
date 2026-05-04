@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   Github,
@@ -207,11 +208,14 @@ const Footer = () => {
             <a
               href="https://ftp-yyc-webring.vercel.app/#https://gabriel-siwa.vercel.app/"
               target="_blank"
+              rel="noopener noreferrer"
             >
-              <img
+              <Image
                 src="https://ftp-yyc-webring.vercel.app/icon.white.svg"
                 alt="FTP-YYC Webring"
-                style={{ width: "24px", height: "auto", opacity: 0.8 }}
+                width={24}
+                height={24}
+                className="opacity-80"
               />
             </a>
             <a href="https://ftp-yyc-webring.vercel.app/#https://gabriel-siwa.vercel.app/?nav=next">
