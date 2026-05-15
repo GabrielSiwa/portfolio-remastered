@@ -1,5 +1,47 @@
 [
   {
+    "id": "photo-booth-system",
+    "title": "Photo Booth Automation System",
+    "short": "Production payment-to-hardware automation deployed at a live events client.",
+    "description": "An end-to-end automation system that bridges Square Terminal payments to a physical photo booth. When a customer taps their card, the system verifies the webhook signature, manages concurrent session state, and triggers the booth software, all within seconds and with zero manual intervention.",
+    "image": "/images/projects/photo-booth-system.jpg",
+    "techStack": [
+      "Python",
+      "Flask",
+      "Square API",
+      "Win32 API",
+      "PyAutoGUI",
+      "Waitress",
+      "Threading",
+      "Cloudflare Tunnel"
+    ],
+    "problem": "A live events client needed a seamless tap-to-pay photo booth experience with no manual steps between payment and session start, and it had to be reliable enough for unattended operation at public events.",
+    "solution": "Built a Flask webhook server that verifies Square payment signatures (HMAC-SHA256), manages thread-safe session state with mutex locks, triggers booth software via its local HTTP API, and uses the Win32 API and PyAutoGUI to handle window orchestration. A polling fallback catches missed webhooks, a safety-net timer releases stuck sessions, and a Terminal watchdog sends Telegram alerts if hardware goes offline. Deployed behind Cloudflare Tunnel for a permanent public webhook URL. Part of a two-system platform — see also: Staff Coupon Generation System.",
+    "date": "2025-05-01",
+    "status": "completed"
+  },
+  {
+    "id": "staff-coupon-system",
+    "title": "Staff Coupon Generation System",
+    "short": "Internal staff tool for issuing and tracking single-use discount codes at live events.",
+    "description": "A full-stack internal web application that lets event staff generate single-use discount codes on the spot — birthdays, anniversaries, family deals. Handles the full coupon lifecycle from creation through redemption, integrating directly with the photo booth kiosk via API. Built with a security-first database design using Supabase RLS and SECURITY DEFINER stored procedures.",
+    "image": "/images/projects/code-room.png",
+    "techStack": [
+      "Next.js 15",
+      "TypeScript",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Supabase",
+      "PostgreSQL",
+      "bcrypt",
+      "Netlify"
+    ],
+    "problem": "Event staff needed a fast way to issue discount codes on the spot without any access to the payment system, while the kiosk needed to validate and redeem those codes atomically — with no risk of double-redemption under concurrent booth taps.",
+    "solution": "Built a password-protected staff dashboard (Next.js static export on Netlify) backed by Supabase PostgreSQL. All data operations go through 8 SECURITY DEFINER stored procedures — zero direct table access. Row Level Security locks every table. Coupon expiry is derived at query time via a PostgreSQL function (no cron jobs). Concurrent redemption is prevented with SELECT FOR UPDATE locks. A partial unique index on (first_name, last_name) enforces one active code per customer. Integrates with the existing Flask kiosk via four atomic API calls. Part of a two-system platform — see also: Photo Booth Automation System.",
+    "date": "2025-05-01",
+    "status": "completed"
+  },
+  {
     "id": "xaplanz",
     "title": "XAPlanz: Site Plan Creator & Viewer",
     "short": "Interactive site planning tool with real-time collaboration and PDF export",
@@ -8,7 +50,7 @@
     "repositoryUrl": "https://github.com/GabrielSiwa/XAPlanz",
     "cta": {
       "label": "View Live Demo",
-      "url": "https://xaplanz.vercel.app"
+      "url": "https://xaplanz-next.vercel.app"
     },
     "techStack": [
       "Vue 3",
@@ -103,7 +145,7 @@
     "title": "EyeMo: AI Voice-Controlled Accessibility",
     "short": "Tap-activated voice commands, OCR and scene analysis for visual accessibility",
     "description": "EyeMo empowers people with visual impairments through tap-activated voice commands, instant OCR with speech output, AI-powered scene analysis, and voice-announced location services using Azure and OpenAI.",
-    "videoUrl": "/demo/EyeMo-Ad.mp4",
+    "videoUrl": "/demo/eyemo-ad.mp4",
     "cta": {
       "label": "View Live Demo",
       "url": "https://coffee-mates.vercel.app/"
@@ -137,7 +179,7 @@
     "title": "Coffee Mates: Capstone Project Overview Website",
     "short": "Showcase website for Coffee Mates group projects",
     "description": "A comprehensive overview website for the group Coffee Mates Projects, featuring project details, team information, and a showcase of individual contributions.",
-    "image": "/images/projects/CoffeeMates.png",
+    "image": "/images/projects/coffee-mates.png",
     "cta": {
       "label": "Visit the website",
       "url": "https://coffee-mates.vercel.app/"
@@ -154,7 +196,7 @@
     "title": "Studdy: Task Manager",
     "short": "Task Management App that uses Local Storage for Offline Access ",
     "description": "Studdy is a task management app that helps users organize their tasks using local storage for offline access.",
-    "image": "/images/projects/Studdy.png",
+    "image": "/images/projects/studdy.png",
     "techStack": ["React Native", "Expo", "TypeScript"],
     "problem": "Users need a reliable way to manage tasks without an internet connection.",
     "solution": "Implemented local storage to allow users to create, read, update, and delete tasks offline, syncing changes when the connection is restored.",

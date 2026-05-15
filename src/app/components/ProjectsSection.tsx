@@ -81,13 +81,7 @@ async function loadProjects(): Promise<Project[]> {
         demoUrl: String(item.demoUrl ?? ""),
         detailsUrl: String(item.detailsUrl ?? ""),
         repositoryUrl: String(item.repositoryUrl ?? ""),
-        videoUrl: String(
-          item.videoUrl ||
-            (item.cta && typeof item.cta === "object"
-              ? (item.cta as Record<string, unknown>).url
-              : "") ||
-            ""
-        ),
+        videoUrl: String(item.videoUrl ?? ""),
         techStack: Array.isArray(item.techStack)
           ? (item.techStack as string[])
           : [],
@@ -154,7 +148,12 @@ export default function ProjectsPage() {
                 className="h-full"
               >
                 <TiltCard className="h-full">
-                  <article className="glass-card overflow-hidden h-full flex flex-col">
+                  <article className="glass-card overflow-hidden h-full flex flex-col relative">
+                    {(project.id === "photo-booth-system" || project.id === "staff-coupon-system") && (
+                      <div className="absolute top-3 right-3 z-10 px-3 py-1 rounded-full bg-galaxy-plasma/80 text-white text-xs font-semibold backdrop-blur-sm border border-galaxy-plasma/40">
+                        Client Work
+                      </div>
+                    )}
                     {localVideoUrl ? (
                       <div className="w-full h-72 relative group flex-shrink-0">
                         <video
