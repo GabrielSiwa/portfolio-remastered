@@ -117,7 +117,7 @@ const Footer = () => {
                 GABRIEL SIWA
               </GradientText>
               <p className="text-galaxy-text-accent font-medium mb-3">
-                Software Developer
+                Software Engineer
               </p>
               <p className="text-galaxy-text-muted leading-relaxed mb-4">
                 Passionate about creating innovative solutions with modern web
@@ -211,7 +211,7 @@ const Footer = () => {
               rel="noopener noreferrer"
             >
               <Image
-                src="/images/icon.white.svg"
+                src="/images/icon-white.svg"
                 alt="FTP-YYC Webring"
                 width={24}
                 height={24}

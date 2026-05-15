@@ -19,7 +19,7 @@ export const BioSection: React.FC = () => {
         >
           <div className="group relative w-full h-full">
             <Image
-              src="/images/Linkedin.png"
+              src="/images/linkedin.png"
               alt="Gabriel Siwa portrait"
               fill
               priority
@@ -49,7 +49,7 @@ export const BioSection: React.FC = () => {
 
             <div className="text-md text-galaxy-text-secondary leading-relaxed space-y-4">
               <p>
-                I&apos;m a Full Stack Software Developer with 2 years building production systems in{" "}
+                I&apos;m a Full Stack Software Engineer with 3 years building production systems in{" "}
                 <span className="text-galaxy-text-accent font-medium">
                   React, TypeScript, Node.js, and cloud platforms (Azure, AWS)
                 </span>

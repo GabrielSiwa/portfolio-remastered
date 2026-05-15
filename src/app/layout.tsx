@@ -25,9 +25,9 @@ const geistMono = Geist_Mono({
 // Site configuration
 const siteConfig = {
   name: "Gabriel Siwa",
-  title: "Gabriel Siwa | Full-Stack Developer",
+  title: "Gabriel Siwa | Software Engineer",
   description:
-    "Full-stack developer specializing in React, Next.js, TypeScript, and cloud solutions. Explore my portfolio of web applications, mobile apps, and AI-powered tools.",
+    "Software Engineer specializing in React, Next.js, TypeScript, and cloud solutions. Explore my portfolio of web applications, mobile apps, and AI-powered tools.",
   url: "https://gabrielsiwa.dev", // Update with your actual domain
   ogImage: "/og-image.png",
 };
@@ -160,7 +160,7 @@ export default function RootLayout({
       >
         {/* Scroll Progress Indicator */}
         <ScrollProgress />
-        
+
         {/* Main site wrapper: Navbar + page content use the animated Background */}
         <div className="relative min-h-screen">
           <Background />

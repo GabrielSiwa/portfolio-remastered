@@ -32,7 +32,7 @@ const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
   useEffect(() => {
     // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
+      "(prefers-reduced-motion: reduce)",
     ).matches;
 
     if (prefersReducedMotion) {
@@ -105,7 +105,7 @@ const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
               transition={{ delay: 0.3, duration: 0.5 }}
               className="mt-4 text-galaxy-text-secondary text-sm sm:text-base tracking-widest uppercase"
             >
-              Full-Stack Developer
+              Software Engineer
             </motion.p>
           </motion.div>
         </motion.div>
