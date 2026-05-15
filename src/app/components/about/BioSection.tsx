@@ -13,26 +13,22 @@ export const BioSection: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center justify-items-center">
         {/* Left: portrait with subtle hover glow */}
         <motion.div
-          className="relative w-full max-w-[320px] mx-auto md:mx-0 h-[400px]"
+          className="group relative mx-auto md:mx-0"
           whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >
-          <div className="group relative w-full h-full">
-            <Image
-              src="/images/linkedin.png"
-              alt="Gabriel Siwa portrait"
-              fill
-              priority
-              sizes="(min-width: 768px) 320px, 100vw"
-              className="object-cover object-top rounded-xl border-2 border-white/10 shadow-lg transition-all duration-300 group-hover:shadow-2xl group-hover:border-galaxy-accent/30"
-              style={{
-                objectPosition: "center 10%",
-              }}
-            />
+          <Image
+            src="/images/linkedin.png"
+            alt="Gabriel Siwa portrait"
+            width={320}
+            height={400}
+            priority
+            className="rounded-xl border-2 border-white/10 shadow-lg object-cover object-top transition-all duration-300 group-hover:shadow-2xl group-hover:border-galaxy-accent/30"
+            style={{ objectPosition: "center 10%" }}
+          />
 
-            {/* Subtle cyan/purple glow on hover */}
-            <div className="absolute -inset-1 bg-gradient-to-br from-galaxy-accent/20 via-cyan-500/10 to-purple-500/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-md"></div>
-          </div>
+          {/* Subtle cyan/purple glow on hover */}
+          <div className="absolute -inset-1 bg-linear-to-br from-galaxy-accent/20 via-cyan-500/10 to-purple-500/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-md" />
         </motion.div>
 
         {/* Right: bio text with better spacing and highlights */}
