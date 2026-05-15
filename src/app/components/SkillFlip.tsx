@@ -246,17 +246,14 @@ const SkillFlip: React.FC<SkillFlipProps> = React.memo(
         aria-label={`${skill} - ${years} ${yearLabel} of experience`}
       >
         <div
-          className={`
-          relative w-full h-full transition-transform duration-1000 transform-gpu 
-          border-3 rounded-md ${isFlipped ? "rotate-y-180" : ""}
-        `}
+          className={`relative w-full h-full transition-transform duration-1000 transform-gpu ${isFlipped ? "rotate-y-180" : ""}`}
           style={{
             transformStyle: "preserve-3d",
             transitionDuration: ANIMATION_CONFIG.TRANSITION_DURATION,
           }}
         >
           {/* Front Face: Technology Icon */}
-          <div className="absolute inset-0 backface-hidden flex items-center justify-center rounded bg-galaxy-nebula p-1">
+          <div className="absolute inset-0 backface-hidden flex items-center justify-center rounded-md bg-galaxy-nebula border border-white/10 p-1">
             <div className="w-7 h-7 relative flex items-center justify-center">
               {IconComponent ? (
                 <IconComponent
@@ -277,7 +274,7 @@ const SkillFlip: React.FC<SkillFlipProps> = React.memo(
 
           {/* Back Face: Skill Details */}
           <div
-            className="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center justify-center rounded bg-galaxy-plasma p-1"
+            className="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center justify-center rounded-md bg-galaxy-plasma border border-white/10 p-1"
             style={{ transform: "rotateY(180deg)" }}
           >
             <span className="text-[12px] font-semibold text-center leading-tight">
