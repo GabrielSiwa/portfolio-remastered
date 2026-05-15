@@ -47,15 +47,15 @@ const CONSTELLATIONS = [
     description:
       "The Lion - Gabriel's zodiac constellation, representing courage, leadership, and creativity",
     stars: [
-      { x: 27.6, y: 11.5 }, // 0 - Epsilon (22 * 1.3, 9.24 * 1.3)
-      { x: 26, y: 10.375 }, // 1 - Mu (20 * 1.3, 8.75 * 1.3)
-      { x: 22.1, y: 11.376 }, // 2 - Zeta (17 * 1.3, 9.52 * 1.3)
-      { x: 21.4, y: 13.377 }, // 3 - Gamma (18 * 1.3, 10.29 * 1.3)
-      { x: 25.9, y: 15.014 }, // 4 - Alpha (23 * 1.3, 10.78 * 1.3)
-      { x: 25.5, y: 17 }, // 5 - Zosma (24 * 1.3, 11.83 * 1.3)
-      { x: 11.6, y: 16 }, // 6 - Chertan (12 * 1.3, 11.83 * 1.3)
-      { x: 6.1, y: 16.834 }, // 7 - Chertan (7 * 1.3, 12.18 * 1.3)
-      { x: 10.5, y: 13.377 }, // 8 - Theta (12 * 1.3, 10.85 * 1.3)
+      { x: 27.6, y: 28 }, // 0 - Epsilon
+      { x: 26,   y: 26 }, // 1 - Mu
+      { x: 22.1, y: 28 }, // 2 - Zeta
+      { x: 21.4, y: 33 }, // 3 - Gamma
+      { x: 25.9, y: 38 }, // 4 - Alpha
+      { x: 25.5, y: 44 }, // 5 - Zosma
+      { x: 11.6, y: 42 }, // 6 - Chertan
+      { x: 6.1,  y: 45 }, // 7 - Chertan
+      { x: 10.5, y: 33 }, // 8 - Theta
     ],
     connections: [
       { from: 0, to: 1 },
@@ -76,17 +76,17 @@ const CONSTELLATIONS = [
     description:
       "A developer's constellation representing the structure of clean, organized code - from root to branches",
     stars: [
-      { x: 85, y: 18.2435 },
-      { x: 83, y: 16.08325 },
-      { x: 87, y: 16.08325 },
-      { x: 81, y: 13.923 },
-      { x: 85, y: 13.923 },
-      { x: 89, y: 13.923 },
-      { x: 79, y: 11.76275 },
-      { x: 83, y: 11.76275 },
-      { x: 87, y: 11.76275 },
-      { x: 91, y: 11.76275 },
-      { x: 85, y: 9.6025 },
+      { x: 85, y: 45 },
+      { x: 83, y: 40 },
+      { x: 87, y: 40 },
+      { x: 81, y: 35 },
+      { x: 85, y: 35 },
+      { x: 89, y: 35 },
+      { x: 79, y: 30 },
+      { x: 83, y: 30 },
+      { x: 87, y: 30 },
+      { x: 91, y: 30 },
+      { x: 85, y: 25 },
     ],
     connections: [
       { from: 0, to: 1 },
@@ -366,7 +366,7 @@ const ConstellationLayer: React.FC = () => {
             className="absolute rounded-full"
             style={{
               left: `${particle.x}%`,
-              top: `${particle.y}%`,
+              top: `${(particle.y / 100) * viewport.height}px`,
               width: `${particle.size}px`,
               height: `${particle.size}px`,
               backgroundColor: particle.color,
@@ -416,7 +416,7 @@ const ConstellationLayer: React.FC = () => {
                     className="absolute pointer-events-auto"
                     style={{
                       left: `${star.x}%`,
-                      top: `${star.y}%`,
+                      top: `${(star.y / 100) * viewport.height}px`,
                       transform: "translate(-50%, -50%)",
                       zIndex: 25,
                     }}
@@ -488,9 +488,9 @@ const ConstellationLayer: React.FC = () => {
                       <motion.line
                         key={`${constellation.id}-line-${index}`}
                         x1={`${fromStar.x}%`}
-                        y1={`${fromStar.y}%`}
+                        y1={(fromStar.y / 100) * viewport.height}
                         x2={`${toStar.x}%`}
-                        y2={`${toStar.y}%`}
+                        y2={(toStar.y / 100) * viewport.height}
                         stroke="rgba(255, 215, 0, 0.8)"
                         strokeWidth={strokeWidth}
                         initial={{ pathLength: 0, opacity: 0 }}
