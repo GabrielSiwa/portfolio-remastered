@@ -49,7 +49,8 @@ export const BioSection: React.FC = () => {
 
             <div className="text-md text-galaxy-text-secondary leading-relaxed space-y-4">
               <p>
-                I&apos;m a Full Stack Software Engineer with 3 years building production systems in{" "}
+                I&apos;m a Full Stack Software Engineer with 3 years building
+                production systems in{" "}
                 <span className="text-galaxy-text-accent font-medium">
                   React, TypeScript, Node.js, and cloud platforms (Azure, AWS)
                 </span>
@@ -57,14 +58,20 @@ export const BioSection: React.FC = () => {
               </p>
 
               <p>
-                At SAIT, I designed and implemented REST API contracts between React frontends and Node.js backends, defining request/response schemas with TypeScript interfaces that prevented runtime errors and cut integration bugs by 40%.
-                </p>
+                At SAIT, I designed and implemented REST API contracts between
+                React frontends and Node.js backends, defining request/response
+                schemas with TypeScript interfaces that prevented runtime errors
+                and cut integration bugs by 40%.
+              </p>
 
-                <p>
+              <p>
                 Reduced the QA defects by{" "}
-                <span className="text-galaxy-text-accent font-medium">47% by implementing unit test coverage for critical API endpoints and React components, catching edge cases before they reached QA</span>
-                . 
-                Rebuilt our CI/CD pipelines with{" "}
+                <span className="text-galaxy-text-accent font-medium">
+                  47% by implementing unit test coverage for critical API
+                  endpoints and React components, catching edge cases before
+                  they reached QA
+                </span>
+                . Rebuilt our CI/CD pipelines with{" "}
                 <span className="text-galaxy-text-accent font-medium">
                   GitHub Actions and deployed using Azure
                 </span>
@@ -74,7 +81,8 @@ export const BioSection: React.FC = () => {
               <p>
                 Specializing in{" "}
                 <span className="text-galaxy-text-accent font-medium">
-                  REST API design, database optimization, secure authentication, and building type-safe React UIs
+                  REST API design, database optimization, secure authentication,
+                  and building type-safe React UIs
                 </span>
                 . Currently expanding my AWS deployment experience with{" "}
                 <span className="text-galaxy-text-accent font-medium">
@@ -84,7 +92,9 @@ export const BioSection: React.FC = () => {
               </p>
 
               <p>
-                <span className="text-galaxy-moonbeam font-medium"></span> Ship features that work the first time. Write code that&apos;s fast, testable, and maintainable from backend queries to frontend UIs.
+                <span className="text-galaxy-moonbeam font-medium"></span> Ship
+                features that work the first time. Write code that&apos;s fast,
+                testable, and maintainable from backend queries to frontend UIs.
               </p>
 
               {/* Availability Status */}
@@ -95,7 +105,7 @@ export const BioSection: React.FC = () => {
                     Actively seeking full-time software developer opportunities
                   </span>
                 </div>
-                
+
                 <div className="flex justify-start">
                   <a
                     href="https://www.linkedin.com/in/gabrielsiwa/"
